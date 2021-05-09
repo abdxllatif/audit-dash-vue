@@ -10,9 +10,6 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '*', component: page404
-  },
-  {
     meta: {
       title: 'Erreur 404'
     },
@@ -44,7 +41,7 @@ const routes = [
     // Document title tag
     // We combine it with defaultDocumentTitle set in `src/main.js` on router.afterEach hook
     meta: {
-      title: 'About'
+      title: 'A propos'
     },
     path: '/about',
     name: 'about',
@@ -104,6 +101,41 @@ const routes = [
     name: 'client.edit',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/ClientForm.vue'),
     props: true
+  },
+  {
+    meta: {
+      title: 'Nouveau Departement'
+    },
+    path: '/insertion/departement',
+    name: 'newDep',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewDep.vue')
+  },
+  {
+    meta: {
+      title: 'Nouvelle formation'
+    },
+    path: '/insertion/formation',
+    name: 'newForm',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewForm.vue')
+  },
+  {
+    meta: {
+      title: 'Départements'
+    },
+    path: '/tables/departement',
+    name: 'dep',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/affichage/Dep.vue')
+  },
+  {
+    meta: {
+      title: 'Formations'
+    },
+    path: '/tables/formation',
+    name: 'form',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/affichage/Form.vue')
+  },
+  {
+    path: '*', redirect: '/404'
   }
 ]
 
@@ -120,8 +152,8 @@ const router = new VueRouter({
   }
 })
 // GOOD
-router.beforeEach((to, from, next) => {
-  if (to.name !== 'login' && !this.$store.isLog) next({ name: 'login' })
+/* router.beforeEach((to, from, next) => {
+  if ((to.name !== 'login' && to.name !== 'home') && !this.$store.isLog) next({ name: 'login' })
   else next()
-})
+}) */
 export default router
