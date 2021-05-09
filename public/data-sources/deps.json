@@ -1,0 +1,26 @@
+{"data":
+    [
+        {
+            "id":1,
+            "avatar":"https:\/\/avatars.dicebear.com\/v2\/gridy\/Howell-Hand.svg",
+            "nom":"Informatique",
+            "description":"Informatique w bzf swlh",
+            "created":"Mar 3, 2021"
+        },
+        {
+            "id":2,
+            "avatar":"https:\/\/avatars.dicebear.com\/v2\/gridy\/Howell-Hand.svg",
+            "nom":"Economie",
+            "description":"Economie w bzf swlh",
+            "created":"Mar 3, 2021"
+        },
+        {
+            "id":10,
+            "avatar":"https:\/\/avatars.dicebear.com\/v2\/gridy\/Howell-Hand.svg",
+            "nom":"Electronique",
+            "description":"Electronique w bzf swlh",
+            "created":"Mar 3, 2021"
+        }
+    ]
+}
+        

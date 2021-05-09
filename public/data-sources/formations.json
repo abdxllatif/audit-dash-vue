@@ -1,0 +1,29 @@
+{"data":
+    [
+        {
+            "id":1,
+            "avatar":"https:\/\/avatars.dicebear.com\/v2\/gridy\/Howell-Hand.svg",
+            "titre":"Ingenieur des systemes informatiques",
+            "description":"Informatique w bzf swlh",
+            "departement":"Electronique",
+            "created":"Mar 3, 2021"
+        },
+        {
+            "id":2,
+            "avatar":"https:\/\/avatars.dicebear.com\/v2\/gridy\/Howell-Hand.svg",
+            "titre":"Systemes informations et web",
+            "description":"ingenieur w bzf swlh",
+            "departement":"Electronique",
+            "created":"Mar 3, 2021"
+        },
+        {
+            "id":10,
+            "avatar":"https:\/\/avatars.dicebear.com\/v2\/gridy\/Howell-Hand.svg",
+            "titre":"EG",
+            "description":"ingenieur en energies renouvlables",
+            "departement":"Electronique",
+            "created":"Mar 3, 2021"
+        }
+    ]
+}
+        
