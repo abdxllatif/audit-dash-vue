@@ -57,20 +57,23 @@ export default {
         password: this.form.password
       })
         .then(response => {
+          this.info = response
           this.$store.isLog = true
           this.$store.username = this.form.username
-          console.log(response)
+          console.log(this.info.data.accessToken)
           this.$session.start()
-          this.$session.set('jwt', response.data.accesToken)
+          this.$session.set('jwt', response.data.accessToken)
+          this.$session.set('username', this.form.username)
+          this.$session.set('email', this.info.data.email)
           console.log(this.$store.isLog)
           console.log(this.$store.username)
           this.$buefy.snackbar.open({
-            message: 'Bienvenue' + this.$store.username,
+            message: 'Bienvenue ' + this.$store.username,
             queue: false
           })
           this.$store.commit('user', {
             name: this.$store.username,
-            email: 'guest@auditdash.com',
+            email: 'admin@auditdash.com',
             avatar: 'https://avatars.dicebear.com/v2/gridy/John-Doe.svg'
           })
           this.$router.push({ name: 'dash' })
