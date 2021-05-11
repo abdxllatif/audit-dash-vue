@@ -21,6 +21,7 @@ import CardComponent from '@/components/CardComponent'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 import DepTable from '@/components/Tables/DepTable.vue'
+import axios from 'axios'
 
 export default {
   name: 'dep',
@@ -32,6 +33,17 @@ export default {
         'Département'
       ]
     }
+  },
+  created () {
+    console.log(this.$session.get('jwt'))
+    axios.get('http://localhost:8080/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .then((response) => {
+        this.listings = response.data
+        console.log(response)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 }
 </script>

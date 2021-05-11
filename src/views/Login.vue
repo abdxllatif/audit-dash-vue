@@ -89,7 +89,6 @@ export default {
         })
       setTimeout(() => {
         this.isLoading = false
-        this.$store.commit('user', this.form)
       }, 500)
     }
   },

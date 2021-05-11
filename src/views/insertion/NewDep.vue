@@ -35,6 +35,7 @@
 import TitleBar from '@/components/TitleBar'
 import CardComponent from '@/components/CardComponent'
 import HeroBar from '@/components/HeroBar'
+import axios from 'axios'
 
 export default {
   name: 'newDep',
@@ -58,7 +59,29 @@ export default {
   },
   methods: {
     submit () {
-
+      this.isLoading = true
+      axios.post('http://localhost:8080/api/data/departements', {
+        name: this.form.name,
+        description: this.form.description
+      }, { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .then(response => {
+          this.$buefy.snackbar.open({
+            message: 'le département ' + this.form.name + ' ajouté',
+            queue: false
+          })
+        })
+        .catch(e => {
+          this.errorMessage = e.message
+          console.log('There was an error!', e)
+          this.$buefy.snackbar.open({
+            type: 'is-warning',
+            message: "Erreur d'insertion",
+            queue: false
+          })
+        })
+      setTimeout(() => {
+        this.isLoading = false
+      }, 500)
     }
   }
 }
