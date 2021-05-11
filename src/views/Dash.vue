@@ -70,11 +70,6 @@ export default {
     this.$store.state.isFooterBarVisible = true
     this.$store.state.isAsideVisible = true
     this.fillChartData()
-
-    this.$buefy.snackbar.open({
-      message: 'Welcome back',
-      queue: false
-    })
   },
   methods: {
     randomChartData (n) {

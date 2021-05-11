@@ -72,9 +72,9 @@ export default {
             queue: false
           })
           this.$store.commit('user', {
-            name: this.$store.username,
-            email: 'admin@auditdash.com',
-            avatar: 'https://avatars.dicebear.com/v2/gridy/John-Doe.svg'
+            name: this.$session.get('username'),
+            email: this.$session.get('email'),
+            avatar: 'https://avatars.dicebear.com/api/avataaars/man-adm.svg?top[]=shortHair&hairColor[]=black&clothes[]=blazerAndSweater&clothesColor[]=black&eyes[]=default&eyebrow[]=default&mouth[]=default'
           })
           this.$router.push({ name: 'dash' })
         })

@@ -17,33 +17,18 @@
           <div class="is-user-name">
             <span>{{ userName }}</span>
           </div>
-          <div slot="dropdown" class="navbar-dropdown">
-            <router-link to="/profile" class="navbar-item" exact-active-class="is-active">
-              <b-icon icon="account" custom-size="default"></b-icon>
-              <span>My Profile</span>
-            </router-link>
-            <a class="navbar-item">
-              <b-icon icon="settings" custom-size="default"></b-icon>
-              <span>Settings</span>
-            </a>
-            <a class="navbar-item">
-              <b-icon icon="email" custom-size="default"></b-icon>
-              <span>Messages</span>
-            </a>
-            <hr class="navbar-divider">
-            <a class="navbar-item">
-              <b-icon icon="logout" custom-size="default"></b-icon>
-              <span>Log Out</span>
-            </a>
-          </div>
         </nav-bar-menu>
-        <a href="#/about" class="navbar-item has-divider is-desktop-icon-only" title="About">
+        <a href="/about" class="navbar-item has-divider is-desktop-icon-only" title="A propos">
           <b-icon icon="help-circle-outline" custom-size="default"/>
           <span>About</span>
         </a>
-        <a class="navbar-item is-desktop-icon-only" title="Log out" @click="logout">
+        <a v-if="this.$session.exists()" class="navbar-item is-desktop-icon-only" title="Se déconnecter" @click="logout">
           <b-icon icon="logout" custom-size="default"/>
           <span>Log out</span>
+        </a>
+        <a v-if="!this.$session.exists()" class="navbar-item is-desktop-icon-only" title="S'identifier" @click="login">
+          <b-icon pack="fa" icon="user" custom-size="default"/>
+          <span>S'identifier</span>
         </a>
       </div>
     </div>
@@ -99,10 +84,20 @@ export default {
       this.$store.commit('darkModeToggle')
     },
     logout () {
+      this.$session.destroy()
+      this.$store.commit('user', {
+        name: 'Guest',
+        email: 'guest@auditdash.com',
+        avatar: 'https://avatars.dicebear.com/v2/gridy/John-Doe.svg'
+      })
+      this.$router.push({ name: 'home' })
       this.$buefy.snackbar.open({
-        message: 'Log out clicked',
+        message: 'Vous avez déconnecté',
         queue: false
       })
+    },
+    login () {
+      this.$router.push({ name: 'login' })
     }
   }
 }
