@@ -23,7 +23,7 @@ import HeroBar from '@/components/HeroBar'
 import FormTable from '@/components/Tables/FormTable.vue'
 
 export default {
-  name: 'Tables',
+  name: 'form',
   components: { HeroBar, TitleBar, CardComponent, FormTable },
   computed: {
     titleStack () {

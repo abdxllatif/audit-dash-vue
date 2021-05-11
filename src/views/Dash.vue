@@ -59,65 +59,6 @@ export default {
     }
   },
   computed: {
-    menu () {
-      return [
-        'General',
-        [
-          {
-            to: '/',
-            icon: 'desktop-mac',
-            label: 'Dashboard'
-          }
-        ],
-        'Menu',
-        [
-          {
-            to: '/tables',
-            label: 'Tables',
-            icon: 'table',
-            updateMark: true
-          },
-          {
-            to: '/forms',
-            label: 'Inerstion',
-            icon: 'square-edit-outline'
-          },
-          {
-            to: '/profile',
-            label: 'Profile',
-            icon: 'account-circle'
-          },
-          {
-            label: 'Submenus',
-            subLabel: 'Submenus Example',
-            icon: 'view-list',
-            menu: [
-              {
-                href: '#void',
-                label: 'Sub-item One'
-              },
-              {
-                href: '#void',
-                label: 'Sub-item Two'
-              }
-            ]
-          }
-        ],
-        'About',
-        [
-          {
-            href: 'https://admin-null.justboil.me',
-            label: 'Premium Demo',
-            icon: 'credit-card'
-          },
-          {
-            href: 'https://justboil.me/bulma-admin-template/null',
-            label: 'About',
-            icon: 'help-circle'
-          }
-        ]
-      ]
-    },
     titleStack () {
       return [
         'Admin',

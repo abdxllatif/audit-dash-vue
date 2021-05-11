@@ -23,7 +23,7 @@ import HeroBar from '@/components/HeroBar'
 import DepTable from '@/components/Tables/DepTable.vue'
 
 export default {
-  name: 'Tables',
+  name: 'dep',
   components: { HeroBar, TitleBar, CardComponent, DepTable },
   computed: {
     titleStack () {
