@@ -13,6 +13,9 @@ export default new Vuex.Store({
     /* LoginState */
     isLog: false,
 
+    /* departements json */
+    deps: [],
+
     /* NavBar */
     isNavBarVisible: true,
 

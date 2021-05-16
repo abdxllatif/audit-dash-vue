@@ -9,7 +9,7 @@
     </hero-bar>
     <section class="section is-main-section">
       <card-component class="has-table has-mobile-sort-spaced" title="Formations" icon="account-multiple">
-        <form-table :data-url="`${$router.options.base}data-sources/formations.json`" :checkable="true"/>
+        <form-table :data-url="`http://localhost:8080/api/data/formations`" :checkable="true"/>
       </card-component>
     </section>
   </div>

@@ -2,7 +2,7 @@
   <div @click="toggle" class="navbar-item has-dropdown has-dropdown-with-icons" :class="{ 'is-hoverable':isHoverable, 'is-active':isDropdownActive }">
     <a class="navbar-link is-arrowless">
       <slot/>
-      <b-icon :icon="toggleDropdownIcon" custom-size="default"/>
+      <b-icon v-if="this.$session.exists()" :icon="toggleDropdownIcon" custom-size="default"/>
     </a>
     <slot name="dropdown"/>
   </div>

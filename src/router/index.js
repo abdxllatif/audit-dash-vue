@@ -5,6 +5,7 @@ import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import Login from '../views/Login.vue'
 import page404 from '../views/404.vue'
+// import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -18,28 +19,28 @@ const routes = [
     component: page404
   },
   {
-    // Document title tag
-    // We combine it with defaultDocumentTitle set in `src/main.js` on router.afterEach hook
     meta: {
       title: 'dash'
     },
     path: '/dash',
     name: 'dash',
     component: Dash
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
   },
   {
-    // Document title tag
-    // We combine it with defaultDocumentTitle set in `src/main.js` on router.afterEach hook
     meta: {
       title: 'home'
     },
     path: '/',
     name: 'home',
     component: Home
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next({ name: 'dash' }) } else { next() }
+    } */
   },
   {
-    // Document title tag
-    // We combine it with defaultDocumentTitle set in `src/main.js` on router.afterEach hook
     meta: {
       title: 'A propos'
     },
@@ -53,10 +54,10 @@ const routes = [
     },
     path: '/login',
     name: 'login',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: Login
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next({ name: 'dash' }) } else { next() }
+    } */
   },
   {
     meta: {
@@ -64,10 +65,10 @@ const routes = [
     },
     path: '/tables',
     name: 'tables',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "tables" */ '../views/Tables.vue')
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
   },
   {
     meta: {
@@ -76,6 +77,9 @@ const routes = [
     path: '/forms',
     name: 'forms',
     component: () => import(/* webpackChunkName: "forms" */ '../views/Forms.vue')
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
   },
   {
     meta: {
@@ -84,6 +88,9 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: () => import(/* webpackChunkName: "profile" */ '../views/Profile.vue')
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
   },
   {
     meta: {
@@ -92,6 +99,9 @@ const routes = [
     path: '/client/new',
     name: 'client.new',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/ClientForm.vue')
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
   },
   {
     meta: {
@@ -101,6 +111,9 @@ const routes = [
     name: 'client.edit',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/ClientForm.vue'),
     props: true
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
   },
   {
     meta: {
@@ -109,6 +122,9 @@ const routes = [
     path: '/insertion/departement',
     name: 'newDep',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewDep.vue')
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
   },
   {
     meta: {
@@ -117,6 +133,20 @@ const routes = [
     path: '/insertion/formation',
     name: 'newForm',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewForm.vue')
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Nouveau partenaire'
+    },
+    path: '/insertion/partenaire',
+    name: 'newPar',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewPar.vue')
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
   },
   {
     meta: {
@@ -125,6 +155,9 @@ const routes = [
     path: '/tables/departement',
     name: 'dep',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/affichage/Dep.vue')
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
   },
   {
     meta: {
@@ -133,6 +166,22 @@ const routes = [
     path: '/tables/formation',
     name: 'form',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/affichage/Form.vue')
+    /* beforeEnter (to, from, next) {
+      console.log(store.state.isLog)
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Partenaires'
+    },
+    path: '/tables/partenaire',
+    name: 'par',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/affichage/Par.vue')
+    /* beforeEnter (to, from, next) {
+      console.log(store.state.isLog)
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
   },
   {
     path: '*', redirect: '/404'
@@ -153,7 +202,7 @@ const router = new VueRouter({
 })
 // GOOD
 /* router.beforeEach((to, from, next) => {
-  if ((to.name !== 'login' && to.name !== 'home') && !this.$store.isLog) next({ name: 'login' })
+  if (!this.$session.exists()) next({ name: 'login' })
   else next()
 }) */
 export default router

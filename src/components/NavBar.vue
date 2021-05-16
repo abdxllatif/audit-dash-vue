@@ -17,11 +17,26 @@
           <div class="is-user-name">
             <span>{{ userName }}</span>
           </div>
+          <div v-if="this.$session.exists()" slot="dropdown" class="navbar-dropdown">
+            <router-link to="/profile" class="navbar-item" exact-active-class="is-active">
+              <b-icon icon="account" custom-size="default"></b-icon>
+              <span>My Profile</span>
+            </router-link>
+            <a class="navbar-item">
+              <b-icon icon="settings" custom-size="default"></b-icon>
+              <span>Settings</span>
+            </a>
+            <hr class="navbar-divider">
+            <a class="navbar-item" @click="logout">
+              <b-icon icon="logout" custom-size="default"></b-icon>
+              <span>Se déconnecter</span>
+            </a>
+          </div>
         </nav-bar-menu>
-        <a href="/about" class="navbar-item has-divider is-desktop-icon-only" title="A propos">
+        <router-link to="/about" class="navbar-item has-divider is-desktop-icon-only" title="A propos">
           <b-icon icon="help-circle-outline" custom-size="default"/>
-          <span>About</span>
-        </a>
+          <span>A propos</span>
+        </router-link>
         <a v-if="this.$session.exists()" class="navbar-item is-desktop-icon-only" title="Se déconnecter" @click="logout">
           <b-icon icon="logout" custom-size="default"/>
           <span>Log out</span>
@@ -85,6 +100,7 @@ export default {
     },
     logout () {
       this.$session.destroy()
+      this.$store.state.isLog = false
       this.$store.commit('user', {
         name: 'Guest',
         email: 'guest@auditdash.com',

@@ -3,8 +3,8 @@
     <title-bar :title-stack="titleStack"/>
     <hero-bar>
       Forms
-      <router-link slot="right" to="/" class="button">
-        Dashboard
+      <router-link slot="right" to="/tables/formation" class="button">
+        Table des formations
       </router-link>
     </hero-bar>
     <section class="section is-main-section">
@@ -13,7 +13,7 @@
           <b-field label="Départment" horizontal>
             <b-select placeholder="Selectionne un départment" v-model="form.department" required>
               <option v-for="(department, index) in departments" :key="index" :value="department">
-                {{ department }}
+                {{ department.nom }}
               </option>
             </b-select>
           </b-field>
@@ -40,6 +40,7 @@
 import TitleBar from '@/components/TitleBar'
 import CardComponent from '@/components/CardComponent'
 import HeroBar from '@/components/HeroBar'
+import axios from 'axios'
 
 export default {
   name: 'newForm',
@@ -52,12 +53,18 @@ export default {
         titre: null,
         description: null
       },
-      departments: [
-        'Informatique',
-        'Economie',
-        'Electronique'
-      ]
+      departments: this.$session.get('depTable')
     }
+  },
+  created () {
+    axios.get('http://localhost:8080/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .then((response) => {
+        this.listings = response.data
+        this.$session.set('depTable', this.listings.results)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   },
   computed: {
     titleStack () {
@@ -69,7 +76,30 @@ export default {
   },
   methods: {
     submit () {
-
+      this.isLoading = true
+      axios.post('http://localhost:8080/api/data/formations', {
+        nom: this.form.titre,
+        description: this.form.description,
+        depId: this.form.department.departementId
+      }, { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .then(response => {
+          this.$buefy.snackbar.open({
+            message: 'la formation ' + this.form.name + ' ajouté',
+            queue: false
+          })
+        })
+        .catch(e => {
+          this.errorMessage = e.message
+          console.log('There was an error!', e)
+          this.$buefy.snackbar.open({
+            type: 'is-warning',
+            message: "Erreur d'insertion",
+            queue: false
+          })
+        })
+      setTimeout(() => {
+        this.isLoading = false
+      }, 500)
     }
   }
 }

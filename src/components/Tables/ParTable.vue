@@ -16,10 +16,10 @@
       :data="departements">
 
       <b-table-column label="Nom" field="nom" sortable v-slot="props">
-        {{ props.row.nom }}
+        {{ props.row.Nom }}
       </b-table-column>
-      <b-table-column label="Description" field="description" sortable v-slot="props">
-        {{ props.row.description }}
+      <b-table-column label="Type" field="type" sortable v-slot="props">
+        {{ props.row.type }}
       </b-table-column>
       <b-table-column label="Created" v-slot="props">
         <small class="has-text-grey is-abbr-like" :title="props.row.created">{{ props.row.createdAt }}</small>
@@ -135,7 +135,7 @@ export default {
     },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8080/api/data/departements/' + this.trashObject.departementId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8080/api/data/partenaires/' + this.trashObject.departementId, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({

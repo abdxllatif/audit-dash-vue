@@ -11,24 +11,19 @@
       :striped="true"
       :hoverable="true"
       default-sort="titre"
-      :data="clients">
+      :data="formations">
 
-      <b-table-column cell-class="has-no-head-mobile is-image-cell" v-slot="props">
-        <div class="image">
-          <img :src="props.row.avatar" class="is-rounded">
-        </div>
-      </b-table-column>
       <b-table-column label="Titre" field="titre" sortable v-slot="props">
-        {{ props.row.titre }}
+        {{ props.row.nom }}
       </b-table-column>
       <b-table-column label="Description" field="description" sortable v-slot="props">
         {{ props.row.description }}
       </b-table-column>
       <b-table-column label="Département" field="departement" sortable v-slot="props">
-        {{ props.row.departement }}
+        {{ props.row.departementDepartementId }}
       </b-table-column>
       <b-table-column label="Created" v-slot="props">
-        <small class="has-text-grey is-abbr-like" :title="props.row.created">{{ props.row.created }}</small>
+        <small class="has-text-grey is-abbr-like" :title="props.row.created">{{ props.row.createdAt }}</small>
       </b-table-column>
       <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
         <div class="buttons is-right">
@@ -82,7 +77,7 @@ export default {
     return {
       isModalActive: false,
       trashObject: null,
-      clients: [],
+      formations: [],
       isLoading: false,
       paginated: false,
       perPage: 10,
@@ -92,7 +87,7 @@ export default {
   computed: {
     trashObjectName () {
       if (this.trashObject) {
-        return this.trashObject.titre
+        return this.trashObject.nom
       }
 
       return null
@@ -102,14 +97,14 @@ export default {
     if (this.dataUrl) {
       this.isLoading = true
       axios
-        .get(this.dataUrl)
+        .get(this.dataUrl, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
-          if (r.data && r.data.data) {
-            if (r.data.data.length > this.perPage) {
+          if (r.data && r.data.results) {
+            if (r.data.results.length > this.perPage) {
               this.paginated = true
             }
-            this.clients = r.data.data
+            this.formations = r.data.results
           }
         })
         .catch(e => {
@@ -124,14 +119,27 @@ export default {
   methods: {
     trashModal (trashObject) {
       this.trashObject = trashObject
+
       this.isModalActive = true
     },
     trashConfirm () {
       this.isModalActive = false
-      this.$buefy.snackbar.open({
-        message: 'Confirmed',
-        queue: false
-      })
+      axios.delete('http://localhost:8080/api/data/formations/' + this.trashObject.formationId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .then(r => {
+          this.isLoading = false
+          this.$buefy.toast.open({
+            message: 'Confirmed',
+            type: 'is-success'
+          })
+        })
+        .catch(e => {
+          this.isLoading = false
+          console.log(e)
+          this.$buefy.toast.open({
+            message: `Error: ${e.message}`,
+            type: 'is-danger'
+          })
+        })
     },
     trashCancel () {
       this.isModalActive = false

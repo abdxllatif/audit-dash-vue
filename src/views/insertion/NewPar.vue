@@ -3,22 +3,23 @@
     <title-bar :title-stack="titleStack"/>
     <hero-bar>
       Insertion
-      <router-link slot="right" to="/tables/departement" class="button">
-        Table des départements
+      <router-link slot="right" to="/tables/partenaire" class="button">
+        Table des partenaires
       </router-link>
     </hero-bar>
     <section class="section is-main-section">
-      <import-component/>
-      <card-component title="Nouveau département" icon="ballot">
+      <card-component title="Nouveau partenaire" icon="ballot">
         <form @submit.prevent="submit">
-          <b-field label="Nom du département" horizontal>
-            <b-field>
-              <b-input icon="account" v-model="form.name" placeholder="Nom du département" name="name" required />
+            <b-field label="Type" horizontal>
+                <b-select placeholder="Selectionne un type" v-model="form.type" required>
+                    <option v-for="(type, index) in types" :key="index" :value="type">
+                        {{ type }}
+                    </option>
+                </b-select>
             </b-field>
-          </b-field>
-          <b-field label="Description" message="Ne pas dépasser 255 caractères" horizontal>
-            <b-input type="textarea" placeholder="Une petite définition du département" v-model="form.description" maxlength="255" required/>
-          </b-field>
+            <b-field label="Nom du partenaire" horizontal>
+              <b-input icon="account" v-model="form.name" placeholder="Nom du partenaire" name="name" required />
+            </b-field>
           <b-field horizontal>
             <b-field grouped>
               <div class="control">
@@ -36,35 +37,38 @@
 import TitleBar from '@/components/TitleBar'
 import CardComponent from '@/components/CardComponent'
 import HeroBar from '@/components/HeroBar'
-import ImportComponent from '@/components/ImportComponent'
 import axios from 'axios'
 
 export default {
   name: 'newDep',
-  components: { HeroBar, CardComponent, TitleBar, ImportComponent },
+  components: { HeroBar, CardComponent, TitleBar },
   data () {
     return {
       isLoading: false,
       form: {
         name: null,
         description: null
-      }
+      },
+      types: [
+        'SocioEconomique',
+        'Pédagogique'
+      ]
     }
   },
   computed: {
     titleStack () {
       return [
         'Insertion',
-        'Departement'
+        'Partenaire'
       ]
     }
   },
   methods: {
     submit () {
       this.isLoading = true
-      axios.post('http://localhost:8080/api/data/departements', {
-        name: this.form.name,
-        description: this.form.description
+      axios.post('http://localhost:8080/api/data/partenaire', {
+        nom: this.form.name,
+        type: this.form.type
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({
