@@ -1,15 +1,15 @@
 <template>
-  <card-component title="Importer un fichier CSV" icon="account-circle">
+  <card-component>
     <form @submit.prevent="submit">
-      <b-field horizontal label="import CSV">
+      <b-field horizontal label="importer un fichier CSV">
         <file-picker/>
-      </b-field>
-      <b-field horizontal>
-        <div class="control">
-          <button type="submit" class="button is-success" :class="{'is-loading':isLoading}">
-            Submit
-          </button>
-        </div>
+        <b-field class="is-right" horizontal>
+          <div class="control">
+            <button type="submit" class="button is-success" :class="{'is-loading':isLoading}">
+              Ajouter
+            </button>
+          </div>
+        </b-field>
       </b-field>
     </form>
   </card-component>

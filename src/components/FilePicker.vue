@@ -27,7 +27,7 @@ export default {
   },
   computed: {
     buttonLabel () {
-      return !this.file ? 'Pick a file' : 'Pick another file'
+      return !this.file ? 'Choisir un fichier' : 'Choisir un autre fichier'
     }
   },
   methods: {

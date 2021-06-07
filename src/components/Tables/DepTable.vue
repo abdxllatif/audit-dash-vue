@@ -2,8 +2,8 @@
   <div>
     <modal-box :is-active="isModalActive" :trash-object-name="trashObjectName" @confirm="trashConfirm"
                @cancel="trashCancel"/>
-    <modal-box-form :is-active="isModalActive" :trash-object-name="trashObjectName" @confirm="trashConfirm"
-               @cancel="trashCancel"/>
+    <modal-box-form :is-active="isFormationModalActive" :trash-object-name="FormationObjectName" @confirm="FormationConfirm"
+               @cancel="FormationCancel"/>
     <b-table
       :checked-rows.sync="checkedRows"
       :checkable="checkable"
@@ -25,11 +25,11 @@
         <small class="has-text-grey is-abbr-like" :title="props.row.created">{{ props.row.createdAt }}</small>
       </b-table-column>
       <b-table-column label="Formations" field="formations" v-slot="props">
-        <div class="button is-small is-dark" type="button" @click.prevent="trashModal(props.row)">Click here</div>
+        <div class="button is-small is-dark" type="button" @click.prevent="FormationModal(props.row)">Click here</div>
       </b-table-column>
       <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
         <div class="buttons is-right">
-          <router-link :to="{name:'client.edit', params: {id: props.row.id}}" class="button is-small is-primary">
+          <router-link :to="{name:'dep.edit', params: {id: props.row.departementId}}" class="button is-small is-primary">
             <b-icon icon="account-edit" size="is-small"/>
           </router-link>
           <button class="button is-small is-danger" type="button" @click.prevent="trashModal(props.row)">
@@ -78,6 +78,7 @@ export default {
   data () {
     return {
       isModalActive: false,
+      isFormationModalActive: false,
       trashObject: null,
       departements: [],
       isLoading: false,
@@ -133,6 +134,10 @@ export default {
       this.trashObject = trashObject
       this.isModalActive = true
     },
+    FormationModal (trashObject) {
+      this.trashObject = trashObject
+      this.isFormationModalActive = true
+    },
     trashConfirm () {
       this.isModalActive = false
       axios.delete('http://localhost:8080/api/data/departements/' + this.trashObject.departementId, { headers: { 'x-access-token': this.$session.get('jwt') } })
@@ -142,6 +147,24 @@ export default {
             message: 'Confirmed',
             type: 'is-success'
           })
+          axios
+            .get(this.dataUrl, { headers: { 'x-access-token': this.$session.get('jwt') } })
+            .then(r => {
+              this.isLoading = false
+              if (r.data && r.data.results) {
+                if (r.data.results.length > this.perPage) {
+                  this.paginated = true
+                }
+                this.departements = r.data.results
+              }
+            })
+            .catch(e => {
+              this.isLoading = false
+              this.$buefy.toast.open({
+                message: `Error: ${e.message}`,
+                type: 'is-danger'
+              })
+            })
         })
         .catch(e => {
           this.isLoading = false
@@ -152,8 +175,14 @@ export default {
           })
         })
     },
+    FormationConfirm () {
+      this.isModalActive = false
+    },
     trashCancel () {
       this.isModalActive = false
+    },
+    FormationCancel () {
+      this.isFormationModalActive = false
     }
   }
 }

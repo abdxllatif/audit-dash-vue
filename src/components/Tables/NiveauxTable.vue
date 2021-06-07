@@ -1,9 +1,5 @@
 <template>
   <div>
-    <modal-box :is-active="isModalActive" :trash-object-name="trashObjectName" @confirm="trashConfirm"
-               @cancel="trashCancel"/>
-    <modal-box-niveaux :is-active="isNivModalActive" :trash-object-name="trashObjectName"
-               @cancel="niveauxCancel"/>
     <b-table
       :checked-rows.sync="checkedRows"
       :checkable="checkable"
@@ -12,35 +8,18 @@
       :per-page="perPage"
       :striped="true"
       :hoverable="true"
-      default-sort="titre"
-      :data="formations">
+      default-sort="nom"
+      :data="niveaux">
 
-      <b-table-column label="Titre" field="titre" sortable v-slot="props">
+      <b-table-column label="Nom" field="nom" sortable v-slot="props">
         {{ props.row.nom }}
       </b-table-column>
       <b-table-column label="Description" field="description" sortable v-slot="props">
         {{ props.row.description }}
       </b-table-column>
-      <b-table-column label="Département" field="departement" sortable v-slot="props">
-        {{ props.row.departementDepartementId }}
+      <b-table-column label="Durée" field="duree" sortable v-slot="props">
+        {{ props.row.duree }}
       </b-table-column>
-      <b-table-column label="Niveaux" field="niveaux" v-slot="props">
-        <div class="button is-small is-dark" type="button" @click.prevent="niveauxModal(props.row)">Click here</div>
-      </b-table-column>
-      <!--<b-table-column label="Created" v-slot="props">
-        <small class="has-text-grey is-abbr-like" :title="props.row.created">{{ props.row.createdAt }}</small>
-      </b-table-column> -->
-      <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
-        <div class="buttons is-right">
-          <router-link :to="{name:'client.edit', params: {id: props.row.id}}" class="button is-small is-primary">
-            <b-icon icon="account-edit" size="is-small"/>
-          </router-link>
-          <button class="button is-small is-danger" type="button" @click.prevent="trashModal(props.row)">
-            <b-icon icon="trash-can" size="is-small"/>
-          </button>
-        </div>
-      </b-table-column>
-
       <section class="section" slot="empty">
         <div class="content has-text-grey has-text-centered">
           <template v-if="isLoading">
@@ -63,15 +42,11 @@
 
 <script>
 import axios from 'axios'
-import ModalBox from '@/components/ModalBox'
-import ModalBoxNiveaux from '../ModalBox/ModalBoxNiveaux.vue'
 
 export default {
-  name: 'FormTable',
-  components: { ModalBox, ModalBoxNiveaux },
+  name: 'NiveauxTable',
   props: {
     dataUrl: {
-      type: String,
       default: null
     },
     checkable: {
@@ -81,10 +56,7 @@ export default {
   },
   data () {
     return {
-      isModalActive: false,
-      isNivModalActive: false,
-      trashObject: null,
-      formations: [],
+      niveaux: [],
       isLoading: false,
       paginated: false,
       perPage: 10,
@@ -101,6 +73,16 @@ export default {
     }
   },
   mounted () {
+    console.log(this.props)
+    console.log(this.$session.get('deps'))
+    /* if (this.dataUrl) {
+      if (r.data && r.data.data) {
+        if (r.data.data.length > this.perPage) {
+          this.paginated = true
+        }
+        this.departements = this.$session.get('deps')
+      }
+    } */
     if (this.dataUrl) {
       this.isLoading = true
       axios
@@ -111,7 +93,7 @@ export default {
             if (r.data.results.length > this.perPage) {
               this.paginated = true
             }
-            this.formations = r.data.results
+            this.niveaux = r.data.results
           }
         })
         .catch(e => {
@@ -126,17 +108,11 @@ export default {
   methods: {
     trashModal (trashObject) {
       this.trashObject = trashObject
-
       this.isModalActive = true
-    },
-    niveauxModal (trashObject) {
-      this.trashObject = trashObject
-
-      this.isNivModalActive = true
     },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8080/api/data/formations/' + this.trashObject.formationId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8080/api/data/niveaux/' + this.trashObject.niveauId, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({
@@ -153,14 +129,8 @@ export default {
           })
         })
     },
-    niveauxConfirm () {
-      this.isNivModalActive = false
-    },
     trashCancel () {
       this.isModalActive = false
-    },
-    niveauxCancel () {
-      this.isNivModalActive = false
     }
   }
 }

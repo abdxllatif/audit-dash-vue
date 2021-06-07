@@ -1,5 +1,5 @@
 <template>
-  <b-modal :active.sync="isModalActive" has-modal-card>
+  <b-modal :active.sync="isFormationModalActive" has-modal-card>
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title">Formations</p>
@@ -45,7 +45,7 @@ export default {
   },
   data () {
     return {
-      isModalActive: false
+      isFormationModalActive: false
     }
   },
   methods: {
@@ -58,9 +58,9 @@ export default {
   },
   watch: {
     isActive (newValue) {
-      this.isModalActive = newValue
+      this.isFormationModalActive = newValue
     },
-    isModalActive (newValue) {
+    isFormationModalActive (newValue) {
       if (!newValue) {
         this.cancel()
       }
