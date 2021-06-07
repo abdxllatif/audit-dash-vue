@@ -140,9 +140,74 @@ export default {
             label: 'Dashboard'
           }
         ],
-        'Menu',
+        'Tables',
         [
           {
+            label: 'Pédagogie',
+            subLabel: 'Insertion des données',
+            icon: 'view-list',
+            menu: [
+              {
+                to: '/tables/departement',
+                label: 'Départements'
+              },
+              {
+                to: '/tables/formation',
+                label: 'Formations'
+              },
+              {
+                to: '/tables/partenaire',
+                label: 'Partenaires'
+              },
+              {
+                to: '/tables/club',
+                label: 'Clubs scientifiques et culturels'
+              },
+              {
+                to: '/tables/activites',
+                label: 'Activités'
+              }
+            ]
+          },
+          {
+            label: 'Personnel',
+            subLabel: 'Insertion des données',
+            icon: 'view-list',
+            menu: [
+              {
+                to: '/tables/departement',
+                label: 'Administratifs'
+              },
+              {
+                to: '/tables/etudiants',
+                label: 'Etudiants'
+              },
+              {
+                to: '/tables/partenaire',
+                label: 'Enseignants'
+              },
+              {
+                to: '/tables/partenaire',
+                label: 'Doctorants'
+              }
+            ]
+          },
+          {
+            label: 'Logistiques',
+            subLabel: 'Insertion des données',
+            icon: 'view-list',
+            menu: [
+              {
+                to: '/tables/salle',
+                label: 'Salles'
+              },
+              {
+                to: '/tables/outil',
+                label: 'Outils'
+              }
+            ]
+          }
+        /*  {
             label: 'Insertion',
             subLabel: 'Insertion des données',
             icon: 'view-list',
@@ -156,8 +221,24 @@ export default {
                 label: 'Formation'
               },
               {
-                to: '/insertion/partner',
+                to: '/insertion/partenaire',
                 label: 'Partenaire'
+              },
+              {
+                to: '/insertion/administratif',
+                label: 'Administratif'
+              },
+              {
+                to: '/insertion/etudiant',
+                label: 'Etudiant'
+              },
+              {
+                to: '/insertion/enseignant',
+                label: 'Enseignant'
+              },
+              {
+                to: '/insertion/',
+                label: 'Etudiant'
               }
             ]
           },
@@ -177,8 +258,20 @@ export default {
               {
                 to: '/tables/partenaire',
                 label: 'Partenaires'
+              },
+              {
+                to: '/tables/administratif',
+                label: 'Administratif'
               }
             ]
+          } */
+        ],
+        'Statistiques',
+        [
+          {
+            to: '/dash',
+            icon: 'desktop-mac',
+            label: 'Graphes'
           }
         ],
         'A propos',
