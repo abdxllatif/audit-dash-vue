@@ -117,6 +117,18 @@ const routes = [
   },
   {
     meta: {
+      title: 'Edit department'
+    },
+    path: '/department/:id',
+    name: 'dep.edit',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/Departement/Edit.vue'),
+    props: true
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
       title: 'Nouveau Departement'
     },
     path: '/insertion/departement',
@@ -144,6 +156,28 @@ const routes = [
     path: '/insertion/partenaire',
     name: 'newPar',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewPar.vue')
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Nouveau administratif'
+    },
+    path: '/insertion/administratif',
+    name: 'newAdm',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewAdministratif.vue')
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Nouveau étudiant'
+    },
+    path: '/insertion/etudiant',
+    name: 'newEtu',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewEtu.vue')
     /* beforeEnter (to, from, next) {
       if (store.state.isLog) { next() } else { next({ name: 'home' }) }
     } */
@@ -178,6 +212,30 @@ const routes = [
     path: '/tables/partenaire',
     name: 'par',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/affichage/Par.vue')
+    /* beforeEnter (to, from, next) {
+      console.log(store.state.isLog)
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Etudiants'
+    },
+    path: '/tables/etudiants',
+    name: 'etudiants',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/affichage/Etudiant.vue')
+    /* beforeEnter (to, from, next) {
+      console.log(store.state.isLog)
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Administratifs'
+    },
+    path: '/tables/administratif',
+    name: 'administratif',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/affichage/Administratif.vue')
     /* beforeEnter (to, from, next) {
       console.log(store.state.isLog)
       if (store.state.isLog) { next() } else { next({ name: 'home' }) }
