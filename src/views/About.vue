@@ -20,15 +20,7 @@
                             <p>
                                 <strong>Audit Dashboard</strong>
                                 <br>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                                <br>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpi
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
+                                L’innovation numérique est en train de métamorphoser toutes les activités humaines. Certains ont pour eux un moyen par contre d’autres subissent étant donné qu’ils sont en retard. . Dans ce contexte, la société KUMA Consulting & Facilities s’est inscrite dans une démarche évolutive et innovante afin de permettre à ses différents clients et partenaires à savoir les organismes, les institutions, les entreprises, et à toutes les personnes morales et physiques l’accès à certains outils et à certaines compétences afin d’améliorer la performance et en même temps de les accompagner pour la réalisation de leurs projets afin d’accroitre la rentabilité.
                             </p>
                         </div>
                     </div>
