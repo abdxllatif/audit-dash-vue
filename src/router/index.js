@@ -184,6 +184,50 @@ const routes = [
   },
   {
     meta: {
+      title: 'Nouveau outil'
+    },
+    path: '/insertion/outil',
+    name: 'newOutil',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewOutil.vue')
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Nouvelle salle'
+    },
+    path: '/insertion/salle',
+    name: 'newSalle',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewSalle.vue')
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Nouveau club'
+    },
+    path: '/insertion/club',
+    name: 'newClub',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewClub.vue')
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Nouvelle activité'
+    },
+    path: '/insertion/activite',
+    name: 'newActivite',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewActivite.vue')
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
       title: 'Départements'
     },
     path: '/tables/departement',
@@ -231,15 +275,97 @@ const routes = [
   },
   {
     meta: {
+      title: 'Salles'
+    },
+    path: '/tables/salles',
+    name: 'salle',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/affichage/Salle.vue')
+    /* beforeEnter (to, from, next) {
+      console.log(store.state.isLog)
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Outils'
+    },
+    path: '/tables/outils',
+    name: 'outil',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/affichage/Outil.vue')
+    /* beforeEnter (to, from, next) {
+      console.log(store.state.isLog)
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Enseignants'
+    },
+    path: '/tables/enseignants',
+    name: 'enseignant',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/affichage/Enseignant.vue')
+    /* beforeEnter (to, from, next) {
+      console.log(store.state.isLog)
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Doctorants'
+    },
+    path: '/tables/doctorants',
+    name: 'doctorant',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/affichage/Doctorant.vue')
+    /* beforeEnter (to, from, next) {
+      console.log(store.state.isLog)
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Clubs scientifiques et culturels'
+    },
+    path: '/tables/clubs',
+    name: 'club',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/affichage/Club.vue')
+    /* beforeEnter (to, from, next) {
+      console.log(store.state.isLog)
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Activités'
+    },
+    path: '/tables/activites',
+    name: 'activite',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/affichage/Activite.vue')
+    /* beforeEnter (to, from, next) {
+      console.log(store.state.isLog)
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
       title: 'Administratifs'
     },
-    path: '/tables/administratif',
+    path: '/tables/administratifs',
     name: 'administratif',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/affichage/Administratif.vue')
     /* beforeEnter (to, from, next) {
       console.log(store.state.isLog)
       if (store.state.isLog) { next() } else { next({ name: 'home' }) }
     } */
+  },
+  // Détails
+  {
+    meta: {
+      title: 'Détails de la formation'
+    },
+    path: '/formation/:id',
+    name: 'FormationDetail',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/details/FormationDetail.vue'),
+    props: true
   },
   {
     path: '*', redirect: '/404'
