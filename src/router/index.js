@@ -357,6 +357,19 @@ const routes = [
       if (store.state.isLog) { next() } else { next({ name: 'home' }) }
     } */
   },
+  // Statistiques
+  {
+    meta: {
+      title: 'Statistiques générales'
+    },
+    path: '/stats',
+    name: 'GeneralStat',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/Stat/General.vue')
+    /* beforeEnter (to, from, next) {
+      console.log(store.state.isLog)
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
   // Détails
   {
     meta: {
@@ -365,6 +378,24 @@ const routes = [
     path: '/formation/:id',
     name: 'FormationDetail',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/details/FormationDetail.vue'),
+    props: true
+  },
+  {
+    meta: {
+      title: 'Détails du département'
+    },
+    path: '/departement/:id',
+    name: 'DepartementDetail',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/details/DepartementDetail.vue'),
+    props: true
+  },
+  {
+    meta: {
+      title: 'Détails du partenaire'
+    },
+    path: '/partenaire/:id',
+    name: 'PartenaireDetail',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/details/PartenaireDetail.vue'),
     props: true
   },
   {

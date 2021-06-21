@@ -111,7 +111,7 @@ export default {
         [
           {
             to: '/',
-            icon: 'desktop-mac',
+            icon: 'home-analytics',
             label: 'Acceuil'
           },
           {
@@ -160,7 +160,7 @@ export default {
                 label: 'Partenaires'
               },
               {
-                to: '/tables/club',
+                to: '/tables/clubs',
                 label: 'Clubs scientifiques et culturels'
               },
               {
@@ -175,7 +175,7 @@ export default {
             icon: 'view-list',
             menu: [
               {
-                to: '/tables/departement',
+                to: '/tables/administratifs',
                 label: 'Administratifs'
               },
               {
@@ -183,11 +183,11 @@ export default {
                 label: 'Etudiants'
               },
               {
-                to: '/tables/partenaire',
+                to: '/tables/enseignants',
                 label: 'Enseignants'
               },
               {
-                to: '/tables/partenaire',
+                to: '/tables/doctorants',
                 label: 'Doctorants'
               }
             ]
@@ -198,11 +198,11 @@ export default {
             icon: 'view-list',
             menu: [
               {
-                to: '/tables/salle',
+                to: '/tables/salles',
                 label: 'Salles'
               },
               {
-                to: '/tables/outil',
+                to: '/tables/outils',
                 label: 'Outils'
               }
             ]
@@ -269,8 +269,13 @@ export default {
         'Statistiques',
         [
           {
+            to: '/stats',
+            icon: 'chart-bar',
+            label: 'Générale'
+          },
+          {
             to: '/dash',
-            icon: 'desktop-mac',
+            icon: 'chart-bar',
             label: 'Graphes'
           }
         ],
