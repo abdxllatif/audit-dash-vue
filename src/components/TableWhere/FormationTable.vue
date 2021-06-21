@@ -2,32 +2,29 @@
   <div>
     <modal-box :is-active="isModalActive" :trash-object-name="trashObjectName" @confirm="trashConfirm"
                @cancel="trashCancel"/>
-    <b-table
+        <b-table
       :loading="isLoading"
       :paginated="paginated"
       :per-page="perPage"
       :striped="true"
       :hoverable="true"
-      default-sort="nom"
-      :data="departements">
+      default-sort="titre"
+      :data="formations">
 
-      <b-table-column label="Nom" field="nom" sortable v-slot="props">
+      <b-table-column label="Titre" field="titre" sortable v-slot="props">
         {{ props.row.nom }}
       </b-table-column>
       <b-table-column label="Description" field="description" sortable v-slot="props">
         {{ props.row.description }}
       </b-table-column>
-      <b-table-column label="Created" v-slot="props">
-        <small class="has-text-grey is-abbr-like" :title="props.row.created">{{ props.row.createdAt }}</small>
-      </b-table-column>
-      <b-table-column label="Détails" field="Détails" v-slot="props">
-        <router-link :to="{name:'DepartementDetail', params: {id: props.row.departementId}}" class="button is-small is-dark">
+      <b-table-column label="Détails" field="details" v-slot="props">
+        <router-link :to="{name:'FormationDetail', params: {id: props.row.formationId}}" class="button is-small is-dark">
           Détails
         </router-link>
       </b-table-column>
       <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
         <div class="buttons is-right">
-          <router-link :to="{name:'dep.edit', params: {id: props.row.departementId}}" class="button is-small is-primary">
+          <router-link :to="{name:'client.edit', params: {id: props.row.id}}" class="button is-small is-primary">
             <b-icon icon="account-edit" size="is-small"/>
           </router-link>
           <button class="button is-small is-danger" type="button" @click.prevent="trashModal(props.row)">
@@ -61,10 +58,15 @@ import axios from 'axios'
 import ModalBox from '@/components/ModalBox'
 
 export default {
-  name: 'DepTable',
+  name: 'FormationTable',
   components: { ModalBox },
   props: {
     dataUrl: {
+      type: String,
+      default: null
+    },
+    id: {
+      type: String,
       default: null
     },
     checkable: {
@@ -75,9 +77,8 @@ export default {
   data () {
     return {
       isModalActive: false,
-      isFormationModalActive: false,
       trashObject: null,
-      departements: [],
+      formations: [],
       isLoading: false,
       paginated: false,
       perPage: 10,
@@ -94,34 +95,31 @@ export default {
     }
   },
   mounted () {
-    console.log(this.props)
-    console.log(this.$session.get('deps'))
-    /* if (this.dataUrl) {
-      if (r.data && r.data.data) {
-        if (r.data.data.length > this.perPage) {
-          this.paginated = true
-        }
-        this.departements = this.$session.get('deps')
-      }
-    } */
     if (this.dataUrl) {
       this.isLoading = true
-      axios
-        .get(this.dataUrl, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.post(this.dataUrl, {
+        table: 'formations',
+        fk: 'departementDepartementId',
+        value: parseInt(this.id)
+      }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
-          if (r.data && r.data.results) {
-            if (r.data.results.length > this.perPage) {
+          console.log(r.data)
+          console.log(parseInt(this.id))
+          if (r && r.data) {
+            if (r.data.length > this.perPage) {
               this.paginated = true
             }
-            this.departements = r.data.results
+            this.formations = r.data
           }
         })
         .catch(e => {
-          this.isLoading = false
-          this.$buefy.toast.open({
-            message: `Error: ${e.message}`,
-            type: 'is-danger'
+          this.errorMessage = e.message
+          console.log('There was an error!', e)
+          this.$buefy.snackbar.open({
+            type: 'is-warning',
+            message: 'Erreur fl count',
+            queue: false
           })
         })
     }
@@ -129,15 +127,17 @@ export default {
   methods: {
     trashModal (trashObject) {
       this.trashObject = trashObject
+
       this.isModalActive = true
     },
-    FormationModal (trashObject) {
+    niveauxModal (trashObject) {
       this.trashObject = trashObject
-      this.isFormationModalActive = true
+
+      this.isNivModalActive = true
     },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8080/api/data/departements/' + this.trashObject.departementId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8080/api/data/formations/' + this.trashObject.formationId, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({
@@ -152,7 +152,7 @@ export default {
                 if (r.data.results.length > this.perPage) {
                   this.paginated = true
                 }
-                this.departements = r.data.results
+                this.formations = r.data.results
               }
             })
             .catch(e => {
@@ -172,14 +172,14 @@ export default {
           })
         })
     },
-    FormationConfirm () {
-      this.isModalActive = false
+    niveauxConfirm () {
+      this.isNivModalActive = false
     },
     trashCancel () {
       this.isModalActive = false
     },
-    FormationCancel () {
-      this.isFormationModalActive = false
+    niveauxCancel () {
+      this.isNivModalActive = false
     }
   }
 }

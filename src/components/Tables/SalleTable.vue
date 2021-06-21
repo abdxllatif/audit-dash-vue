@@ -3,8 +3,6 @@
     <modal-box :is-active="isModalActive" :trash-object-name="trashObjectName" @confirm="trashConfirm"
                @cancel="trashCancel"/>
     <b-table
-      :checked-rows.sync="checkedRows"
-      :checkable="checkable"
       :loading="isLoading"
       :paginated="paginated"
       :per-page="perPage"

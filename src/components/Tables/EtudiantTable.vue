@@ -3,8 +3,6 @@
     <modal-box :is-active="isModalActive" :trash-object-name="trashObjectName" @confirm="trashConfirm"
                @cancel="trashCancel"/>
     <b-table
-      :checked-rows.sync="checkedRows"
-      :checkable="checkable"
       :loading="isLoading"
       :paginated="paginated"
       :per-page="perPage"
@@ -14,7 +12,7 @@
       :data="departements">
 
       <b-table-column label="Nom" field="nom" sortable v-slot="props">
-        {{ props.row.nom }}
+        {{ props.row.Nom }}
       </b-table-column>
       <b-table-column label="Prénom" field="prenom" sortable v-slot="props">
         {{ props.row.prenom }}
@@ -24,15 +22,6 @@
       </b-table-column>
       <b-table-column label="Lieu de naissance" field="lieu" sortable v-slot="props">
         {{ props.row.lieu_naissance }}
-      </b-table-column>
-      <b-table-column label="Nom" field="nom" sortable v-slot="props">
-        {{ props.row.nom }}
-      </b-table-column>
-      <b-table-column label="Created" v-slot="props">
-        <small class="has-text-grey is-abbr-like" :title="props.row.created">{{ props.row.createdAt }}</small>
-      </b-table-column>
-      <b-table-column label="Formations" field="formations" v-slot="props">
-        <div class="button is-small is-dark" type="button" @click.prevent="FormationModal(props.row)">Click here</div>
       </b-table-column>
       <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
         <div class="buttons is-right">

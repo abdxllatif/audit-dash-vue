@@ -3,7 +3,7 @@
     <title-bar :title-stack="titleStack"/>
     <hero-bar>
       Insertion
-      <router-link slot="right" to="/tables/administratif" class="button">
+      <router-link slot="right" to="/tables/administratifs" class="button">
         Table des administratifs
       </router-link>
     </hero-bar>
@@ -113,14 +113,14 @@ export default {
   methods: {
     submit () {
       this.isLoading = true
-      axios.post('http://localhost:8080/api/data/formations', {
+      axios.post('http://localhost:8080/api/data/administratifs', {
         nom: this.form.titre,
         description: this.form.description,
         depId: this.form.department.departementId
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({
-            message: 'la formation ' + this.form.name + ' ajouté',
+            message: 'administratif: ' + this.form.name + ' ajouté',
             queue: false
           })
         })

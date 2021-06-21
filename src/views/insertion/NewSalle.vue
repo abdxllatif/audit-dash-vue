@@ -3,7 +3,7 @@
     <title-bar :title-stack="titleStack"/>
     <hero-bar>
       Insertion
-      <router-link slot="right" to="/tables/outils" class="button">
+      <router-link slot="right" to="/tables/salles" class="button">
         Table des salles
       </router-link>
     </hero-bar>

@@ -2,11 +2,7 @@
   <div>
     <modal-box :is-active="isModalActive" :trash-object-name="trashObjectName" @confirm="trashConfirm"
                @cancel="trashCancel"/>
-    <modal-box-niveaux :is-active="isNivModalActive" :trash-object-name="trashObjectName"
-               @cancel="niveauxCancel"/>
     <b-table
-      :checked-rows.sync="checkedRows"
-      :checkable="checkable"
       :loading="isLoading"
       :paginated="paginated"
       :per-page="perPage"
@@ -24,12 +20,11 @@
       <b-table-column label="Département" field="departement" sortable v-slot="props">
         {{ props.row.departementDepartementId }}
       </b-table-column>
-      <b-table-column label="Niveaux" field="niveaux" v-slot="props">
-        <div class="button is-small is-dark" type="button" @click.prevent="niveauxModal(props.row)">Click here</div>
+      <b-table-column label="Détails" field="details" v-slot="props">
+        <router-link :to="{name:'FormationDetail', params: {id: props.row.formationId}}" class="button is-small is-dark">
+          Détails
+        </router-link>
       </b-table-column>
-      <!--<b-table-column label="Created" v-slot="props">
-        <small class="has-text-grey is-abbr-like" :title="props.row.created">{{ props.row.createdAt }}</small>
-      </b-table-column> -->
       <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
         <div class="buttons is-right">
           <router-link :to="{name:'client.edit', params: {id: props.row.id}}" class="button is-small is-primary">
@@ -64,11 +59,10 @@
 <script>
 import axios from 'axios'
 import ModalBox from '@/components/ModalBox'
-import ModalBoxNiveaux from '../ModalBox/ModalBoxNiveaux.vue'
 
 export default {
   name: 'FormTable',
-  components: { ModalBox, ModalBoxNiveaux },
+  components: { ModalBox },
   props: {
     dataUrl: {
       type: String,
@@ -82,7 +76,6 @@ export default {
   data () {
     return {
       isModalActive: false,
-      isNivModalActive: false,
       trashObject: null,
       formations: [],
       isLoading: false,
@@ -143,6 +136,24 @@ export default {
             message: 'Confirmed',
             type: 'is-success'
           })
+          axios
+            .get(this.dataUrl, { headers: { 'x-access-token': this.$session.get('jwt') } })
+            .then(r => {
+              this.isLoading = false
+              if (r.data && r.data.results) {
+                if (r.data.results.length > this.perPage) {
+                  this.paginated = true
+                }
+                this.formations = r.data.results
+              }
+            })
+            .catch(e => {
+              this.isLoading = false
+              this.$buefy.toast.open({
+                message: `Error: ${e.message}`,
+                type: 'is-danger'
+              })
+            })
         })
         .catch(e => {
           this.isLoading = false

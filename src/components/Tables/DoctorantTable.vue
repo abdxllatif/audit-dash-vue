@@ -3,31 +3,31 @@
     <modal-box :is-active="isModalActive" :trash-object-name="trashObjectName" @confirm="trashConfirm"
                @cancel="trashCancel"/>
     <b-table
+      :checked-rows.sync="checkedRows"
+      :checkable="checkable"
       :loading="isLoading"
       :paginated="paginated"
       :per-page="perPage"
       :striped="true"
       :hoverable="true"
       default-sort="nom"
-      :data="departements">
+      :data="doctorants">
 
       <b-table-column label="Nom" field="nom" sortable v-slot="props">
         {{ props.row.nom }}
       </b-table-column>
-      <b-table-column label="Description" field="description" sortable v-slot="props">
-        {{ props.row.description }}
+      <b-table-column label="Prénom" field="prenom" sortable v-slot="props">
+        {{ props.row.preom }}
       </b-table-column>
-      <b-table-column label="Created" v-slot="props">
-        <small class="has-text-grey is-abbr-like" :title="props.row.created">{{ props.row.createdAt }}</small>
+      <b-table-column label="Date de naissance" field="DateNaissance" sortable v-slot="props">
+        {{ props.row.date_naissance }}
       </b-table-column>
-      <b-table-column label="Détails" field="Détails" v-slot="props">
-        <router-link :to="{name:'DepartementDetail', params: {id: props.row.departementId}}" class="button is-small is-dark">
-          Détails
-        </router-link>
+      <b-table-column label="Lieu de naissance" field="LieuNaissance" sortable v-slot="props">
+        {{ props.row.lieu_naissance }}
       </b-table-column>
       <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
         <div class="buttons is-right">
-          <router-link :to="{name:'dep.edit', params: {id: props.row.departementId}}" class="button is-small is-primary">
+          <router-link :to="{name:'dep.edit', params: {id: props.row.clubId}}" class="button is-small is-primary">
             <b-icon icon="account-edit" size="is-small"/>
           </router-link>
           <button class="button is-small is-danger" type="button" @click.prevent="trashModal(props.row)">
@@ -61,7 +61,7 @@ import axios from 'axios'
 import ModalBox from '@/components/ModalBox'
 
 export default {
-  name: 'DepTable',
+  name: 'DoctorantTable',
   components: { ModalBox },
   props: {
     dataUrl: {
@@ -75,13 +75,13 @@ export default {
   data () {
     return {
       isModalActive: false,
-      isFormationModalActive: false,
       trashObject: null,
-      departements: [],
+      doctorants: [],
       isLoading: false,
       paginated: false,
       perPage: 10,
-      checkedRows: []
+      checkedRows: [],
+      nom: ''
     }
   },
   computed: {
@@ -114,7 +114,7 @@ export default {
             if (r.data.results.length > this.perPage) {
               this.paginated = true
             }
-            this.departements = r.data.results
+            this.doctorants = r.data.results
           }
         })
         .catch(e => {
@@ -131,13 +131,9 @@ export default {
       this.trashObject = trashObject
       this.isModalActive = true
     },
-    FormationModal (trashObject) {
-      this.trashObject = trashObject
-      this.isFormationModalActive = true
-    },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8080/api/data/departements/' + this.trashObject.departementId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8080/api/data/doctorants/' + this.trashObject.activiteId, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({
@@ -152,7 +148,7 @@ export default {
                 if (r.data.results.length > this.perPage) {
                   this.paginated = true
                 }
-                this.departements = r.data.results
+                this.doctorants = r.data.results
               }
             })
             .catch(e => {
@@ -172,14 +168,8 @@ export default {
           })
         })
     },
-    FormationConfirm () {
-      this.isModalActive = false
-    },
     trashCancel () {
       this.isModalActive = false
-    },
-    FormationCancel () {
-      this.isFormationModalActive = false
     }
   }
 }

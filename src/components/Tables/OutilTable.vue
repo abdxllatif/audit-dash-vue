@@ -13,8 +13,8 @@
       default-sort="nom"
       :data="outils">
 
-      <b-table-column label="Nom" field="nom" sortable v-slot="props">
-        {{ props.row.nom }}
+      <b-table-column label="Titre" field="titre" sortable v-slot="props">
+        {{ props.row.titre }}
       </b-table-column>
       <b-table-column label="Type" field="type" sortable v-slot="props">
         {{ props.row.type }}

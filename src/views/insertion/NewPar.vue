@@ -72,7 +72,7 @@ export default {
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({
-            message: 'le département ' + this.form.name + ' ajouté',
+            message: 'le partenaire ' + this.form.name + ' ajouté',
             queue: false
           })
         })

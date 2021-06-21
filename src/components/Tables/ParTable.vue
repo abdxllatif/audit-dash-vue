@@ -2,18 +2,14 @@
   <div>
     <modal-box :is-active="isModalActive" :trash-object-name="trashObjectName" @confirm="trashConfirm"
                @cancel="trashCancel"/>
-    <modal-box-form :is-active="isModalActive" :trash-object-name="trashObjectName" @confirm="trashConfirm"
-               @cancel="trashCancel"/>
     <b-table
-      :checked-rows.sync="checkedRows"
-      :checkable="checkable"
       :loading="isLoading"
       :paginated="paginated"
       :per-page="perPage"
       :striped="true"
       :hoverable="true"
       default-sort="nom"
-      :data="departements">
+      :data="partenaires">
 
       <b-table-column label="Nom" field="nom" sortable v-slot="props">
         {{ props.row.Nom }}
@@ -24,8 +20,10 @@
       <b-table-column label="Created" v-slot="props">
         <small class="has-text-grey is-abbr-like" :title="props.row.created">{{ props.row.createdAt }}</small>
       </b-table-column>
-      <b-table-column label="Formations" field="formations" v-slot="props">
-        <div class="button is-small is-dark" type="button" @click.prevent="trashModal(props.row)">Click here</div>
+      <b-table-column label="Détails" field="details" v-slot="props">
+        <router-link :to="{name:'PartenaireDetail', params: {id: props.row.partenaireId}}" class="button is-small is-dark">
+          Détails
+        </router-link>
       </b-table-column>
       <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
         <div class="buttons is-right">
@@ -61,11 +59,10 @@
 <script>
 import axios from 'axios'
 import ModalBox from '@/components/ModalBox'
-import ModalBoxForm from '@/components/ModalBox/ModalBoxForm'
 
 export default {
-  name: 'DepTable',
-  components: { ModalBox, ModalBoxForm },
+  name: 'ParTable',
+  components: { ModalBox },
   props: {
     dataUrl: {
       default: null
@@ -79,7 +76,7 @@ export default {
     return {
       isModalActive: false,
       trashObject: null,
-      departements: [],
+      partenaires: [],
       isLoading: false,
       paginated: false,
       perPage: 10,
@@ -103,7 +100,7 @@ export default {
         if (r.data.data.length > this.perPage) {
           this.paginated = true
         }
-        this.departements = this.$session.get('deps')
+        this.partenaires = this.$session.get('deps')
       }
     } */
     if (this.dataUrl) {
@@ -116,7 +113,7 @@ export default {
             if (r.data.results.length > this.perPage) {
               this.paginated = true
             }
-            this.departements = r.data.results
+            this.partenaires = r.data.results
           }
         })
         .catch(e => {
@@ -135,13 +132,31 @@ export default {
     },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8080/api/data/partenaires/' + this.trashObject.departementId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8080/api/data/partenaires/' + this.trashObject.partenaireId, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({
             message: 'Confirmed',
             type: 'is-success'
           })
+          axios
+            .get(this.dataUrl, { headers: { 'x-access-token': this.$session.get('jwt') } })
+            .then(r => {
+              this.isLoading = false
+              if (r.data && r.data.results) {
+                if (r.data.results.length > this.perPage) {
+                  this.paginated = true
+                }
+                this.partenaires = r.data.results
+              }
+            })
+            .catch(e => {
+              this.isLoading = false
+              this.$buefy.toast.open({
+                message: `Error: ${e.message}`,
+                type: 'is-danger'
+              })
+            })
         })
         .catch(e => {
           this.isLoading = false

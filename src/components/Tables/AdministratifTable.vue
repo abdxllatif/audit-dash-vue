@@ -3,8 +3,6 @@
     <modal-box :is-active="isModalActive" :trash-object-name="trashObjectName" @confirm="trashConfirm"
                @cancel="trashCancel"/>
     <b-table
-      :checked-rows.sync="checkedRows"
-      :checkable="checkable"
       :loading="isLoading"
       :paginated="paginated"
       :per-page="perPage"
@@ -13,20 +11,17 @@
       default-sort="nom"
       :data="administratifs">
 
-      <b-table-column label="Titre" field="titre" sortable v-slot="props">
-        {{ props.row.titre }}
+      <b-table-column label="Nom" field="nom" sortable v-slot="props">
+        {{ props.row.nom }}
       </b-table-column>
-      <b-table-column label="Type" field="type" sortable v-slot="props">
-        {{ props.row.type }}
+      <b-table-column label="Prénom" field="prenom" sortable v-slot="props">
+        {{ props.row.prenom }}
       </b-table-column>
       <b-table-column label="Date début" field="date debut" sortable v-slot="props">
         {{ props.row.date_debut }}
       </b-table-column>
       <b-table-column label="Date fin" field="date fin" sortable v-slot="props">
         {{ props.row.date_fin }}
-      </b-table-column>
-      <b-table-column label="Créateur" field="createur" sortable v-slot="props">
-        {{ props.row.clubClubId }}
       </b-table-column>
       <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
         <div class="buttons is-right">
@@ -122,6 +117,7 @@ export default {
         })
         .catch(e => {
           this.isLoading = false
+          console.log(e)
           this.$buefy.toast.open({
             message: `Error: ${e.message}`,
             type: 'is-danger'
@@ -136,7 +132,7 @@ export default {
     },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8080/api/data/administratifs/' + this.trashObject.activiteId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8080/api/data/administratifs/' + this.trashObject.administratifId, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({

@@ -16,9 +16,6 @@
               <b-input icon="account" v-model="form.name" placeholder="Nom du club" name="name" required />
             </b-field>
           </b-field>
-          <b-field label="Description" message="Ne pas dépasser 255 caractères" horizontal>
-            <b-input type="textarea" placeholder="Une petite définition du club" v-model="form.description" maxlength="255" required/>
-          </b-field>
           <b-field label="Type" horizontal>
                 <b-select placeholder="Selectionne un type" v-model="form.type" required>
                     <option v-for="(type, index) in types" :key="index" :value="type">
@@ -54,7 +51,7 @@ export default {
       isLoading: false,
       form: {
         name: null,
-        description: null
+        type: null
       },
       types: [
         'Scientifique',
@@ -73,14 +70,15 @@ export default {
   },
   methods: {
     submit () {
+      console.log(this.form.type)
       this.isLoading = true
-      axios.post('http://localhost:8080/api/data/departements', {
+      axios.post('http://localhost:8080/api/data/clubs', {
         nom: this.form.name,
-        description: this.form.description
+        description: this.form.type
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({
-            message: 'le département ' + this.form.name + ' ajouté',
+            message: 'le club ' + this.form.name + ' ajouté',
             queue: false
           })
         })

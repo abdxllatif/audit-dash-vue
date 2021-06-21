@@ -3,6 +3,9 @@
     <title-bar :title-stack="titleStack"/>
     <hero-bar>
       Table des outils
+      <p class="subtitle">
+        Total : {{ total }} outils
+      </p>
       <router-link slot="right" to="/insertion/outil" class="button">
         Nouveau outil
       </router-link>
@@ -21,7 +24,7 @@ import CardComponent from '@/components/CardComponent'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 import OutilTable from '@/components/Tables/OutilTable.vue'
-// import axios from 'axios'
+import axios from 'axios'
 
 export default {
   name: 'outil',
@@ -33,17 +36,29 @@ export default {
         'Outil'
       ]
     }
+  },
+  data () {
+    return {
+      total: 0
+    }
+  },
+  created () {
+    axios.post('http://localhost:8080/api/stats/count', {
+      table: 'outils'
+    }, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .then(response => {
+        console.log(response.data.count)
+        this.total = response.data.count
+      })
+      .catch(e => {
+        this.errorMessage = e.message
+        console.log('There was an error!', e)
+        this.$buefy.snackbar.open({
+          type: 'is-warning',
+          message: 'Erreur fl count',
+          queue: false
+        })
+      })
   }
-/*  created () {
-    console.log(this.$session.get('jwt'))
-    axios.get('http://localhost:8080/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
-      .then((response) => {
-        this.listings = response.data
-        console.log(this.listings.results)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  } */
 }
 </script>

@@ -129,7 +129,7 @@ export default {
     },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8080/api/data/departements/' + this.trashObject.departementId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8080/api/data/clubs/' + this.trashObject.clubId, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({
@@ -144,7 +144,7 @@ export default {
                 if (r.data.results.length > this.perPage) {
                   this.paginated = true
                 }
-                this.departements = r.data.results
+                this.clubs = r.data.results
               }
             })
             .catch(e => {

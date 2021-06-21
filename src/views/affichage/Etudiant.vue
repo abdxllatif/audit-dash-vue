@@ -3,6 +3,9 @@
     <title-bar :title-stack="titleStack"/>
     <hero-bar>
       Table des Etudiants
+      <p class="subtitle">
+        Total : {{ total }} etudiants
+      </p>
       <router-link slot="right" to="/insertion/etudiant" class="button">
         Nouveau étudiant
       </router-link>
@@ -34,15 +37,27 @@ export default {
       ]
     }
   },
+  data () {
+    return {
+      total: 0
+    }
+  },
   created () {
-    console.log(this.$session.get('jwt'))
-    axios.get('http://localhost:8080/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
-      .then((response) => {
-        this.listings = response.data
-        console.log(this.listings.results)
+    axios.post('http://localhost:8080/api/stats/count', {
+      table: 'etudiants'
+    }, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .then(response => {
+        console.log(response.data.count)
+        this.total = response.data.count
       })
-      .catch((error) => {
-        console.log(error)
+      .catch(e => {
+        this.errorMessage = e.message
+        console.log('There was an error!', e)
+        this.$buefy.snackbar.open({
+          type: 'is-warning',
+          message: 'Erreur fl count',
+          queue: false
+        })
       })
   }
 }

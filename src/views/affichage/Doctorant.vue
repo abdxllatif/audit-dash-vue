@@ -2,17 +2,17 @@
   <div>
     <title-bar :title-stack="titleStack"/>
     <hero-bar>
-      Table des formations
+      Table des doctorants
       <p class="subtitle">
-        Total : {{ total }} formations
+        Total : {{ total }} doctorants
       </p>
-      <router-link slot="right" to="/insertion/formation" class="button">
-        Nouvelle formation
+      <router-link slot="right" to="/insertion/administratif" class="button">
+        Nouveau doctorant
       </router-link>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component class="has-table has-mobile-sort-spaced" title="Formations" icon="account-multiple">
-        <form-table :data-url="`http://localhost:8080/api/data/formations`" :checkable="true"/>
+      <card-component class="has-table has-mobile-sort-spaced" title="Doctorants" icon="account-multiple">
+        <doctorant-table :data-url="`http://localhost:8080/api/data/doctorants`" :checkable="true"/>
       </card-component>
     </section>
   </div>
@@ -23,17 +23,17 @@
 import CardComponent from '@/components/CardComponent'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
-import FormTable from '@/components/Tables/FormTable.vue'
+import DoctorantTable from '@/components/Tables/DoctorantTable.vue'
 import axios from 'axios'
 
 export default {
-  name: 'form',
-  components: { HeroBar, TitleBar, CardComponent, FormTable },
+  name: 'doctorant',
+  components: { HeroBar, TitleBar, CardComponent, DoctorantTable },
   computed: {
     titleStack () {
       return [
         'Tables',
-        'Département'
+        'Doctorants'
       ]
     }
   },
@@ -44,7 +44,7 @@ export default {
   },
   created () {
     axios.post('http://localhost:8080/api/stats/count', {
-      table: 'formations'
+      table: 'doctorants'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
         console.log(response.data.count)

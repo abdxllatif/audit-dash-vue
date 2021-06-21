@@ -12,13 +12,10 @@
       :data="niveaux">
 
       <b-table-column label="Nom" field="nom" sortable v-slot="props">
-        {{ props.row.nom }}
-      </b-table-column>
-      <b-table-column label="Description" field="description" sortable v-slot="props">
-        {{ props.row.description }}
+        {{ props.row.titre }}
       </b-table-column>
       <b-table-column label="Durée" field="duree" sortable v-slot="props">
-        {{ props.row.duree }}
+        {{ props.row.Durée }}
       </b-table-column>
       <section class="section" slot="empty">
         <div class="content has-text-grey has-text-centered">
