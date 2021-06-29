@@ -75,7 +75,7 @@ export default {
     },
     heroTitle () {
       if (this.isProfileExists) {
-        return 'Détails du partenaire ' + this.form.nom
+        return 'Détails du partenaire ' + this.form.Nom
       } else {
         return 'Create Client'
       }

@@ -16,6 +16,13 @@ export default new Vuex.Store({
     /* departements json */
     deps: [],
 
+    /* salles */
+    salles: [],
+    salleTD: 0,
+    salleTP: 0,
+    salleAmphi: 0,
+    salleBureau: 0,
+    salleAutres: 0,
     /* NavBar */
     isNavBarVisible: true,
 

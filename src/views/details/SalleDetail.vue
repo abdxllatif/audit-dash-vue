@@ -9,60 +9,28 @@
     </hero-bar>
     <section class="section is-main-section">
       <tiles>
-        <card-component v-if="isProfileExists" title="Profil du formation" icon="account" class="tile is-child">
+        <card-component v-if="isProfileExists" title="Profil de la salle" icon="account" class="tile is-child">
           <b-field label="ID" horizontal>
-              <b-input v-model="form.formationId" custom-class="is-static" readonly />
+              <b-input v-model="form.salleId" custom-class="is-static" readonly />
           </b-field>
           <b-field label="Nom" horizontal>
             <b-input :value="form.nom" custom-class="is-static" readonly/>
           </b-field>
-          <b-field label="Description" horizontal>
-            <b-input :value="form.description" custom-class="is-static" readonly/>
+          <b-field label="Type" horizontal>
+            <b-input :value="form.type" custom-class="is-static" readonly/>
+          </b-field>
+          <b-field label="Capacité" horizontal>
+            <b-input :value="form.capacite" custom-class="is-static" readonly/>
           </b-field>
           <b-field label="Département" horizontal>
             <b-input :value="dep" custom-class="is-static" readonly/>
           </b-field>
           <b-field label="Created" horizontal>
-            <b-input :value="createdReadable" custom-class="is-static" readonly/>
+            <b-input :value="form.createdAt" custom-class="is-static" readonly/>
           </b-field>
         </card-component>
-        <card-component v-if="isProfileExists" title="Niveaux" icon="account" class="tile is-child">
-          <niveaux-table :data-url="`http://localhost:8080/api/data/niveaux`"/>
-                <section>
-                    <b-collapse
-                        class="card"
-                        animation="slide"
-                        :open="isOpen == !index"
-                        @open="isOpen = index">
-                        <template #trigger="props">
-                            <div
-                                class="card-header"
-                                role="button"
-                            >
-                                <p class="card-header-title">
-                                    nouveau niveau
-                                </p>
-                                <a class="card-header-icon">
-                                    <b-icon
-                                        :icon="props.open ? 'menu-down' : 'menu-up'">
-                                    </b-icon>
-                                </a>
-                            </div>
-                        </template>
-                        <div class="card-content">
-                            <div class="content">
-                                text
-                            </div>
-                        </div>
-                    </b-collapse>
-                </section>
-        </card-component>
-      </tiles>
-      <tiles>
-        <card-component v-if="isProfileExists" title="Partenaires" icon="account" class="tile is-child">
-            <par-table :data-url="`http://localhost:8080/api/data/partenaires`"/>
-        </card-component>
-        <card-component v-if="isProfileExists" title="Enseignants" icon="account" class="tile is-child">
+        <card-component v-if="isProfileExists" title="Outils" icon="tools" class="tile is-child">
+            <outil-table :data-url="`http://localhost:8080/api/stats/data`" :id="parseInt(this.id)"/>
         </card-component>
       </tiles>
     </section>
@@ -77,13 +45,11 @@ import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 import Tiles from '@/components/Tiles'
 import CardComponent from '@/components/CardComponent'
-import ParTable from '@/components/Tables/ParTable.vue'
-// import EtudiantTable from '@/components/Tables/EtudiantTable.vue'
-import NiveauxTable from '@/components/Tables/NiveauxTable.vue'
+import outilTable from '@/components/TableWhere/OutilTable.vue'
 
 export default {
-  name: 'FormationDetail',
-  components: { CardComponent, Tiles, HeroBar, TitleBar, ParTable, NiveauxTable },
+  name: 'SalleDetail',
+  components: { CardComponent, Tiles, HeroBar, TitleBar, outilTable },
   props: {
     id: {
       default: null
@@ -110,27 +76,27 @@ export default {
 
       return [
         'Admin',
-        'Formation',
+        'Salle',
         lastCrumb
       ]
     },
     heroTitle () {
       if (this.isProfileExists) {
-        return 'Détails de la formation ' + this.form.nom
+        return 'Détails de la salle ' + this.form.nom
       } else {
         return 'Create Client'
       }
     },
     heroRouterLinkTo () {
       if (this.isProfileExists) {
-        return { name: 'newForm' }
+        return { name: 'newSalle' }
       } else {
         return '/'
       }
     },
     heroRouterLinkLabel () {
       if (this.isProfileExists) {
-        return 'Nouvelle formation'
+        return 'Nouvelle salle'
       } else {
         return 'Dashboard'
       }
@@ -154,9 +120,9 @@ export default {
     getData () {
       if (this.id) {
         axios
-          .get('http://localhost:8080/api/data/formations', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8080/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
-            const item = find(r.data.results, item => item.formationId === parseInt(this.id))
+            const item = find(r.data.results, item => item.salleId === parseInt(this.id))
 
             if (item) {
               this.isProfileExists = true

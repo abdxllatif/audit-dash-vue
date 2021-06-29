@@ -1,26 +1,24 @@
 <template>
   <div>
-    <b-table
-      :checked-rows.sync="checkedRows"
-      :checkable="checkable"
+    <modal-box :is-active="isModalActive" :trash-object-name="trashObjectName" @confirm="trashConfirm"
+               @cancel="trashCancel"/>
+        <b-table
       :loading="isLoading"
       :paginated="paginated"
       :per-page="perPage"
       :striped="true"
       :hoverable="true"
-      default-sort="nom"
-      :data="niveaux">
+      default-sort="titre"
+      :data="salles">
 
       <b-table-column label="Nom" field="nom" sortable v-slot="props">
         {{ props.row.nom }}
       </b-table-column>
-      <b-table-column label="Durée" field="duree" sortable v-slot="props">
-        {{ props.row.Durée }}
+      <b-table-column label="Type" field="type" sortable v-slot="props">
+        {{ props.row.type }}
       </b-table-column>
-      <b-table-column label="Détails" field="details" v-slot="props">
-        <router-link :to="{name:'FormationDetail', params: {id: props.row.formationId}}" class="button is-small is-dark">
-          Détails
-        </router-link>
+      <b-table-column label="Capacité" field="capacite" sortable v-slot="props">
+        {{ props.row.capacite }}
       </b-table-column>
       <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
         <div class="buttons is-right">
@@ -32,6 +30,7 @@
           </button>
         </div>
       </b-table-column>
+
       <section class="section" slot="empty">
         <div class="content has-text-grey has-text-centered">
           <template v-if="isLoading">
@@ -54,11 +53,18 @@
 
 <script>
 import axios from 'axios'
+import ModalBox from '@/components/ModalBox'
 
 export default {
-  name: 'NiveauxTable',
+  name: 'salleTable',
+  components: { ModalBox },
   props: {
     dataUrl: {
+      type: String,
+      default: null
+    },
+    id: {
+      type: String,
       default: null
     },
     checkable: {
@@ -68,7 +74,9 @@ export default {
   },
   data () {
     return {
-      niveaux: [],
+      isModalActive: false,
+      trashObject: null,
+      salles: [],
       isLoading: false,
       paginated: false,
       perPage: 10,
@@ -85,34 +93,31 @@ export default {
     }
   },
   mounted () {
-    console.log(this.props)
-    console.log(this.$session.get('deps'))
-    /* if (this.dataUrl) {
-      if (r.data && r.data.data) {
-        if (r.data.data.length > this.perPage) {
-          this.paginated = true
-        }
-        this.departements = this.$session.get('deps')
-      }
-    } */
     if (this.dataUrl) {
       this.isLoading = true
-      axios
-        .get(this.dataUrl, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.post(this.dataUrl, {
+        table: 'salles',
+        fk: 'departementDepartementId',
+        value: parseInt(this.id)
+      }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
-          if (r.data && r.data.results) {
-            if (r.data.results.length > this.perPage) {
+          console.log(r.data)
+          console.log(parseInt(this.id))
+          if (r && r.data) {
+            if (r.data.length > this.perPage) {
               this.paginated = true
             }
-            this.niveaux = r.data.results
+            this.salles = r.data
           }
         })
         .catch(e => {
-          this.isLoading = false
-          this.$buefy.toast.open({
-            message: `Error: ${e.message}`,
-            type: 'is-danger'
+          this.errorMessage = e.message
+          console.log('There was an error!', e)
+          this.$buefy.snackbar.open({
+            type: 'is-warning',
+            message: 'Erreur fl count',
+            queue: false
           })
         })
     }
@@ -120,17 +125,36 @@ export default {
   methods: {
     trashModal (trashObject) {
       this.trashObject = trashObject
+
       this.isModalActive = true
     },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8080/api/data/niveaux/' + this.trashObject.niveauId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8080/api/data/salles/' + this.trashObject.salleId, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({
             message: 'Confirmed',
             type: 'is-success'
           })
+          axios
+            .get(this.dataUrl, { headers: { 'x-access-token': this.$session.get('jwt') } })
+            .then(r => {
+              this.isLoading = false
+              if (r.data && r.data.results) {
+                if (r.data.results.length > this.perPage) {
+                  this.paginated = true
+                }
+                this.salles = r.data.results
+              }
+            })
+            .catch(e => {
+              this.isLoading = false
+              this.$buefy.toast.open({
+                message: `Error: ${e.message}`,
+                type: 'is-danger'
+              })
+            })
         })
         .catch(e => {
           this.isLoading = false

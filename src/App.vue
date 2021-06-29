@@ -274,9 +274,14 @@ export default {
             label: 'Générale'
           },
           {
-            to: '/dash',
+            to: '/charts',
             icon: 'chart-bar',
             label: 'Graphes'
+          },
+          {
+            to: '/query',
+            icon: 'chart-bar',
+            label: "Création d'une requete"
           }
         ],
         'A propos',

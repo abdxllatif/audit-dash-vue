@@ -24,12 +24,12 @@
           </b-field>
         </card-component>
         <card-component v-if="isProfileExists" title="Formations" icon="account" class="tile is-child">
-            <formation-table :data-url="`http://localhost:8080/api/stats/data`" :id="parseInt(this.id)" :checkable="true"/>
+            <formation-table :data-url="`http://localhost:8080/api/stats/data`" :id="parseInt(this.id)"/>
         </card-component>
       </tiles>
       <tiles>
         <card-component v-if="isProfileExists" title="Salles" icon="account" class="tile is-child">
-          <salle-table :data-url="`http://localhost:8080/api/data/salles`" :checkable="true"/>
+            <salle-table :data-url="`http://localhost:8080/api/stats/data`" :id="parseInt(this.id)"/>
         </card-component>
         <card-component v-if="isProfileExists" title="Enseignants" icon="account" class="tile is-child">
         </card-component>
@@ -47,11 +47,11 @@ import HeroBar from '@/components/HeroBar'
 import Tiles from '@/components/Tiles'
 import CardComponent from '@/components/CardComponent'
 import FormationTable from '@/components/TableWhere/FormationTable.vue'
-import SalleTable from '@/components/Tables/SalleTable.vue'
+import salleTable from '@/components/TableWhere/SalleTable.vue'
 
 export default {
   name: 'DepartementDetail',
-  components: { CardComponent, Tiles, HeroBar, TitleBar, FormationTable, SalleTable },
+  components: { CardComponent, Tiles, HeroBar, TitleBar, FormationTable, salleTable },
   props: {
     id: {
       default: null

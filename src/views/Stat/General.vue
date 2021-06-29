@@ -7,15 +7,20 @@
     <section class="section is-main-section">
       <tiles>
         <card-widget class="tile is-child" type="is-primary" icon="account-multiple" :number="totalEtd" label="Etudiants"/>
-        <card-widget class="tile is-child" type="is-info" icon="cart-outline" :number="totalEns" label="Enseignants"/>
-        <card-widget class="tile is-child" type="is-success" icon="chart-timeline-variant" :number="totalPar" label="Partenaires"/>
-        <card-widget class="tile is-child" type="is-success" icon="chart-timeline-variant" :number="totalDoc" label="Doctorants"/>
+        <card-widget class="tile is-child" type="is-info" icon="account-tie" :number="totalEns" label="Enseignants"/>
+        <card-widget class="tile is-child" type="is-primary" icon="chart-timeline-variant" :number="totalPar" label="Partenaires"/>
+        <card-widget class="tile is-child" type="is-info" icon="school" :number="totalDoc" label="Doctorants"/>
       </tiles>
       <tiles>
-        <card-widget class="tile is-child" type="is-primary" icon="account-multiple" :number="totalDep" label="Départements"/>
-        <card-widget class="tile is-child" type="is-info" icon="cart-outline" :number="totalFrm" label="Formations"/>
-        <card-widget class="tile is-child" type="is-success" icon="chart-timeline-variant" :number="totalClb" label="Clubs"/>
-        <card-widget class="tile is-child" type="is-success" icon="chart-timeline-variant" :number="totalAct" label="Activités"/>
+        <card-widget class="tile is-child" type="is-primary" icon="tools" :number="totalDep" label="Départements"/>
+        <card-widget class="tile is-child" type="is-info" icon="school" :number="totalFrm" label="Formations"/>
+        <card-widget class="tile is-child" type="is-primary" icon="account-group" :number="totalClb" label="Clubs"/>
+        <card-widget class="tile is-child" type="is-info" icon="lightbulb-group" :number="totalAct" label="Activités"/>
+      </tiles>
+      <tiles>
+        <card-widget class="tile is-child" type="is-primary" icon="tools" :number="totalSal" label="Salles"/>
+        <card-widget class="tile is-child" type="is-info" icon="school" :number="totalOut" label="Outils"/>
+        <card-widget class="tile is-child" type="is-info" icon="account-group" :number="totalAdm" label="Administratifs"/>
       </tiles>
     </section>
   </div>
@@ -41,7 +46,14 @@ export default {
       totalEtd: 0,
       totalPar: 0,
       totalEns: 0,
-      totalClb: 0
+      totalDoc: 0,
+      totalDep: 0,
+      totalFrm: 0,
+      totalAct: 0,
+      totalClb: 0,
+      totalSal: 0,
+      totalOut: 0,
+      totalAdm: 0
     }
   },
   computed: {
@@ -183,6 +195,57 @@ export default {
       .then(response => {
         console.log(response.data.count)
         this.totalAct = response.data.count
+      })
+      .catch(e => {
+        this.errorMessage = e.message
+        console.log('There was an error!', e)
+        this.$buefy.snackbar.open({
+          type: 'is-warning',
+          message: 'Erreur fl count',
+          queue: false
+        })
+      })
+      // salles count
+    axios.post('http://localhost:8080/api/stats/count', {
+      table: 'salles'
+    }, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .then(response => {
+        console.log(response.data.count)
+        this.totalSal = response.data.count
+      })
+      .catch(e => {
+        this.errorMessage = e.message
+        console.log('There was an error!', e)
+        this.$buefy.snackbar.open({
+          type: 'is-warning',
+          message: 'Erreur fl count',
+          queue: false
+        })
+      })
+      // outils count
+    axios.post('http://localhost:8080/api/stats/count', {
+      table: 'outils'
+    }, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .then(response => {
+        console.log(response.data.count)
+        this.totalOut = response.data.count
+      })
+      .catch(e => {
+        this.errorMessage = e.message
+        console.log('There was an error!', e)
+        this.$buefy.snackbar.open({
+          type: 'is-warning',
+          message: 'Erreur fl count',
+          queue: false
+        })
+      })
+      // Administratifs count
+    axios.post('http://localhost:8080/api/stats/count', {
+      table: 'administratifs'
+    }, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .then(response => {
+        console.log(response.data.count)
+        this.totalAdm = response.data.count
       })
       .catch(e => {
         this.errorMessage = e.message

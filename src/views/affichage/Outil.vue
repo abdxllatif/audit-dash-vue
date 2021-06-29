@@ -12,7 +12,7 @@
     </hero-bar>
     <section class="section is-main-section">
       <card-component class="has-table has-mobile-sort-spaced" title="Outils" icon="account-multiple">
-        <outil-table :data-url="`http://localhost:8080/api/data/outils`" :checkable="true"/>
+        <outil-table :data-url="`http://localhost:8080/api/data/outils`"/>
       </card-component>
     </section>
   </div>

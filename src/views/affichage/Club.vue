@@ -12,7 +12,7 @@
     </hero-bar>
     <section class="section is-main-section">
       <card-component class="has-table has-mobile-sort-spaced" title="Clubs" icon="account-multiple">
-        <club-table :data-url="`http://localhost:8080/api/data/clubs`" :checkable="true"/>
+        <club-table :data-url="`http://localhost:8080/api/data/clubs`"/>
       </card-component>
     </section>
   </div>

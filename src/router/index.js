@@ -370,6 +370,14 @@ const routes = [
       if (store.state.isLog) { next() } else { next({ name: 'home' }) }
     } */
   },
+  {
+    meta: {
+      title: 'Charts'
+    },
+    path: '/charts',
+    name: 'charts',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/Stat/Charts.vue')
+  },
   // Détails
   {
     meta: {
@@ -396,6 +404,25 @@ const routes = [
     path: '/partenaire/:id',
     name: 'PartenaireDetail',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/details/PartenaireDetail.vue'),
+    props: true
+  },
+  {
+    meta: {
+      title: 'Détails de la salle'
+    },
+    path: '/salle/:id',
+    name: 'SalleDetail',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/details/SalleDetail.vue'),
+    props: true
+  },
+  /* Query */
+  {
+    meta: {
+      title: "Création d'une requete"
+    },
+    path: '/query',
+    name: 'QueryCreator',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/query/Query.vue'),
     props: true
   },
   {

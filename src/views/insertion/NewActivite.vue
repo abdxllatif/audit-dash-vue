@@ -12,19 +12,38 @@
       <card-component title="Nouvelle activité" icon="ballot">
         <form @submit.prevent="submit">
             <b-field label="Organisateur" horizontal>
-                <b-select placeholder="Selectionne un organisateur" v-model="form.type" required>
-                    <option v-for="(type, index) in types" :key="index" :value="type">
-                        {{ type }}
+                <b-select placeholder="Selectionne un organisateur" v-model="form.club" required>
+                    <option v-for="(club, index) in clubs" :key="index" :value="club">
+                        {{ club.nom }}
                     </option>
                 </b-select>
             </b-field>
           <b-field label="Titre" horizontal>
             <b-field>
-              <b-input icon="account" v-model="form.name" placeholder="Titre de l'activité" name="name" required />
+              <b-input icon="account" v-model="form.titre" placeholder="Titre de l'activité" name="titre" required />
             </b-field>
           </b-field>
-          <b-field label="Description" message="Ne pas dépasser 255 caractères" horizontal>
-            <b-input type="textarea" placeholder="Une petite description de l'activité" v-model="form.description" maxlength="255" required/>
+          <b-field label="Type" horizontal>
+              <b-select placeholder="Selectionne un type" v-model="form.type" required>
+                    <option v-for="(type, index) in types" :key="index" :value="type">
+                        {{ type }}
+                    </option>
+              </b-select>
+          </b-field>
+          <b-field  label="Période" horizontal>
+            <b-field label="Date de début">
+              <b-datepicker ref="datepicker" expanded placeholder="Selectionner une date" v-model="form.dateDebut" required></b-datepicker>
+            </b-field>
+            <b-field label="Date de fin">
+              <b-datepicker ref="datepicker" placeholder="Selectionner une date" v-model="form.dateFin" required></b-datepicker>
+            </b-field>
+          </b-field>
+          <b-field label="Salle principale" horizontal>
+                <b-select placeholder="Selectionne une salle" v-model="form.salle" required>
+                    <option v-for="(salle, index) in salles" :key="index" :value="salle">
+                        {{ salle.nom }}
+                    </option>
+                </b-select>
           </b-field>
           <b-field horizontal>
             <b-field grouped>
@@ -56,11 +75,13 @@ export default {
         name: null,
         description: null
       },
+      clubs: [],
+      salles: [],
       types: [
-        'Alphabit Club',
-        'Ingeniums Club',
-        'DSC ESI SBA',
-        'Administration'
+        'Scientifique',
+        'Culturelle',
+        'Sportive',
+        'Autres'
       ]
     }
   },
@@ -72,16 +93,38 @@ export default {
       ]
     }
   },
+  created () {
+    axios.get('http://localhost:8080/api/data/clubs', { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .then((response) => {
+        this.listings = response.data
+        this.clubs = this.listings.results
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    axios.get('http://localhost:8080/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .then((response) => {
+        this.listings = response.data
+        this.salles = this.listings.results
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  },
   methods: {
     submit () {
       this.isLoading = true
       axios.post('http://localhost:8080/api/data/activites', {
-        nom: this.form.name,
-        description: this.form.description
+        titre: this.form.titre,
+        clubId: this.form.club.clubId,
+        type: this.form.type,
+        date_debut: this.form.dateDebut,
+        date_fin: this.form.dateFin,
+        salleId: this.form.salle.salleId
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({
-            message: 'le département ' + this.form.name + ' ajouté',
+            message: "l'activité " + this.form.titre + ' bien ajoutée',
             queue: false
           })
         })

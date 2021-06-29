@@ -1,34 +1,32 @@
 <template>
   <div>
     <title-bar :title-stack="titleStack"/>
-    <hero-bar>
-      Table des activités
-      <p class="subtitle">
-        Total : {{ total }} activités
-      </p>
-      <router-link slot="right" to="/insertion/activite" class="button">
-        Nouvelle activité
-      </router-link>
-    </hero-bar>
     <section class="section is-main-section">
-      <card-component class="has-table has-mobile-sort-spaced" title="Activités" icon="account-multiple">
-        <activite-table :data-url="`http://localhost:8080/api/data/activites`"/>
-      </card-component>
+        <tiles>
+            <card-component title="Liste des attributs" class="tile is-child">
+                <list-att></list-att>
+            </card-component>
+            <card-component title="Attributs choisis" class="tile is-child">
+                dzk,
+            </card-component>
+            <card-component title="Liste des dimentions" class="tile is-child">
+                fek,
+            </card-component>
+        </tiles>
     </section>
   </div>
-
 </template>
 
 <script>
-import CardComponent from '@/components/CardComponent'
 import TitleBar from '@/components/TitleBar'
-import HeroBar from '@/components/HeroBar'
-import ActiviteTable from '@/components/Tables/ActiviteTable.vue'
 import axios from 'axios'
+import Tiles from '../../components/Tiles.vue'
+import CardComponent from '@/components/CardComponent'
+import ListAtt from '../../components/Query/ListAtt.vue'
 
 export default {
-  name: 'activite',
-  components: { HeroBar, TitleBar, CardComponent, ActiviteTable },
+  name: 'QueryCreator',
+  components: { TitleBar, Tiles, CardComponent, ListAtt },
   computed: {
     titleStack () {
       return [

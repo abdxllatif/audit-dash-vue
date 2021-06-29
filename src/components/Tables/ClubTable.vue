@@ -22,6 +22,11 @@
       <b-table-column label="Created" v-slot="props">
         <small class="has-text-grey is-abbr-like" :title="props.row.created">{{ props.row.createdAt }}</small>
       </b-table-column>
+      <b-table-column label="Détails" field="details" v-slot="props">
+        <router-link :to="{name:'ClubDetail', params: {id: props.row.clubId}}" class="button is-small is-dark">
+          Détails
+        </router-link>
+      </b-table-column>
       <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
         <div class="buttons is-right">
           <router-link :to="{name:'dep.edit', params: {id: props.row.clubId}}" class="button is-small is-primary">

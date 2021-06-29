@@ -67,10 +67,6 @@ export default {
     dataUrl: {
       type: String,
       default: null
-    },
-    checkable: {
-      type: Boolean,
-      default: false
     }
   },
   data () {

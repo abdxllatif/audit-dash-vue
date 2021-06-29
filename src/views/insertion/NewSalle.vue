@@ -11,17 +11,21 @@
       <import-component/>
       <card-component title="Nouvelle salle" icon="ballot">
         <form @submit.prevent="submit">
+          <b-field label="Départment" horizontal>
+            <b-select placeholder="Selectionne un départment" v-model="form.department" required>
+              <option v-for="(department, index) in departments" :key="index" :value="department">
+                {{ department.nom }}
+              </option>
+            </b-select>
+          </b-field>
           <b-field label="Nom de la salle" horizontal>
             <b-field>
               <b-input icon="account" v-model="form.name" placeholder="identifiant de la salle" name="name" required />
             </b-field>
           </b-field>
-          <b-field label="Description" message="Ne pas dépasser 255 caractères" horizontal>
-            <b-input type="textarea" placeholder="Une petite définition de la salle" v-model="form.description" maxlength="255" required/>
-          </b-field>
           <b-field label="Capacité de la salle" horizontal>
               <b-input icon="account-multiple" v-model="form.capacite" placeholder="Capacité" name="capacite" required />
-            </b-field>
+          </b-field>
           <b-field label="Type" horizontal>
                 <b-select placeholder="Selectionne un type" v-model="form.type" required>
                     <option v-for="(type, index) in types" :key="index" :value="type">
@@ -57,7 +61,8 @@ export default {
       isLoading: false,
       form: {
         name: null,
-        description: null
+        capacite: 0,
+        department: null
       },
       types: [
         'Amphi',
@@ -65,8 +70,19 @@ export default {
         'Salle TD',
         'Bureau',
         'Autres'
-      ]
+      ],
+      departments: []
     }
+  },
+  created () {
+    axios.get('http://localhost:8080/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .then((response) => {
+        this.listings = response.data
+        this.departments = this.listings.results
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   },
   computed: {
     titleStack () {
@@ -79,13 +95,15 @@ export default {
   methods: {
     submit () {
       this.isLoading = true
-      axios.post('http://localhost:8080/api/data/departements', {
+      axios.post('http://localhost:8080/api/data/salles', {
         nom: this.form.name,
-        description: this.form.description
+        description: this.form.type,
+        capacite: this.form.capacite,
+        departementId: this.form.department.departementId
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({
-            message: 'le département ' + this.form.name + ' ajouté',
+            message: 'la salle ' + this.form.name + ' bien ajoutée',
             queue: false
           })
         })

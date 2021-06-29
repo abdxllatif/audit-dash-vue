@@ -17,8 +17,16 @@
       <b-table-column label="Type" field="type" sortable v-slot="props">
         {{ props.row.type }}
       </b-table-column>
+      <b-table-column label="Capacité" field="capacite" sortable v-slot="props">
+        {{ props.row.capacite }}
+      </b-table-column>
       <b-table-column label="Created" v-slot="props">
         <small class="has-text-grey is-abbr-like" :title="props.row.created">{{ props.row.createdAt }}</small>
+      </b-table-column>
+      <b-table-column label="Détails" field="details" v-slot="props">
+        <router-link :to="{name:'SalleDetail', params: {id: props.row.salleId}}" class="button is-small is-dark">
+          Détails
+        </router-link>
       </b-table-column>
       <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
         <div class="buttons is-right">
@@ -109,6 +117,7 @@ export default {
               this.paginated = true
             }
             this.salles = r.data.results
+            this.$store.state.salles = r.data.results
           }
         })
         .catch(e => {
