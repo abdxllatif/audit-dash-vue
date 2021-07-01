@@ -9,12 +9,12 @@
     </hero-bar>
     <section class="section is-main-section">
       <tiles>
-        <card-component v-if="isProfileExists" title="Profil du partenaire" icon="account" class="tile is-child">
+        <card-component v-if="isProfileExists" title="Profil du club" icon="account" class="tile is-child">
           <b-field label="ID" horizontal>
-              <b-input v-model="form.partenaireId" custom-class="is-static" readonly />
+              <b-input v-model="form.clubId" custom-class="is-static" readonly />
           </b-field>
           <b-field label="Nom" horizontal>
-            <b-input :value="form.Nom" custom-class="is-static" readonly/>
+            <b-input :value="form.nom" custom-class="is-static" readonly/>
           </b-field>
           <b-field label="Type" horizontal>
             <b-input :value="form.type" custom-class="is-static" readonly/>
@@ -23,8 +23,8 @@
             <b-input :value="form.createdAt" custom-class="is-static" readonly/>
           </b-field>
         </card-component>
-        <card-component v-if="isProfileExists" title="Formations" icon="account" class="tile is-child">
-            <form-table :data-url="`http://localhost:8080/api/data/formations`" :checkable="true"/>
+        <card-component v-if="isProfileExists" title="Activités" icon="account" class="tile is-child">
+            <activite-table :data-url="`http://localhost:8080/api/data/activites`" :checkable="false"/>
         </card-component>
       </tiles>
     </section>
@@ -39,11 +39,11 @@ import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 import Tiles from '@/components/Tiles'
 import CardComponent from '@/components/CardComponent'
-import FormTable from '@/components/Tables/FormTable.vue'
+import ActiviteTable from '@/components/Tables/ActiviteTable.vue'
 
 export default {
-  name: 'PartenaireDetail',
-  components: { CardComponent, Tiles, HeroBar, TitleBar, FormTable },
+  name: 'ClubDetail',
+  components: { CardComponent, Tiles, HeroBar, TitleBar, ActiviteTable },
   props: {
     id: {
       default: null
@@ -61,18 +61,18 @@ export default {
     titleStack () {
       return [
         'Admin',
-        'Partenaire',
-        this.form.Nom
+        'Club',
+        this.form.nom
       ]
     },
     heroTitle () {
-      return 'Détails du partenaire ' + this.form.Nom
+      return 'Détails du club ' + this.form.nom
     },
     heroRouterLinkTo () {
-      return { name: 'newPar' }
+      return { name: 'newClub' }
     },
     heroRouterLinkLabel () {
-      return 'Nouveau partenaire'
+      return 'Nouveau club'
     }
   },
   created () {
@@ -93,9 +93,9 @@ export default {
     getData () {
       if (this.id) {
         axios
-          .get('http://localhost:8080/api/data/partenaires', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8080/api/data/clubs', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
-            const item = find(r.data.results, item => item.partenaireId === parseInt(this.id))
+            const item = find(r.data.results, item => item.clubId === parseInt(this.id))
 
             if (item) {
               this.isProfileExists = true

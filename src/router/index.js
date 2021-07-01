@@ -415,6 +415,15 @@ const routes = [
     component: () => import(/* webpackChunkName: "client-form" */ '../views/details/SalleDetail.vue'),
     props: true
   },
+  {
+    meta: {
+      title: 'Détails du club'
+    },
+    path: '/club/:id',
+    name: 'ClubDetail',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/details/ClubDetail.vue'),
+    props: true
+  },
   /* Query */
   {
     meta: {

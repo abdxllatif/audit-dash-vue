@@ -68,26 +68,14 @@ export default {
   },
   computed: {
     titleStack () {
-      let lastCrumb
-
-      if (this.isProfileExists) {
-        lastCrumb = this.form.nom
-      } else {
-        lastCrumb = 'New client'
-      }
-
       return [
         'Admin',
         'Département',
-        lastCrumb
+        this.form.nom
       ]
     },
     heroTitle () {
-      if (this.isProfileExists) {
-        return 'Détails du département ' + this.form.nom
-      } else {
-        return 'Create Client'
-      }
+      return 'Détails du département ' + this.form.nom
     },
     heroRouterLinkTo () {
       if (this.isProfileExists) {
@@ -151,7 +139,7 @@ export default {
               this.form.created_date = new Date(item.created_mm_dd_yyyy)
               this.createdReadable = dayjs(new Date(item.created_mm_dd_yyyy)).format('MMM D, YYYY')
             } else {
-              this.$router.push({ name: 'client.new' })
+              this.$router.push({ name: '404' })
             }
           })
           .catch(e => {

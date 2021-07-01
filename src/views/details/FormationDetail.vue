@@ -3,7 +3,7 @@
     <title-bar :title-stack="titleStack"/>
     <hero-bar>
       {{ heroTitle }}
-      <router-link slot="right" :to="heroRouterLinkTo" class="button">
+      <router-link slot="right" :to="{ name: 'newForm', params: { selDep: this.department }}" class="button">
         {{ heroRouterLinkLabel }}
       </router-link>
     </hero-bar>
@@ -100,33 +100,15 @@ export default {
   },
   computed: {
     titleStack () {
-      let lastCrumb
-
-      if (this.isProfileExists) {
-        lastCrumb = this.form.nom
-      } else {
-        lastCrumb = 'New client'
-      }
-
       return [
         'Admin',
-        'Formation',
-        lastCrumb
+        this.dep,
+        this.depid,
+        this.form.nom
       ]
     },
     heroTitle () {
-      if (this.isProfileExists) {
-        return 'Détails de la formation ' + this.form.nom
-      } else {
-        return 'Create Client'
-      }
-    },
-    heroRouterLinkTo () {
-      if (this.isProfileExists) {
-        return { name: 'newForm' }
-      } else {
-        return '/'
-      }
+      return 'Détails de la formation ' + this.form.nom
     },
     heroRouterLinkLabel () {
       if (this.isProfileExists) {
@@ -165,7 +147,9 @@ export default {
               this.createdReadable = dayjs(new Date(item.created_mm_dd_yyyy)).format('MMM D, YYYY')
               axios.get('http://localhost:8080/api/data/departements/' + this.form.departementDepartementId, { headers: { 'x-access-token': this.$session.get('jwt') } })
                 .then(r => {
+                  this.department = r.data.data
                   this.dep = r.data.data.nom
+                  this.depid = r.data.data.departementId
                 })
                 .catch(e => {
                   this.$buefy.toast.open({
@@ -175,7 +159,7 @@ export default {
                   })
                 })
             } else {
-              this.$router.push({ name: 'client.new' })
+              this.$router.push({ name: '404' })
             }
           })
           .catch(e => {
