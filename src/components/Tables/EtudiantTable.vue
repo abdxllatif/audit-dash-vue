@@ -9,7 +9,7 @@
       :striped="true"
       :hoverable="true"
       default-sort="nom"
-      :data="departements">
+      :data="etudiants">
 
       <b-table-column label="Nom" field="nom" sortable v-slot="props">
         {{ props.row.Nom }}
@@ -75,7 +75,7 @@ export default {
       isModalActive: false,
       isFormationModalActive: false,
       trashObject: null,
-      departements: [],
+      etudiants: [],
       isLoading: false,
       paginated: false,
       perPage: 10,
@@ -92,14 +92,12 @@ export default {
     }
   },
   mounted () {
-    console.log(this.props)
-    console.log(this.$session.get('deps'))
     /* if (this.dataUrl) {
       if (r.data && r.data.data) {
         if (r.data.data.length > this.perPage) {
           this.paginated = true
         }
-        this.departements = this.$session.get('deps')
+        this.etudiants = this.$session.get('deps')
       }
     } */
     if (this.dataUrl) {
@@ -112,7 +110,7 @@ export default {
             if (r.data.results.length > this.perPage) {
               this.paginated = true
             }
-            this.departements = r.data.results
+            this.etudiants = r.data.results
           }
         })
         .catch(e => {
@@ -135,7 +133,7 @@ export default {
     },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8080/api/data/departements/' + this.trashObject.departementId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8080/api/data/etudiants/' + this.trashObject.etudiantId, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({
@@ -146,11 +144,11 @@ export default {
             .get(this.dataUrl, { headers: { 'x-access-token': this.$session.get('jwt') } })
             .then(r => {
               this.isLoading = false
-              if (r.data && r.data.results) {
-                if (r.data.results.length > this.perPage) {
+              if (r.data && r.data.data) {
+                if (r.data.data.length > this.perPage) {
                   this.paginated = true
                 }
-                this.departements = r.data.results
+                this.etudiants = r.data.data
               }
             })
             .catch(e => {

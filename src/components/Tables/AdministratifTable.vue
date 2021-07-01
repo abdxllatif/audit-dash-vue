@@ -17,12 +17,6 @@
       <b-table-column label="Prénom" field="prenom" sortable v-slot="props">
         {{ props.row.prenom }}
       </b-table-column>
-      <b-table-column label="Date début" field="date debut" sortable v-slot="props">
-        {{ props.row.date_debut }}
-      </b-table-column>
-      <b-table-column label="Date fin" field="date fin" sortable v-slot="props">
-        {{ props.row.date_fin }}
-      </b-table-column>
       <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
         <div class="buttons is-right">
           <router-link :to="{name:'dep.edit', params: {id: props.row.administratifId}}" class="button is-small is-primary">
@@ -92,27 +86,18 @@ export default {
     }
   },
   mounted () {
-    console.log(this.props)
-    console.log(this.$session.get('deps'))
-    /* if (this.dataUrl) {
-      if (r.data && r.data.data) {
-        if (r.data.data.length > this.perPage) {
-          this.paginated = true
-        }
-        this.departements = this.$session.get('deps')
-      }
-    } */
     if (this.dataUrl) {
       this.isLoading = true
       axios
         .get(this.dataUrl, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
-          if (r.data && r.data.results) {
-            if (r.data.results.length > this.perPage) {
+          console.log(r.data.data)
+          if (r.data && r.data.data) {
+            if (r.data.data.length > this.perPage) {
               this.paginated = true
             }
-            this.administratifs = r.data.results
+            this.administratifs = r.data.data
           }
         })
         .catch(e => {

@@ -94,8 +94,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.props)
-    console.log(this.$session.get('deps'))
     /* if (this.dataUrl) {
       if (r.data && r.data.data) {
         if (r.data.data.length > this.perPage) {
@@ -110,11 +108,11 @@ export default {
         .get(this.dataUrl, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
-          if (r.data && r.data.results) {
-            if (r.data.results.length > this.perPage) {
+          if (r.data && r.data.data) {
+            if (r.data.data.length > this.perPage) {
               this.paginated = true
             }
-            this.enseignants = r.data.results
+            this.enseignants = r.data.data
           }
         })
         .catch(e => {
@@ -133,7 +131,7 @@ export default {
     },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8080/api/data/enseignants/' + this.trashObject.activiteId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8080/api/data/enseignants/' + this.trashObject.enseignantId, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({
