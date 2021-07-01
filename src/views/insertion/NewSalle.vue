@@ -12,11 +12,12 @@
       <card-component title="Nouvelle salle" icon="ballot">
         <form @submit.prevent="submit">
           <b-field label="Départment" horizontal>
-            <b-select placeholder="Selectionne un départment" v-model="form.department" required>
+            <b-select v-if="$route.params.sel==null" placeholder="Selectionne un départment" v-model="form.department" required>
               <option v-for="(department, index) in departments" :key="index" :value="department">
                 {{ department.nom }}
               </option>
             </b-select>
+            <b-input v-if="$route.params.sel!=null" v-model="$route.params.sel.nom" custom-class="is-static" readonly/>
           </b-field>
           <b-field label="Nom de la salle" horizontal>
             <b-field>
@@ -99,7 +100,7 @@ export default {
         nom: this.form.name,
         description: this.form.type,
         capacite: this.form.capacite,
-        departementId: this.form.department.departementId
+        departementId: this.$route.params.sel.departementId
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({

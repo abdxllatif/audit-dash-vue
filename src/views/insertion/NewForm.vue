@@ -11,12 +11,12 @@
       <card-component title="Nouvelle formation" icon="ballot">
         <form @submit.prevent="submit">
           <b-field label="Départment" horizontal>
-            <b-select v-if="$route.params.selDep==null" placeholder="Selectionne un départment" v-model="form.department" required>
+            <b-select v-if="$route.params.sel==null" placeholder="Selectionne un départment" v-model="form.department" required>
               <option v-for="(department, index) in departments" :key="index" :value="department">
                 {{ department.nom }}
               </option>
             </b-select>
-            <b-input v-if="$route.params.selDep!=null" v-model="$route.params.selDep.nom" custom-class="is-static" readonly/>
+            <b-input v-if="$route.params.sel!=null" v-model="$route.params.sel.nom" custom-class="is-static" readonly/>
           </b-field>
           <b-field label="Titre" message="Titre de la formation" horizontal>
             <b-input placeholder="e.g. ingenieur des systèmes informatiques" v-model="form.titre" required />
@@ -55,7 +55,7 @@ export default {
         description: null
       },
       departments: [],
-      selDep: this.$route.params.selDep
+      sel: this.$route.params.sel
     }
   },
   created () {
@@ -83,7 +83,7 @@ export default {
       axios.post('http://localhost:8080/api/data/formations', {
         nom: this.form.titre,
         description: this.form.description,
-        departementId: this.selDep.departementId
+        departementId: this.sel.departementId
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({

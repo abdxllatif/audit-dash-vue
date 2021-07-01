@@ -3,7 +3,7 @@
     <title-bar :title-stack="titleStack"/>
     <hero-bar>
       {{ heroTitle }}
-      <router-link slot="right" :to="{ name: 'newForm', params: { selDep: this.department }}" class="button">
+      <router-link slot="right" :to="{ name: 'newForm', params: { sels: this.department }}" class="button">
         {{ heroRouterLinkLabel }}
       </router-link>
     </hero-bar>

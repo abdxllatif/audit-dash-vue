@@ -23,12 +23,12 @@
             <b-input :value="this.FormCount" custom-class="is-static" readonly/>
           </b-field>
         </card-component>
-        <card-component v-if="isProfileExists" title="Formations" icon="account" class="tile is-child">
+        <card-component v-if="isProfileExists" v-bind:selected="this.form" vers="newForm" title="Formations" icon="account" class="tile is-child">
             <formation-table :data-url="`http://localhost:8080/api/stats/data`" :id="parseInt(this.id)"/>
         </card-component>
       </tiles>
       <tiles>
-        <card-component v-if="isProfileExists" title="Salles" icon="account" class="tile is-child">
+        <card-component v-if="isProfileExists" v-bind:selected="this.form" vers="newSalle" title="Salles" icon="account" class="tile is-child">
             <salle-table :data-url="`http://localhost:8080/api/stats/data`" :id="parseInt(this.id)"/>
         </card-component>
         <card-component v-if="isProfileExists" title="Enseignants" icon="account" class="tile is-child">
