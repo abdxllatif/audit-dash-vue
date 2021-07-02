@@ -24,6 +24,9 @@
           <b-field label="Description" message="Ne pas dépasser 255 caractères" horizontal>
             <b-input type="textarea" placeholder="Une petite définition de la formation" v-model="form.description" maxlength="255" required/>
           </b-field>
+          <b-field label="Durée" message="Durée en ans [1..10]" horizontal>
+            <b-input placeholder="e.g. 3" type="number" min="1" max="10" v-model="form.duree" required></b-input>
+          </b-field>
           <b-field horizontal>
             <b-field grouped>
               <div class="control">
@@ -83,13 +86,43 @@ export default {
       axios.post('http://localhost:8080/api/data/formations', {
         nom: this.form.titre,
         description: this.form.description,
-        departementId: this.sel.departementId
+        departementId: this.form.department.departementId // this.sel.departementId
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({
-            message: 'la formation ' + this.form.name + ' ajouté',
+            message: 'la formation ' + this.form.titre + ' ajouté',
             queue: false
           })
+          console.log(response.data.data.formationId)
+          for (let i = 0; i < (this.form.duree); i++) {
+            let k = i + 1
+            axios.post('http://localhost:8080/api/data/niveaux', {
+              titre: 'niveau ' + k,
+              desc: 'desc',
+              Durée: 1,
+              formationId: response.data.data.formationId
+            }, { headers: { 'x-access-token': this.$session.get('jwt') } })
+              .then(response2 => {
+                console.log(response2)
+                for (let j = 0; j < (this.form.duree * 2); j++) {
+                  k = j + 1
+                  axios.post('http://localhost:8080/api/data/semestres', {
+                    numero: 'semestre ' + k,
+                    desc: 'desc',
+                    niveauId: response2.data.data.niveauId
+                  }, { headers: { 'x-access-token': this.$session.get('jwt') } })
+                    .then(response3 => {
+                      console.log(response3)
+                    })
+                    .catch(e3 => {
+                      console.log(e3)
+                    })
+                }
+              })
+              .catch(e2 => {
+                console.log(e2)
+              })
+          }
         })
         .catch(e => {
           this.errorMessage = e.message
