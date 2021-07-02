@@ -58,7 +58,8 @@ export default {
         description: null
       },
       departments: [],
-      sel: this.$route.params.sel
+      sel: this.$route.params.sel,
+      departId: ''
     }
   },
   created () {
@@ -83,10 +84,15 @@ export default {
   methods: {
     submit () {
       this.isLoading = true
+      if (this.sel == null) {
+        this.departId = this.form.department.departementId
+      } else {
+        this.departId = this.sel.departementId
+      }
       axios.post('http://localhost:8080/api/data/formations', {
         nom: this.form.titre,
         description: this.form.description,
-        departementId: this.form.department.departementId // this.sel.departementId
+        departementId: this.departId // this.form.department.departementId // this.sel.departementId
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({
