@@ -103,14 +103,14 @@ export default {
           for (let i = 0; i < (this.form.duree); i++) {
             let k = i + 1
             axios.post('http://localhost:8080/api/data/niveaux', {
-              titre: 'niveau ' + k,
+              nom: 'niveau ' + k,
               desc: 'desc',
               Durée: 1,
               formationId: response.data.data.formationId
             }, { headers: { 'x-access-token': this.$session.get('jwt') } })
               .then(response2 => {
                 console.log(response2)
-                for (let j = 0; j < (this.form.duree * 2); j++) {
+                for (let j = 0; j < (2); j++) {
                   k = j + 1
                   axios.post('http://localhost:8080/api/data/semestres', {
                     numero: 'semestre ' + k,

@@ -18,7 +18,7 @@
         {{ props.row.Durée }}
       </b-table-column>
       <b-table-column label="Détails" field="details" v-slot="props">
-        <router-link :to="{name:'FormationDetail', params: {id: props.row.formationId}}" class="button is-small is-dark">
+        <router-link :to="{name:'NiveauDetail', params: {id: props.row.niveauId}}" class="button is-small is-dark">
           Détails
         </router-link>
       </b-table-column>
@@ -64,6 +64,9 @@ export default {
     checkable: {
       type: Boolean,
       default: false
+    },
+    id: {
+      default: null
     }
   },
   data () {
@@ -85,8 +88,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.props)
-    console.log(this.$session.get('deps'))
     /* if (this.dataUrl) {
       if (r.data && r.data.data) {
         if (r.data.data.length > this.perPage) {
@@ -98,14 +99,19 @@ export default {
     if (this.dataUrl) {
       this.isLoading = true
       axios
-        .get(this.dataUrl, { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .post(this.dataUrl, {
+          table: 'niveauxes',
+          fk: 'formationFormationId',
+          value: this.id
+        }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
+          console.log(r)
           this.isLoading = false
-          if (r.data && r.data.results) {
-            if (r.data.results.length > this.perPage) {
+          if (r && r.data) {
+            if (r.data.length > this.perPage) {
               this.paginated = true
             }
-            this.niveaux = r.data.results
+            this.niveaux = r.data
           }
         })
         .catch(e => {

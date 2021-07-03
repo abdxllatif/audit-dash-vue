@@ -378,6 +378,14 @@ const routes = [
     name: 'charts',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/Stat/Charts.vue')
   },
+  {
+    meta: {
+      title: 'Audit Social'
+    },
+    path: '/audit',
+    name: 'Audit',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/Stat/Audit.vue')
+  },
   // Détails
   {
     meta: {
@@ -386,6 +394,15 @@ const routes = [
     path: '/formation/:id',
     name: 'FormationDetail',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/details/FormationDetail.vue'),
+    props: true
+  },
+  {
+    meta: {
+      title: 'Détails du niveau'
+    },
+    path: '/niveau/:id',
+    name: 'NiveauDetail',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/details/NiveauDetail.vue'),
     props: true
   },
   {

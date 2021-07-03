@@ -8,63 +8,37 @@
       </router-link>
     </hero-bar>
     <section class="section is-main-section">
-      <tiles>
-        <card-component v-if="isProfileExists" title="Profil du formation" icon="account" class="tile is-child">
-          <b-field label="ID" horizontal>
-              <b-input v-model="form.formationId" custom-class="is-static" readonly />
-          </b-field>
-          <b-field label="Nom" horizontal>
-            <b-input :value="form.nom" custom-class="is-static" readonly/>
-          </b-field>
-          <b-field label="Description" horizontal>
-            <b-input :value="form.description" custom-class="is-static" readonly/>
-          </b-field>
-          <b-field label="Département" horizontal>
-            <b-input :value="dep" custom-class="is-static" readonly/>
-          </b-field>
-          <b-field label="Created" horizontal>
-            <b-input :value="createdReadable" custom-class="is-static" readonly/>
-          </b-field>
-        </card-component>
-        <card-component v-if="isProfileExists" title="Niveaux" icon="account" class="tile is-child">
-          <niveaux-table :data-url="`http://localhost:8080/api/data/niveaux`"/>
-                <section>
-                    <b-collapse
-                        class="card"
-                        animation="slide"
-                        :open="isOpen == !index"
-                        @open="isOpen = index">
-                        <template #trigger="props">
-                            <div
-                                class="card-header"
-                                role="button"
-                            >
-                                <p class="card-header-title">
-                                    nouveau niveau
-                                </p>
-                                <a class="card-header-icon">
-                                    <b-icon
-                                        :icon="props.open ? 'menu-down' : 'menu-up'">
-                                    </b-icon>
-                                </a>
-                            </div>
-                        </template>
-                        <div class="card-content">
-                            <div class="content">
-                                text
-                            </div>
-                        </div>
-                    </b-collapse>
-                </section>
-        </card-component>
-      </tiles>
-      <tiles>
-        <card-component v-if="isProfileExists" title="Partenaires" icon="account" class="tile is-child">
-            <par-table :data-url="`http://localhost:8080/api/data/partenaires`"/>
-        </card-component>
-        <card-component v-if="isProfileExists" title="Enseignants" icon="account" class="tile is-child">
-        </card-component>
-      </tiles>
+      <b-tabs>
+            <b-tab-item label="Profil de la formation" icon="google-photos">
+                <b-field label="ID" horizontal>
+                  <b-input v-model="form.formationId" custom-class="is-static" readonly />
+                </b-field>
+                <b-field label="Nom" horizontal>
+                  <b-input :value="form.nom" custom-class="is-static" readonly/>
+                </b-field>
+                <b-field label="Description" horizontal>
+                  <b-input :value="form.description" custom-class="is-static" readonly/>
+                </b-field>
+                <b-field label="Département" horizontal>
+                  <b-input :value="dep" custom-class="is-static" readonly/>
+                </b-field>
+                <b-field label="Created" horizontal>
+                  <b-input :value="createdReadable" custom-class="is-static" readonly/>
+                </b-field>
+            </b-tab-item>
+            <b-tab-item label="Niveaux">
+              <card-component v-if="isProfileExists" title="Niveaux" icon="account" class="tile is-child">
+                <niveaux-table :data-url="`http://localhost:8080/api/stats/data`" :id="this.form.formationId"/>
+              </card-component>
+            </b-tab-item>
+            <b-tab-item label="Partenaires">
+              <card-component v-if="isProfileExists" title="Partenaires" icon="account" class="tile is-child">
+                <par-table :data-url="`http://localhost:8080/api/data/partenaires`"/>
+              </card-component>
+            </b-tab-item>
+            <b-tab-item label="Enseignants"></b-tab-item>
+            <b-tab-item label="..."></b-tab-item>
+      </b-tabs>
     </section>
   </div>
 </template>
@@ -75,7 +49,6 @@ import dayjs from 'dayjs'
 import find from 'lodash/find'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
-import Tiles from '@/components/Tiles'
 import CardComponent from '@/components/CardComponent'
 import ParTable from '@/components/Tables/ParTable.vue'
 // import EtudiantTable from '@/components/Tables/EtudiantTable.vue'
@@ -83,7 +56,7 @@ import NiveauxTable from '@/components/Tables/NiveauxTable.vue'
 
 export default {
   name: 'FormationDetail',
-  components: { CardComponent, Tiles, HeroBar, TitleBar, ParTable, NiveauxTable },
+  components: { CardComponent, HeroBar, TitleBar, ParTable, NiveauxTable },
   props: {
     id: {
       default: null
