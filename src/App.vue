@@ -279,6 +279,11 @@ export default {
             label: 'Graphes'
           },
           {
+            to: '/audit',
+            icon: 'finance',
+            label: 'Audit Social'
+          },
+          {
             to: '/query',
             icon: 'chart-bar',
             label: "Création d'une requete"

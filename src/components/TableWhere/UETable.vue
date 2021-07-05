@@ -44,7 +44,8 @@
             </b-table-column>
 
             <template #detail="props">
-                <b-table :data="data" :loading="isLoading">
+              <module-table v-bind:idUe="props.row.ueId"></module-table>
+                <!--<b-table :data="data" :loading="isLoading">
                     <b-table-column field="nom" label="Nom" sortable>
                         {{ props.row.nom }}
                     </b-table-column>
@@ -57,7 +58,7 @@
                     <b-table-column field="id" label="Crédit" sortable>
                         {{ props.row.credit }}
                     </b-table-column>
-                </b-table>
+                </b-table>-->
             </template>
         </b-table>
 
@@ -66,9 +67,11 @@
 
 <script>
 import axios from 'axios'
+import ModuleTable from './ModuleTable.vue'
 // const data = [{ id: 1, nom: 'UEF1', type: 'Fondamentale', coefficient: '9', credit: '9', charge: '450', modules: { id: 2, nom: 'Analyse', type: 'Math', coefficient: '5', credit: '5', charge: '250' } }]
 export default {
   name: 'UETable',
+  components: { ModuleTable },
   props: {
     dataUrl: {
       type: String,

@@ -8,32 +8,36 @@
       </router-link>
     </hero-bar>
     <section class="section is-main-section">
-      <tiles>
-        <card-component v-if="isProfileExists" title="Profil du département" icon="account" class="tile is-child">
-          <b-field label="ID" horizontal>
-              <b-input v-model="form.departementId" custom-class="is-static" readonly />
-          </b-field>
-          <b-field label="Nom" horizontal>
-            <b-input :value="form.nom" custom-class="is-static" readonly/>
-          </b-field>
-          <b-field label="Created" horizontal>
-            <b-input :value="form.createdAt" custom-class="is-static" readonly/>
-          </b-field>
-          <b-field label="Nombre de formations" horizontal>
-            <b-input :value="this.FormCount" custom-class="is-static" readonly/>
-          </b-field>
-        </card-component>
-        <card-component v-if="isProfileExists" v-bind:selected="this.form" vers="newForm" title="Formations" icon="account" class="tile is-child">
-            <formation-table :data-url="`http://localhost:8080/api/stats/data`" :id="parseInt(this.id)"/>
-        </card-component>
-      </tiles>
-      <tiles>
-        <card-component v-if="isProfileExists" v-bind:selected="this.form" vers="newSalle" title="Salles" icon="account" class="tile is-child">
-            <salle-table :data-url="`http://localhost:8080/api/stats/data`" :id="parseInt(this.id)"/>
-        </card-component>
-        <card-component v-if="isProfileExists" title="Enseignants" icon="account" class="tile is-child">
-        </card-component>
-      </tiles>
+      <b-tabs>
+        <b-tab-item label="Profil du département" icon="google-photos">
+            <b-field label="ID" horizontal>
+                <b-input v-model="form.departementId" custom-class="is-static" readonly />
+            </b-field>
+            <b-field label="Nom" horizontal>
+              <b-input :value="form.nom" custom-class="is-static" readonly/>
+            </b-field>
+            <b-field label="Created" horizontal>
+              <b-input :value="form.createdAt" custom-class="is-static" readonly/>
+            </b-field>
+            <b-field label="Nombre de formations" horizontal>
+              <b-input :value="this.FormCount" custom-class="is-static" readonly/>
+            </b-field>
+        </b-tab-item>
+        <b-tab-item label="Formation" icon="google-photos">
+          <card-component v-if="isProfileExists" v-bind:selected="this.form" vers="newForm" title="Formations" icon="account" class="tile is-child">
+              <formation-table :data-url="`http://localhost:8080/api/stats/data`" :id="parseInt(this.id)"/>
+          </card-component>
+        </b-tab-item>
+        <b-tab-item label="Les salles" icon="google-photos">
+          <card-component v-if="isProfileExists" v-bind:selected="this.form" vers="newSalle" title="Salles" icon="account" class="tile is-child">
+              <salle-table :data-url="`http://localhost:8080/api/stats/data`" :id="parseInt(this.id)"/>
+          </card-component>
+        </b-tab-item>
+        <b-tab-item label="Les enseignants" icon="google-photos">
+          <card-component v-if="isProfileExists" title="Enseignants" icon="account" class="tile is-child">
+          </card-component>
+        </b-tab-item>
+      </b-tabs>
     </section>
   </div>
 </template>
@@ -44,14 +48,13 @@ import dayjs from 'dayjs'
 import find from 'lodash/find'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
-import Tiles from '@/components/Tiles'
 import CardComponent from '@/components/CardComponent'
 import FormationTable from '@/components/TableWhere/FormationTable.vue'
 import salleTable from '@/components/TableWhere/SalleTable.vue'
 
 export default {
   name: 'DepartementDetail',
-  components: { CardComponent, Tiles, HeroBar, TitleBar, FormationTable, salleTable },
+  components: { CardComponent, HeroBar, TitleBar, FormationTable, salleTable },
   props: {
     id: {
       default: null
