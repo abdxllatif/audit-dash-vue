@@ -8,8 +8,8 @@
       </router-link>
     </hero-bar>
     <section class="section is-main-section">
-      <tiles>
-        <card-component v-if="isProfileExists" title="Profil de la salle" icon="account" class="tile is-child">
+      <b-tabs>
+        <b-tab-item label="Profil de la salle" icon="account">
           <b-field label="ID" horizontal>
               <b-input v-model="form.salleId" custom-class="is-static" readonly />
           </b-field>
@@ -28,11 +28,13 @@
           <b-field label="Created" horizontal>
             <b-input :value="form.createdAt" custom-class="is-static" readonly/>
           </b-field>
-        </card-component>
-        <card-component v-if="isProfileExists" title="Outils" icon="tools" class="tile is-child">
-            <outil-table :data-url="`http://localhost:8080/api/stats/data`" :id="parseInt(this.id)"/>
-        </card-component>
-      </tiles>
+        </b-tab-item>
+        <b-tab-item label="équipements" icon="account">
+          <card-component v-if="isProfileExists" title="Outils" icon="tools" class="tile is-child">
+            <outil-table :data-url="`http://localhost:8080/api/data/outils/salles/`" :id="parseInt(this.id)"/>
+          </card-component>
+        </b-tab-item>
+      </b-tabs>
     </section>
   </div>
 </template>
@@ -43,13 +45,12 @@ import dayjs from 'dayjs'
 import find from 'lodash/find'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
-import Tiles from '@/components/Tiles'
 import CardComponent from '@/components/CardComponent'
 import outilTable from '@/components/TableWhere/OutilTable.vue'
 
 export default {
   name: 'SalleDetail',
-  components: { CardComponent, Tiles, HeroBar, TitleBar, outilTable },
+  components: { CardComponent, HeroBar, TitleBar, outilTable },
   props: {
     id: {
       default: null

@@ -8,7 +8,7 @@
       :per-page="perPage"
       :striped="true"
       :hoverable="true"
-      default-sort="titre"
+      default-sort="Titre"
       :data="outils">
 
       <b-table-column label="Titre" field="nom" sortable v-slot="props">
@@ -16,6 +16,9 @@
       </b-table-column>
       <b-table-column label="Type" field="type" sortable v-slot="props">
         {{ props.row.type }}
+      </b-table-column>
+      <b-table-column label="Quantité" field="quantité" sortable v-slot="props">
+        {{ props.row.quantity }}
       </b-table-column>
       <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
         <div class="buttons is-right">
@@ -74,6 +77,7 @@ export default {
       isModalActive: false,
       trashObject: null,
       outils: [],
+      last: [],
       isLoading: false,
       paginated: false,
       perPage: 10,
@@ -89,23 +93,29 @@ export default {
       return null
     }
   },
-  mounted () {
+  async mounted () {
     if (this.dataUrl) {
       this.isLoading = true
-      axios.post(this.dataUrl, {
-        table: 'outils',
-        fk: 'salleSalleId',
-        value: parseInt(this.id)
-      }, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      await axios.get(this.dataUrl + 1, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
-          console.log(r.data)
+          console.log(r)
           console.log(parseInt(this.id))
-          if (r && r.data) {
-            if (r.data.length > this.perPage) {
+          if (r.data && r.data.data) {
+            if (r.data.data.length > this.perPage) {
               this.paginated = true
             }
-            this.outils = r.data
+            this.outils = r.data.data
+            for (let i = 0; i < this.outils.length; i++) {
+              axios.get('http://localhost:8080/api/data/outils/' + this.outils[i].outilId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+                .then(r2 => {
+                  console.log(r2.data.data)
+                  this.outils[i].titre = r2.data.data.titre
+                  this.outils[i].type = r2.data.data.type
+                })
+            }
+            console.log(this.outils)
+            this.last = this.outils
           }
         })
         .catch(e => {

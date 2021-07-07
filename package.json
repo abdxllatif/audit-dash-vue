@@ -19,10 +19,12 @@
     "lodash": "^4.17.20",
     "numeral": "^2.0.6",
     "register-service-worker": "^1.7.2",
+    "sortablejs": "^1.14.0",
     "vue": "^2.6.12",
     "vue-chartjs": "^3.5.1",
     "vue-router": "^3.5.1",
     "vue-session": "^1.0.0",
+    "vuedraggable": "^2.24.3",
     "vuex": "^3.6.2"
   },
   "devDependencies": {

@@ -7,10 +7,18 @@
                 <list-att></list-att>
             </card-component>
             <card-component title="Attributs choisis" class="tile is-child">
-                dzk,
+                <draggable class="box" :list="list2" group="people" @change="log">
+                  <div
+                    class="box"
+                    v-for="(element, index) in list2"
+                    :key="element.name"
+                  >
+                    {{ element.name }} {{ index }}
+                  </div>
+                </draggable>
             </card-component>
             <card-component title="Liste des dimentions" class="tile is-child">
-                fek,
+
             </card-component>
         </tiles>
     </section>
@@ -19,14 +27,15 @@
 
 <script>
 import TitleBar from '@/components/TitleBar'
-import axios from 'axios'
+// import axios from 'axios'
 import Tiles from '../../components/Tiles.vue'
 import CardComponent from '@/components/CardComponent'
 import ListAtt from '../../components/Query/ListAtt.vue'
+import draggable from 'vuedraggable'
 
 export default {
   name: 'QueryCreator',
-  components: { TitleBar, Tiles, CardComponent, ListAtt },
+  components: { TitleBar, Tiles, CardComponent, ListAtt, draggable },
   computed: {
     titleStack () {
       return [
@@ -37,26 +46,27 @@ export default {
   },
   data () {
     return {
-      total: 0
+      total: 0,
+      list2: []
     }
   },
-  created () {
-    axios.post('http://localhost:8080/api/stats/count', {
-      table: 'activites'
-    }, { headers: { 'x-access-token': this.$session.get('jwt') } })
-      .then(response => {
-        console.log(response.data.count)
-        this.total = response.data.count
-      })
-      .catch(e => {
-        this.errorMessage = e.message
-        console.log('There was an error!', e)
-        this.$buefy.snackbar.open({
-          type: 'is-warning',
-          message: 'Erreur fl count',
-          queue: false
-        })
-      })
+  methods: {
+    add: function () {
+      this.list.push({ name: 'Juan' })
+    },
+    replace: function () {
+      this.list = [{ name: 'Edgard' }]
+    },
+    clone: function (el) {
+      return {
+        name: el.name + ' cloned'
+      }
+    },
+    log: function (evt) {
+      console.log(this.list2)
+      // window.console.log(evt)
+      console.log(evt)
+    }
   }
 }
 </script>
