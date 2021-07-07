@@ -3,37 +3,47 @@
         <b-collapse
             class="card"
             animation="slide"
-            v-for="(tab, index) of tables"
-            :key="index"
             :open="isOpen == index"
             @open="isOpen = index">
             <div slot="trigger" slot-scope="props" class="card-header" role="button">
-              <p class="card-header-title">{{ tab.table }}</p>
+              <p class="card-header-title">Grouping By</p>
               <a class="card-header-icon"><b-icon :icon="props.open ? 'menu-up' : 'menu-down'"></b-icon></a>
             </div>
             <div class="card-content">
-                <draggable class="content" :list="Object.keys(tab)" group="people" @change="log">
-                  <div
-                    class="box"
-                    v-for="(element, index) in Object.keys(tab)"
-                    :key="index"
-                  >
-                    {{ element }}
-                  </div>
-                </draggable>
+                <div class="block">
+                  <b-radio v-model="radio"
+                      name="name"
+                      native-value="Rollup">
+                      Rollup
+                  </b-radio>
+                  <b-radio v-model="radio"
+                      name="name"
+                      native-value="Cube">
+                      Cube
+                  </b-radio>
+                  <b-radio v-model="radio"
+                      name="name"
+                      native-value="Sets">
+                      Sets
+                  </b-radio>
+                </div>
+                <b-button  type="is-primary">Ajouter</b-button>
+                <b-field>
+                    <b-input v-model="name" placeholder="Ordred By"></b-input>
+                </b-field>
+                <b-field>
+                    <b-input v-model="name" placeholder="Partition By"></b-input>
+                </b-field>
             </div>
         </b-collapse>
-
     </section>
 </template>
 
 <script>
 import axios from 'axios'
-import draggable from 'vuedraggable'
 
 export default {
   components: {
-    draggable
   },
   data () {
     return {

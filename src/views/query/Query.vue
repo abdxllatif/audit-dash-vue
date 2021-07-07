@@ -13,12 +13,12 @@
                     v-for="(element, index) in list2"
                     :key="element.name"
                   >
-                    {{ element.name }} {{ index }}
+                    {{ element }} {{ index }}
                   </div>
                 </draggable>
             </card-component>
             <card-component title="Liste des dimentions" class="tile is-child">
-
+                <grouping-by></grouping-by>
             </card-component>
         </tiles>
     </section>
@@ -32,10 +32,11 @@ import Tiles from '../../components/Tiles.vue'
 import CardComponent from '@/components/CardComponent'
 import ListAtt from '../../components/Query/ListAtt.vue'
 import draggable from 'vuedraggable'
+import GroupingBy from '../../components/Query/GroupingBy.vue'
 
 export default {
   name: 'QueryCreator',
-  components: { TitleBar, Tiles, CardComponent, ListAtt, draggable },
+  components: { TitleBar, Tiles, CardComponent, ListAtt, draggable, GroupingBy },
   computed: {
     titleStack () {
       return [
