@@ -3,22 +3,22 @@
         <b-collapse
             class="card"
             animation="slide"
-            v-for="(collapse, index) of collapses"
+            v-for="(tab, index) of tables"
             :key="index"
             :open="isOpen == index"
             @open="isOpen = index">
             <div slot="trigger" slot-scope="props" class="card-header" role="button">
-              <p class="card-header-title">{{ collapse.title }}</p>
+              <p class="card-header-title">{{ tab.table }}</p>
               <a class="card-header-icon"><b-icon :icon="props.open ? 'menu-down' : 'menu-up'"></b-icon></a>
             </div>
             <div class="card-content">
-                <draggable class="content" :list="list1" group="people" @change="log">
+                <draggable class="content" :list="tables" group="people" @change="log">
                   <div
                     class="box"
-                    v-for="(element, index) in list1"
-                    :key="element.name"
+                    v-for="(element, index) in tables"
+                    :key="index"
                   >
-                    {{ element.name }} {{ index }}
+                    {{ element }} {{ index }}
                   </div>
                 </draggable>
             </div>
@@ -77,6 +77,7 @@ export default {
       .then(r => {
         this.isLoading = false
         console.log(r)
+        this.tables = r.data.value
       })
       .catch(e => {
         this.isLoading = false
