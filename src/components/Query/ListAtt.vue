@@ -8,43 +8,41 @@
             :open="isOpen == index"
             @open="isOpen = index">
             <div slot="trigger" slot-scope="props" class="card-header" role="button">
-              <p class="card-header-title">{{ tab.table }}</p>
+              <p class="card-header-title">{{ tab.nom }}</p>
               <a class="card-header-icon"><b-icon :icon="props.open ? 'menu-up' : 'menu-down'"></b-icon></a>
             </div>
-            <div class="card-content">
-                <draggable class="content" :list="Object.keys(tab)" group="people" @change="log">
+            <att :tab="tab.atts"></att>
+            <!--<div class="card-content">
+                <draggable class="content" group="people" @change="log">
                   <div
                     class="box"
-                    v-for="(element, index) in Object.keys(tab)"
-                    :key="index"
+                    v-for="element in Object.keys(tab)"
+                    :key="element"
                   >
-                    {{ element }}
+                    {{ element }} {{ tab.table }}
                   </div>
                 </draggable>
-            </div>
+            </div>-->
         </b-collapse>
 
     </section>
 </template>
 
 <script>
-import axios from 'axios'
-import draggable from 'vuedraggable'
+import facts from '../../../public/data-sources/attributs.json'
+// import axios from 'axios'
+// import draggable from 'vuedraggable'
+import Att from './Att.vue'
 
 export default {
   components: {
-    draggable
+    Att
   },
   data () {
     return {
-      list1: [
-        { name: 'John', id: 1 },
-        { name: 'Joao', id: 2 },
-        { name: 'Jean', id: 3 },
-        { name: 'Gerard', id: 4 }
-      ],
+      list1: [],
       isOpen: 0,
-      tables: [],
+      tables: facts.facts,
       keys: [],
       collapses: [
         {
@@ -72,9 +70,9 @@ export default {
       ]
     }
   },
-  async created () {
+  /* async created () {
     await axios
-      .get('http://localhost:8080/api/bi/data', { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .get('http://localhost:8080/api/bi/fact_data', { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(r => {
         this.isLoading = false
         console.log(r.data.value)
@@ -90,7 +88,7 @@ export default {
       })
     this.keys = Object.keys(this.tables[0])
     console.log(this.keys)
-  },
+  }, */
   mounted () {
     this.keys = Object.keys(this.tables)
     console.log(this.keys)

@@ -1,0 +1,111 @@
+{"facts":
+    [
+        {
+            "nom":"fact_delib",
+            "atts": [
+                {   "nom":"MoyenneGenerale",
+                    "table": "fact_delib",
+                    "type":"String",
+                    "dims":[
+                        {
+                            "nom":"dim_etudiant",
+                            "atts": [
+                                {   "nom":"nomEtudiant",
+                                    "type":"String",
+                                    "dimTable":"dim_etudiant"
+                                }
+                            ]
+                        },
+                        {
+                            "nom":"dim_formation",
+                            "atts": [
+                                {   "nom":"nomFormation",
+                                    "type":"String",
+                                    "dimTable":"dim_formation"
+                                }
+                            ]
+                        },
+                        {
+                            "nom":"dim_niveau",
+                            "atts": [
+                                {   "nom":"",
+                                    "type":"",
+                                    "dimTable":"dim_niveau"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {   "nom":"TauxReussite",
+                    "table": "fact_delib",
+                    "type":"Integer",
+                    "dims":[
+                        {
+                            "nom":"dim_etudiant",
+                            "atts": [
+                                {   "nom":"",
+                                    "type":""
+                                }
+                            ]
+                        },
+                        {
+                            "nom":"dim_formation",
+                            "atts": [
+                                {   "nom":"",
+                                    "type":""
+                                }
+                            ]
+                        },
+                        {
+                            "nom":"dim_niveau",
+                            "atts": [
+                                {   "nom":"",
+                                    "type":""
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "nom":"fact_etudiant",
+            "atts": [
+                {   "nom":"NombreTotal",
+                    "table": "fact_etudiant",
+                    "type":"String",
+                    "dims":[
+                        {
+                            "nom":"dim_departement",
+                            "atts": [
+                                {   "nom":"nomDep",
+                                    "type":"String",
+                                    "dimTable":"dim_departement"
+                                }
+                            ]
+                        },
+                        {
+                            "nom":"dim_formation",
+                            "atts": [
+                                {   "nom":"nomFormation",
+                                    "type":"String",
+                                    "dimTable":"dim_formation"
+                                }
+                            ]
+                        },
+                        {
+                            "nom":"dim_niveau",
+                            "atts": [
+                                {   "nom":"Nom",
+                                    "type":"String",
+                                    "dimTable":"dim_niveau"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+        

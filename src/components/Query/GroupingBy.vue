@@ -3,36 +3,36 @@
         <b-collapse
             class="card"
             animation="slide"
-            :open="isOpen == index"
-            @open="isOpen = index">
-            <div slot="trigger" slot-scope="props" class="card-header" role="button">
+            :open="isOpen == true"
+            @open="isOpen = false">
+            <div slot="trigger" slot-scope="props" class="card-header" type="is-dark" role="button" style="background-color: #ABCDEF">
               <p class="card-header-title">Grouping By</p>
               <a class="card-header-icon"><b-icon :icon="props.open ? 'menu-up' : 'menu-down'"></b-icon></a>
             </div>
-            <div class="card-content">
+            <div class="card-content" style="background-color: #F1F3F6">
                 <div class="block">
-                  <b-radio v-model="radio"
+                  <b-radio v-model="form.radio"
                       name="name"
                       native-value="Rollup">
                       Rollup
                   </b-radio>
-                  <b-radio v-model="radio"
+                  <b-radio v-model="form.radio"
                       name="name"
                       native-value="Cube">
                       Cube
                   </b-radio>
-                  <b-radio v-model="radio"
+                  <b-radio v-model="form.radio"
                       name="name"
                       native-value="Sets">
                       Sets
                   </b-radio>
                 </div>
-                <b-button  type="is-primary">Ajouter</b-button>
+                <b-button  type="is-primary" v-on:click="add">Ajouter</b-button>
                 <b-field>
-                    <b-input v-model="name" placeholder="Ordred By"></b-input>
+                    <b-input v-model="form.ordred" placeholder="Ordred By"></b-input>
                 </b-field>
                 <b-field>
-                    <b-input v-model="name" placeholder="Partition By"></b-input>
+                    <b-input v-model="form.partition" placeholder="Partition By"></b-input>
                 </b-field>
             </div>
         </b-collapse>
@@ -40,13 +40,18 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 
 export default {
   components: {
   },
   data () {
     return {
+      form: {
+        radio: '',
+        ordred: '',
+        partition: ''
+      },
       list1: [
         { name: 'John', id: 1 },
         { name: 'Joao', id: 2 },
@@ -82,32 +87,13 @@ export default {
       ]
     }
   },
-  async created () {
-    await axios
-      .get('http://localhost:8080/api/bi/data', { headers: { 'x-access-token': this.$session.get('jwt') } })
-      .then(r => {
-        this.isLoading = false
-        console.log(r.data.value)
-        this.tables = r.data.value
-      })
-      .catch(e => {
-        this.isLoading = false
-        console.log(e)
-        this.$buefy.toast.open({
-          message: `Error: ${e.message}`,
-          type: 'is-danger'
-        })
-      })
-    this.keys = Object.keys(this.tables[0])
-    console.log(this.keys)
-  },
   mounted () {
     this.keys = Object.keys(this.tables)
     console.log(this.keys)
   },
   methods: {
     add: function () {
-      this.list.push({ name: 'Juan' })
+      console.log(this.form)
     },
     replace: function () {
       this.list = [{ name: 'Edgard' }]

@@ -7,51 +7,71 @@
                 <list-att></list-att>
             </card-component>
             <card-component title="Attributs choisis" class="tile is-child">
-                <draggable class="box" :list="list2" group="people" @change="log">
-                  <div
-                    class="box"
-                    v-for="(element, index) in list2"
-                    :key="element.name"
-                  >
-                    {{ element }} {{ index }}
-                  </div>
-                </draggable>
+                <att-ch :list="list2"></att-ch>
             </card-component>
             <card-component title="Liste des dimentions" class="tile is-child">
+                <b-collapse
+                    class="card"
+                    animation="slide"
+                    v-for="(dim, index) of this.$store.state.dims"
+                    :key="index"
+                    :open="isOpen == false"
+                    @open="isOpen = true">
+                    <div slot="trigger" slot-scope="props" class="card-header" role="button">
+                      <p class="card-header-title">{{ dim.nom }}</p>
+                      <a class="card-header-icon"><b-icon :icon="props.open ? 'menu-up' : 'menu-down'"></b-icon></a>
+                    </div>
+                    <simple-att :dim="dim.atts"></simple-att>
+                </b-collapse>
                 <grouping-by></grouping-by>
             </card-component>
         </tiles>
+        <div><b-button class="is-success" style="float: right" v-on:click="show">Done</b-button></div>
     </section>
   </div>
 </template>
 
 <script>
+import facts from '../../../public/data-sources/attributs.json'
 import TitleBar from '@/components/TitleBar'
 // import axios from 'axios'
 import Tiles from '../../components/Tiles.vue'
 import CardComponent from '@/components/CardComponent'
 import ListAtt from '../../components/Query/ListAtt.vue'
-import draggable from 'vuedraggable'
+// import draggable from 'vuedraggable'
 import GroupingBy from '../../components/Query/GroupingBy.vue'
+import AttCh from '../../components/Query/AttCh.vue'
+import SimpleAtt from '../../components/Query/SimpleAtt.vue'
 
 export default {
   name: 'QueryCreator',
-  components: { TitleBar, Tiles, CardComponent, ListAtt, draggable, GroupingBy },
+  components: { TitleBar, Tiles, CardComponent, ListAtt, GroupingBy, AttCh, SimpleAtt },
   computed: {
     titleStack () {
       return [
-        'Tables',
-        'Activités'
+        'Statistics',
+        'Query Creator'
       ]
     }
+  },
+  mounted () {
+    console.log('here')
+    console.log(facts.facts)
   },
   data () {
     return {
       total: 0,
-      list2: []
+      list2: [],
+      facts: facts,
+      dims: []
     }
   },
   methods: {
+    show: function () {
+      let query = ''
+      query = 'SELECT ' + 'FROM'
+      alert('this is the query \n' + query)
+    },
     add: function () {
       this.list.push({ name: 'Juan' })
     },

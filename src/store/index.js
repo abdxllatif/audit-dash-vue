@@ -31,7 +31,11 @@ export default new Vuex.Store({
 
     /* Aside */
     isAsideVisible: true,
-    isAsideMobileExpanded: false
+    isAsideMobileExpanded: false,
+
+    /* QueryCreator */
+    dims: [],
+    atts: []
 
   },
   mutations: {
