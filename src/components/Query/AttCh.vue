@@ -21,18 +21,28 @@
                     </template>
                     <div class="card-content">
                         <div class="content">
-                            <b-field>
-                                <b-checkbox>sum</b-checkbox>
-                            </b-field>
-                            <b-field>
-                                <b-checkbox>avg</b-checkbox>
-                            </b-field>
-                            <b-field>
-                                <b-checkbox>tri</b-checkbox>
-                            </b-field>
-                            <b-field>
-                                <b-checkbox>Basic</b-checkbox>
-                            </b-field>
+                            <div class="block">
+                                <b-checkbox v-model="element.checkBoxGroup"
+                                    native-value="sum">
+                                    SUM
+                                </b-checkbox>
+                                <b-checkbox v-model="element.checkBoxGroup"
+                                    native-value="avg">
+                                    AVG
+                                </b-checkbox>
+                                <b-checkbox v-model="element.checkBoxGroup"
+                                    native-value="min">
+                                    MIN
+                                </b-checkbox>
+                                <b-checkbox v-model="element.checkBoxGroup"
+                                    native-value="max">
+                                    MAX
+                                </b-checkbox>
+                            </div>
+                            <p class="content">
+                                <b>Selection:</b>
+                                {{ element.checkBoxGroup }}
+                            </p>
                         </div>
                     </div>
                   </b-collapse>
@@ -64,11 +74,12 @@ export default {
       list1: [],
       isOpen: 0,
       tables: [],
-      keys: []
+      keys: [],
+      checkboxGroup: []
     }
   },
   created () {
-    this.keys = Object.keys(this.tab)
+    /* this.keys = Object.keys(this.tab)
     delete this.keys[0]
     console.log(this.keys)
     const text = '[]'
@@ -77,7 +88,7 @@ export default {
       this.obj.push({ nom: this.keys[i], table: this.tab.table })
     }
     console.log('yes')
-    console.log(this.obj)
+    console.log(this.obj) */
   },
   methods: {
     log: function (evt) {

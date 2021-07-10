@@ -11,7 +11,8 @@
             </div>
             <div class="card-content" style="background-color: #F1F3F6">
                 <div class="block">
-                  <b-radio v-model="form.radio"
+                  <b-radio
+                      v-model="form.radio"
                       name="name"
                       native-value="Rollup">
                       Rollup
@@ -27,13 +28,15 @@
                       Sets
                   </b-radio>
                 </div>
+                <b-field v-if="form.radio != ''" label="Attribut" horizontal>
+                  <b-select placeholder="Selectionne un attribut" v-model="form.att" required>
+                    <option v-for="(att, index) in this.$store.state.atts" :key="index" :value="att">
+                      {{ att.nom }}
+                    </option>
+                  </b-select>
+                  <b-input v-if="$route.params.sel!=null" v-model="$route.params.sel.nom" custom-class="is-static" readonly/>
+                </b-field>
                 <b-button  type="is-primary" v-on:click="add">Ajouter</b-button>
-                <b-field>
-                    <b-input v-model="form.ordred" placeholder="Ordred By"></b-input>
-                </b-field>
-                <b-field>
-                    <b-input v-model="form.partition" placeholder="Partition By"></b-input>
-                </b-field>
             </div>
         </b-collapse>
     </section>
@@ -49,8 +52,7 @@ export default {
     return {
       form: {
         radio: '',
-        ordred: '',
-        partition: ''
+        att: null
       },
       list1: [
         { name: 'John', id: 1 },
@@ -93,6 +95,73 @@ export default {
   },
   methods: {
     add: function () {
+      console.log(this.form.att)
+      if (this.form.radio === 'Rollup') {
+        this.$store.state.isRollUp = true
+        let count = 0
+        for (let i = 0; i < this.$store.state.RollUp.length; i++) {
+          if (this.$store.state.RollUp[i].name === this.form.att.table) {
+            let count2 = 0
+            for (let j = 0; j < this.$store.state.RollUp[i].params.length; j++) {
+              if (this.$store.state.RollUp[i].params[j] === this.form.att.nom) {
+                count2++
+                alert('deja zedtha ya na9ch')
+              }
+            }
+            if (count2 === 0) {
+              this.$store.state.RollUp[i].params.push(this.form.att.nom)
+            }
+            count++
+          }
+        }
+        if (count === 0) {
+          this.$store.state.RollUp.push({ name: this.form.att.table, params: [this.form.att.nom] })
+        }
+      } else if (this.form.radio === 'Cube') {
+        this.$store.state.isCube = true
+        let count = 0
+        for (let i = 0; i < this.$store.state.Cube.length; i++) {
+          if (this.$store.state.Cube[i].name === this.form.att.table) {
+            let count2 = 0
+            for (let j = 0; j < this.$store.state.Cube[i].params.length; j++) {
+              if (this.$store.state.Cube[i].params[j] === this.form.att.nom) {
+                count2++
+                alert('deja zedtha ya na9ch')
+              }
+            }
+            if (count2 === 0) {
+              this.$store.state.Cube[i].params.push(this.form.att.nom)
+            }
+            count++
+          }
+        }
+        if (count === 0) {
+          this.$store.state.Cube.push({ name: this.form.att.table, params: this.form.att.nom })
+        }
+      } else if (this.form.radio === 'Sets') {
+        this.$store.state.isGroupBy = true
+        let count = 0
+        for (let i = 0; i < this.$store.state.GroupBy.length; i++) {
+          if (this.$store.state.GroupBy[i].name === this.form.att.table) {
+            let count2 = 0
+            for (let j = 0; j < this.$store.state.GroupBy[i].params.length; j++) {
+              if (this.$store.state.GroupBy[i].params[j] === this.form.att.nom) {
+                count2++
+                alert('deja zedtha ya na9ch')
+              }
+            }
+            if (count2 === 0) {
+              this.$store.state.GroupBy[i].params.push(this.form.att.nom)
+            }
+            count++
+          }
+        }
+        if (count === 0) {
+          this.$store.state.GroupBy.push({ name: this.form.att.table, params: this.form.att.nom })
+        }
+      } else {
+        alert('tetmnyk biya?')
+      }
       console.log(this.form)
     },
     replace: function () {

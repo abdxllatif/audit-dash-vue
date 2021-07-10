@@ -68,9 +68,56 @@ export default {
   },
   methods: {
     show: function () {
-      let query = ''
-      query = 'SELECT ' + 'FROM'
-      alert('this is the query \n' + query)
+      const jsonr = {
+        tables: [],
+        isRollUp: false,
+        isCube: false,
+        isGroupBy: false,
+        GroupBy: [],
+        Cube: [],
+        RollUp: []
+      }
+      const atts = this.$store.state.atts
+      console.log(atts)
+      // const dims = this.$store.state.dims
+      jsonr.isRollUp = this.$store.state.isRollUp
+      jsonr.RollUp = this.$store.state.RollUp
+      jsonr.isCube = this.$store.state.isCube
+      jsonr.Cube = this.$store.state.Cube
+      jsonr.isGroupBy = this.$store.state.isGroupBy
+      jsonr.GroupBy = this.$store.state.GroupBy
+      const tables = []
+      for (let i = 0; i < atts.length; i++) {
+        let count = 0
+        const vars = []
+        for (let x = 0; x < atts[i].checkBoxGroup.length; x++) {
+          if (atts[i].checkBoxGroup[x] === 'sum') {
+            vars.push('sum(' + atts[i].nom + ')')
+          }
+          if (atts[i].checkBoxGroup[x] === 'avg') {
+            vars.push('avg(' + atts[i].nom + ')')
+          }
+          if (atts[i].checkBoxGroup[x] === 'max') {
+            vars.push('max(' + atts[i].nom + ')')
+          }
+          if (atts[i].checkBoxGroup[x] === 'min') {
+            vars.push('min(' + atts[i].nom + ')')
+          }
+        }
+        for (let j = 0; j < tables.length; j++) {
+          if (atts[i].table === tables[j].name) {
+            for (let z = 0; z < vars.length; z++) {
+              tables[j].params.push(vars[z])
+            }
+            count++
+          }
+        }
+        if (count === 0) {
+          tables.push({ name: atts[i].table, params: vars })
+        }
+      }
+      jsonr.tables = tables
+      alert('this is the JSON \n' + JSON.stringify(jsonr))
     },
     add: function () {
       this.list.push({ name: 'Juan' })

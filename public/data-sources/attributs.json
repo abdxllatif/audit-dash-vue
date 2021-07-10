@@ -6,6 +6,7 @@
                 {   "nom":"MoyenneGenerale",
                     "table": "fact_delib",
                     "type":"String",
+                    "checkBoxGroup":[],
                     "dims":[
                         {
                             "nom":"dim_etudiant",
@@ -39,6 +40,7 @@
                 {   "nom":"TauxReussite",
                     "table": "fact_delib",
                     "type":"Integer",
+                    "checkBoxGroup":[],
                     "dims":[
                         {
                             "nom":"dim_etudiant",
@@ -74,6 +76,7 @@
                 {   "nom":"NombreTotal",
                     "table": "fact_etudiant",
                     "type":"String",
+                    "checkBoxGroup":[],
                     "dims":[
                         {
                             "nom":"dim_departement",

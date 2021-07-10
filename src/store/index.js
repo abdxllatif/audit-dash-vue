@@ -35,7 +35,13 @@ export default new Vuex.Store({
 
     /* QueryCreator */
     dims: [],
-    atts: []
+    atts: [],
+    isRollUp: false,
+    RollUp: [],
+    isCube: false,
+    Cube: [],
+    isGroupBy: false,
+    GroupBy: []
 
   },
   mutations: {
