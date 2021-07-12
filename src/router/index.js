@@ -61,6 +61,17 @@ const routes = [
   },
   {
     meta: {
+      title: 'Signup'
+    },
+    path: '/signup',
+    name: 'signup',
+    component: () => import(/* webpackChunkName: "forms" */ '../views/Signup.vue')
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next({ name: 'dash' }) } else { next() }
+    } */
+  },
+  {
+    meta: {
       title: 'Tables'
     },
     path: '/tables',
@@ -449,6 +460,24 @@ const routes = [
     path: '/query',
     name: 'QueryCreator',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/query/Query.vue'),
+    props: true
+  },
+  {
+    meta: {
+      title: 'Résultats'
+    },
+    path: '/query/results',
+    name: 'QueryResult',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/query/Result.vue'),
+    props: true
+  },
+  {
+    meta: {
+      title: 'Graphe des résultats'
+    },
+    path: '/query/results/chart',
+    name: 'ChartResult',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/query/ChartResult.vue'),
     props: true
   },
   {

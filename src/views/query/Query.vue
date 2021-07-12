@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import router from '../../router/index'
 import facts from '../../../public/data-sources/attributs.json'
 import TitleBar from '@/components/TitleBar'
 // import axios from 'axios'
@@ -118,6 +119,8 @@ export default {
       }
       jsonr.tables = tables
       alert('this is the JSON \n' + JSON.stringify(jsonr))
+      router.push({ name: 'QueryResult', params: { json: JSON.stringify(jsonr) } })
+      // Vue.$router.push({ name: 'QueryResult' })
     },
     add: function () {
       this.list.push({ name: 'Juan' })
