@@ -18,6 +18,11 @@ import './registerServiceWorker'
 /* Vue. Main component */
 import App from './App.vue'
 
+/* Vue Apex Chart */
+import VueApexCharts from 'vue-apexcharts'
+Vue.use(VueApexCharts)
+Vue.component('apexchart', VueApexCharts)
+
 /* Default title tag */
 const defaultDocumentTitle = 'Audit Dash'
 

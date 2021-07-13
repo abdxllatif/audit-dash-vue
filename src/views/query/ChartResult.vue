@@ -14,7 +14,10 @@
       </div>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component class="has-table has-mobile-sort-spaced" title="Graphe" icon="account-multiple">
+      <card-component v-bind:title="'Graphe ' + type" icon="account-multiple">
+          <apexchart width="70%" v-bind:type="type" :options="options" :series="data"></apexchart>
+          x :{{ x }} <br>
+          y :{{ y }}
       </card-component>
     </section>
   </div>
@@ -25,11 +28,13 @@
 import CardComponent from '@/components/CardComponent'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
-import axios from 'axios'
+// import axios from 'axios'
+import VueApexCharts from 'vue-apexcharts'
 
+/* eslint-disable */
 export default {
   name: 'ChartResult',
-  components: { HeroBar, TitleBar, CardComponent },
+  components: { HeroBar, TitleBar, CardComponent, VueApexCharts },
   computed: {
     titleStack () {
       return [
@@ -41,38 +46,57 @@ export default {
     }
   },
   props: {
+    x: {
+      default: null
+    },
+    y: {
+      default: null
+    },
+    type: {
+      default: null
+    }
   },
   data () {
     return {
       isModalActive: false,
       total: 0,
       columns: [],
-      data: []
+      data: [],
+      options: {},
+      series: [44, 55, 41, 17, 15],
+      a: []
     }
   },
   created () {
-    axios
-      .get('http://localhost:8080/api/data/formations', { headers: { 'x-access-token': this.$session.get('jwt') } })
-      .then(r => {
-        this.isLoading = false
-        if (r.data && r.data.results) {
-          if (r.data.results.length > this.perPage) {
-            this.paginated = true
-          }
-          this.data = r.data.results
-          const a = Object.keys(this.data[0])
-          for (let z = 0; z < a.length; z++) {
-            this.columns.push({ field: a[z], label: a[z], searchable: true })
-          }
+    if (this.type === ('pie' || 'donut')) {
+      for (let i = 0; i < this.$store.state.data.length; i++) {
+        console.log(eval('this.$store.state.data[i].' + this.x))
+        this.data.push(eval('this.$store.state.data[i].' + this.x))
+      }
+    } else if (this.type === 'bar') {
+        let b = ''
+        for (let j = 0; j < this.$store.state.data.length; j++) {
+            b = eval('this.$store.state.data[j].' + this.x)
+            console.log(b)
+            this.a.push(b)
         }
-      })
-      .catch(e => {
-        this.isLoading = false
-        this.$buefy.toast.open({
-          message: `Error: ${e.message}`,
-          type: 'is-danger'
-        })
-      })
+        this.data.push({ name: this.x, data: this.a })
+        console.log('yo a')
+        console.log(this.a)
+        console.log('yo data')
+        console.log(this.data)
+    } else if (this.type === 'area') {
+        let b = ''
+        for (let k = 0; k < this.$store.state.data.length; k++) {
+            b = eval('this.$store.state.data[k].' + this.x)
+            console.log(b)
+            this.a.push(b)
+        }
+        this.data.push({ name: this.x, data: this.a })
+        console.log('yo')
+        console.log(this.a)
+    }
+    
   },
   methods: {
     ChartModal () {

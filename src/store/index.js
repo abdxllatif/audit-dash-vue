@@ -41,7 +41,11 @@ export default new Vuex.Store({
     isCube: false,
     Cube: [],
     isGroupBy: false,
-    GroupBy: []
+    GroupBy: [],
+
+    /* ChartCreator */
+    variables: [],
+    data: []
 
   },
   mutations: {

@@ -10,15 +10,15 @@
       <section class="modal-card-body">
             <b-field label="X: " horizontal>
                   <b-select placeholder="Selectionne un type de graphe" v-model="form.x" expanded required>
-                    <option v-for="(type, index) in types" :key="index" :value="type">
-                      {{ type }}
+                    <option v-for="(vars, index) in this.vars" :key="index" :value="vars">
+                      {{ vars }}
                     </option>
                   </b-select>
             </b-field>
             <b-field label="Y: " horizontal>
                   <b-select placeholder="Selectionne un type de graphe" v-model="form.y" expanded required>
-                    <option v-for="(type, index) in types" :key="index" :value="type">
-                      {{ type }}
+                    <option v-for="(vars, index) in vars" :key="index" :value="vars">
+                      {{ vars }}
                     </option>
                   </b-select>
             </b-field>
@@ -46,15 +46,19 @@ export default {
     isActive: {
       type: Boolean,
       default: false
+    },
+    vars: {
+      default: []
     }
   },
   data () {
     return {
       isModalActive: false,
       types: [
-        'PieChart',
-        'BarChart',
-        'AreaChart'
+        'pie',
+        'bar',
+        'area',
+        'donut'
       ],
       form: {
         x: '',
@@ -69,6 +73,7 @@ export default {
     },
     confirm () {
       this.$emit('confirm')
+      this.$router.push({ name: 'ChartResult', params: { x: this.form.x, y: this.form.y, type: this.form.type } })
     }
   },
   watch: {

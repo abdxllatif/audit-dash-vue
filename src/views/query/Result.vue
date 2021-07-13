@@ -1,6 +1,6 @@
 <template>
   <div>
-    <modal-chart :is-active="isModalActive" @confirm="Confirm"
+    <modal-chart :is-active="isModalActive" :vars="Object.keys(data[0])" @confirm="Confirm"
                @cancel="Cancel"/>
     <title-bar :title-stack="titleStack"/>
     <hero-bar>
@@ -49,7 +49,6 @@ export default {
   data () {
     return {
       isModalActive: false,
-      total: 0,
       columns: [],
       data: []
     }
@@ -68,6 +67,8 @@ export default {
           for (let z = 0; z < a.length; z++) {
             this.columns.push({ field: a[z], label: a[z], searchable: true })
           }
+          this.$store.state.variables = this.columns
+          this.$store.state.data = this.data
         }
       })
       .catch(e => {
@@ -83,7 +84,6 @@ export default {
       this.isModalActive = true
     },
     Confirm () {
-      this.$router.push({ name: 'ChartResult' })
       this.isModalActive = false
     },
     Cancel () {
