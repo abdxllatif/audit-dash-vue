@@ -1,20 +1,16 @@
 <template>
   <div>
-    <modal-chart :is-active="isModalActive" :vars="Object.keys(data[0])" :x="this.x" :y="this.y" @confirm="Confirm"
-               @cancel="Cancel"/>
-    <modal-save-result :is-active="isSaveModalActive" :vars="Object.keys(data[0])" @confirm="ConfirmSave"
+    <modal-chart :is-active="isModalActive" :vars="Object.keys(data[0])" @confirm="Confirm"
                @cancel="Cancel"/>
     <title-bar :title-stack="titleStack"/>
     <hero-bar>
-      Résultat de la requete
+      Les résultats sauvegardées
       <p class="subtitle">
-        requete :
+        Total :
       </p>
       <div slot="right">
-        <b-button class="mr-4" type="is-info" @click="ChartModal">Génerer un graphe</b-button>
-        <b-button class="mr-4" type="is-success" @click="SaveChart">Sauvegarder</b-button>
         <router-link to="/query" class="button is-dark">
-          Retour
+          Nouvelle requete
         </router-link>
       </div>
     </hero-bar>
@@ -33,17 +29,15 @@ import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 import axios from 'axios'
 import ModalChart from '../../components/ModalBox/ModalChart.vue'
-import ModalSaveResult from '../../components/ModalBox/ModalSaveResult.vue'
 
 export default {
-  name: 'QueryResult',
-  components: { HeroBar, TitleBar, CardComponent, ModalChart, ModalSaveResult },
+  name: 'SavedQuery',
+  components: { HeroBar, TitleBar, CardComponent, ModalChart },
   computed: {
     titleStack () {
       return [
         'Statistics',
-        'QueryCreator',
-        'Results'
+        'SevedQuery'
       ]
     }
   },
@@ -51,17 +45,12 @@ export default {
   },
   data () {
     return {
-      isSaveModalActive: false,
       isModalActive: false,
       columns: [],
-      data: [],
-      x: [],
-      y: []
+      data: []
     }
   },
   created () {
-    this.x = this.$store.state.attDim
-    this.y = this.$store.state.checked
     axios
       .get('http://localhost:8080/api/data/formations', { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(r => {
@@ -94,15 +83,11 @@ export default {
     Confirm () {
       this.isModalActive = false
     },
-    ConfirmSave () {
-      this.isSaveModalActive = false
-    },
     Cancel () {
       this.isModalActive = false
-      this.isSaveModalActive = false
     },
     SaveChart () {
-      this.isSaveModalActive = true
+      alert('not yet')
     }
   }
 }

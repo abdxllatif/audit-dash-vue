@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import router from '../../router/index'
+// import router from '../../router/index'
 import facts from '../../../public/data-sources/attributs.json'
 import TitleBar from '@/components/TitleBar'
 // import axios from 'axios'
@@ -43,6 +43,7 @@ import ListAtt from '../../components/Query/ListAtt.vue'
 import GroupingBy from '../../components/Query/GroupingBy.vue'
 import AttCh from '../../components/Query/AttCh.vue'
 import SimpleAtt from '../../components/Query/SimpleAtt.vue'
+import axios from 'axios'
 
 export default {
   name: 'QueryCreator',
@@ -64,7 +65,8 @@ export default {
       total: 0,
       list2: [],
       facts: facts,
-      dims: []
+      dims: [],
+      attDims: []
     }
   },
   methods: {
@@ -80,6 +82,8 @@ export default {
       }
       const atts = this.$store.state.atts
       console.log(atts)
+      console.log('dims')
+      console.log(this.$store.state.dims)
       // const dims = this.$store.state.dims
       jsonr.isRollUp = this.$store.state.isRollUp
       jsonr.RollUp = this.$store.state.RollUp
@@ -88,21 +92,26 @@ export default {
       jsonr.isGroupBy = this.$store.state.isGroupBy
       jsonr.GroupBy = this.$store.state.GroupBy
       const tables = []
+      this.$store.state.checked = []
       for (let i = 0; i < atts.length; i++) {
         let count = 0
         const vars = []
         for (let x = 0; x < atts[i].checkBoxGroup.length; x++) {
           if (atts[i].checkBoxGroup[x] === 'sum') {
             vars.push('sum(' + atts[i].nom + ')')
+            this.$store.state.checked.push('sum(' + atts[i].nom + ')')
           }
           if (atts[i].checkBoxGroup[x] === 'avg') {
             vars.push('avg(' + atts[i].nom + ')')
+            this.$store.state.checked.push('avg(' + atts[i].nom + ')')
           }
           if (atts[i].checkBoxGroup[x] === 'max') {
             vars.push('max(' + atts[i].nom + ')')
+            this.$store.state.checked.push('max(' + atts[i].nom + ')')
           }
           if (atts[i].checkBoxGroup[x] === 'min') {
             vars.push('min(' + atts[i].nom + ')')
+            this.$store.state.checked.push('min(' + atts[i].nom + ')')
           }
         }
         for (let j = 0; j < tables.length; j++) {
@@ -118,9 +127,18 @@ export default {
         }
       }
       jsonr.tables = tables
-      alert('this is the JSON \n' + JSON.stringify(jsonr))
-      router.push({ name: 'QueryResult', params: { json: JSON.stringify(jsonr) } })
+      // alert('this is the JSON \n' + JSON.stringify(jsonr))
+      // console.log(jsonr)
+      // router.push({ name: 'QueryResult', params: { json: JSON.stringify(jsonr) } })
       // Vue.$router.push({ name: 'QueryResult' })
+      axios.post('http://localhost:8081/api/bi/sql', jsonr)
+        .then(r => {
+          console.log('resultat')
+          console.log(r)
+        })
+        .catch(e => {
+          console.log(e)
+        })
     },
     add: function () {
       this.list.push({ name: 'Juan' })

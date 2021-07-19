@@ -42,6 +42,8 @@ export default new Vuex.Store({
     Cube: [],
     isGroupBy: false,
     GroupBy: [],
+    attDim: [],
+    checked: [],
 
     /* ChartCreator */
     variables: [],

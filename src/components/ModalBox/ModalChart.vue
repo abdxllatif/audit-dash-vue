@@ -10,14 +10,14 @@
       <section class="modal-card-body">
             <b-field label="X: " horizontal>
                   <b-select placeholder="Selectionne un type de graphe" v-model="form.x" expanded required>
-                    <option v-for="(vars, index) in this.vars" :key="index" :value="vars">
-                      {{ vars }}
+                    <option v-for="(vars, index) in this.x" :key="index" :value="vars">
+                      {{ vars.nom }}
                     </option>
                   </b-select>
             </b-field>
             <b-field label="Y: " horizontal>
                   <b-select placeholder="Selectionne un type de graphe" v-model="form.y" expanded required>
-                    <option v-for="(vars, index) in vars" :key="index" :value="vars">
+                    <option v-for="(vars, index) in this.y" :key="index" :value="vars">
                       {{ vars }}
                     </option>
                   </b-select>
@@ -33,7 +33,7 @@
       </section>
       <footer class="modal-card-foot">
         <button class="button" type="button" @click="cancel">Annuler</button>
-        <button class="button is-danger" @click="confirm">Confirmer</button>
+        <button class="button is-success" @click="confirm">Confirmer</button>
       </footer>
     </div>
   </b-modal>
@@ -48,6 +48,12 @@ export default {
       default: false
     },
     vars: {
+      default: []
+    },
+    x: {
+      default: []
+    },
+    y: {
       default: []
     }
   },

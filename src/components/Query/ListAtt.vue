@@ -43,31 +43,7 @@ export default {
       list1: [],
       isOpen: 0,
       tables: facts.facts,
-      keys: [],
-      collapses: [
-        {
-          title: 'Fait_Etudiants',
-          att: [
-            {
-              nom: 'Moyenne'
-            },
-            {
-              nom: 'residence'
-            },
-            {
-              nom: 'khobz'
-            }
-          ]
-        },
-        {
-          title: 'Title 2',
-          text: 'Text 2'
-        },
-        {
-          title: 'Title 3',
-          text: 'Text 3'
-        }
-      ]
+      keys: []
     }
   },
   /* async created () {
@@ -90,6 +66,8 @@ export default {
     console.log(this.keys)
   }, */
   mounted () {
+    this.$forceUpdate()
+    this.tables = facts.facts
     this.keys = Object.keys(this.tables)
     console.log(this.keys)
   },

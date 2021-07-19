@@ -481,6 +481,15 @@ const routes = [
     props: true
   },
   {
+    meta: {
+      title: 'Résultats sauvegardées'
+    },
+    path: '/results',
+    name: 'SavedQuery',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/query/SavedQuery.vue'),
+    props: true
+  },
+  {
     path: '*', redirect: '/404'
   }
 ]

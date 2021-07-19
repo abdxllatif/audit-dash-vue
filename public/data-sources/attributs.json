@@ -1,107 +1,263 @@
 {"facts":
     [
         {
-            "nom":"fact_delib",
+            "nom":"delib_forma_fact",
             "atts": [
-                {   "nom":"MoyenneGenerale",
-                    "table": "fact_delib",
+                {   "nom":"Dm_moyenne",
+                    "table": "delib_forma_fact",
                     "type":"String",
                     "checkBoxGroup":[],
                     "dims":[
                         {
-                            "nom":"dim_etudiant",
+                            "nom":"etudiant_dim",
                             "atts": [
-                                {   "nom":"nomEtudiant",
+                                {   "nom":"nom_prenom",
                                     "type":"String",
-                                    "dimTable":"dim_etudiant"
+                                    "dimTable":"etudiant_dim"
+                                },
+                                {   "nom":"email",
+                                    "type":"String",
+                                    "dimTable":"etudiant_dim"
+                                },
+                                {   "nom":"date_naissance",
+                                    "type":"String",
+                                    "dimTable":"etudiant_dim"
+                                },
+                                {   "nom":"sex",
+                                    "type":"String",
+                                    "dimTable":"etudiant_dim"
+                                },
+                                {   "nom":"reside",
+                                    "type":"String",
+                                    "dimTable":"etudiant_dim"
                                 }
                             ]
                         },
                         {
-                            "nom":"dim_formation",
+                            "nom":"deliberation_module_dim",
                             "atts": [
-                                {   "nom":"nomFormation",
+                                {   "nom":"Dm_annee",
                                     "type":"String",
-                                    "dimTable":"dim_formation"
+                                    "dimTable":"deliberation_module_dim"
+                                },
+                                {   "nom":"Dm_moyenne",
+                                    "type":"String",
+                                    "dimTable":"deliberation_module_dim"
+                                },
+                                {   "nom":"Dm_coefficient",
+                                    "type":"String",
+                                    "dimTable":"deliberation_module_dim"
+                                },
+                                {   "nom":"Dm_credit",
+                                    "type":"String",
+                                    "dimTable":"deliberation_module_dim"
                                 }
                             ]
                         },
                         {
-                            "nom":"dim_niveau",
+                            "nom":"matiere_dim",
                             "atts": [
-                                {   "nom":"",
-                                    "type":"",
-                                    "dimTable":"dim_niveau"
+                                {   "nom":"nom_m",
+                                    "type":"String",
+                                    "dimTable":"matiere_dim"
+                                },
+                                {   "nom":"type_m",
+                                    "type":"String",
+                                    "dimTable":"matiere_dim"
+                                },
+                                {   "nom":"coefficient_m",
+                                    "type":"String",
+                                    "dimTable":"matiere_dim"
+                                },
+                                {   "nom":"credit_m",
+                                    "type":"String",
+                                    "dimTable":"matiere_dim"
+                                },
+                                {   "nom":"charge_horaire_m",
+                                    "type":"String",
+                                    "dimTable":"matiere_dim"
+                                }
+                            ]
+                        },
+                        {
+                            "nom":"semestre_dim",
+                            "atts": [
+                                {   "nom":"numero",
+                                    "type":"String",
+                                    "dimTable":"semestre_dim"
+                                }
+                            ]
+                        },
+                        {
+                            "nom":"ue_dim",
+                            "atts": [
+                                {   "nom":"nom_ue",
+                                    "type":"String",
+                                    "dimTable":"ue_dim"
+                                },
+                                {   "nom":"type_ue",
+                                    "type":"String",
+                                    "dimTable":"ue_dim"
+                                },
+                                {   "nom":"coefficient_ue",
+                                    "type":"String",
+                                    "dimTable":"ue_dim"
+                                },
+                                {   "nom":"credit_ue",
+                                    "type":"String",
+                                    "dimTable":"ue_dim"
+                                },
+                                {   "nom":"charge_horaire_ue",
+                                    "type":"String",
+                                    "dimTable":"ue_dim"
+                                }
+                            ]
+                        },
+                        {
+                            "nom":"formation_dim",
+                            "atts": [
+                                {   "nom":"nom",
+                                    "type":"String",
+                                    "dimTable":"formation_dim"
+                                }
+                            ]
+                        },
+                        {
+                            "nom":"niveau_dim",
+                            "atts": [
+                                {   "nom":"nom",
+                                    "type":"String",
+                                    "dimTable":"niveau_dim"
                                 }
                             ]
                         }
                     ]
                 },
-                {   "nom":"TauxReussite",
-                    "table": "fact_delib",
-                    "type":"Integer",
-                    "checkBoxGroup":[],
-                    "dims":[
-                        {
-                            "nom":"dim_etudiant",
-                            "atts": [
-                                {   "nom":"",
-                                    "type":""
-                                }
-                            ]
-                        },
-                        {
-                            "nom":"dim_formation",
-                            "atts": [
-                                {   "nom":"",
-                                    "type":""
-                                }
-                            ]
-                        },
-                        {
-                            "nom":"dim_niveau",
-                            "atts": [
-                                {   "nom":"",
-                                    "type":""
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "nom":"fact_etudiant",
-            "atts": [
-                {   "nom":"NombreTotal",
-                    "table": "fact_etudiant",
+                {   "nom":"charge_horaire_m",
+                    "table": "delib_forma_fact",
                     "type":"String",
                     "checkBoxGroup":[],
                     "dims":[
                         {
-                            "nom":"dim_departement",
+                            "nom":"etudiant_dim",
                             "atts": [
-                                {   "nom":"nomDep",
+                                {   "nom":"nom_prenom",
                                     "type":"String",
-                                    "dimTable":"dim_departement"
+                                    "dimTable":"etudiant_dim"
+                                },
+                                {   "nom":"email",
+                                    "type":"String",
+                                    "dimTable":"etudiant_dim"
+                                },
+                                {   "nom":"date_naissance",
+                                    "type":"String",
+                                    "dimTable":"etudiant_dim"
+                                },
+                                {   "nom":"sex",
+                                    "type":"String",
+                                    "dimTable":"etudiant_dim"
+                                },
+                                {   "nom":"reside",
+                                    "type":"String",
+                                    "dimTable":"etudiant_dim"
                                 }
                             ]
                         },
                         {
-                            "nom":"dim_formation",
+                            "nom":"deliberation_module_dim",
                             "atts": [
-                                {   "nom":"nomFormation",
+                                {   "nom":"Dm_annee",
                                     "type":"String",
-                                    "dimTable":"dim_formation"
+                                    "dimTable":"deliberation_module_dim"
+                                },
+                                {   "nom":"Dm_moyenne",
+                                    "type":"String",
+                                    "dimTable":"deliberation_module_dim"
+                                },
+                                {   "nom":"Dm_coefficient",
+                                    "type":"String",
+                                    "dimTable":"deliberation_module_dim"
+                                },
+                                {   "nom":"Dm_credit",
+                                    "type":"String",
+                                    "dimTable":"deliberation_module_dim"
                                 }
                             ]
                         },
                         {
-                            "nom":"dim_niveau",
+                            "nom":"matiere_dim",
                             "atts": [
-                                {   "nom":"Nom",
+                                {   "nom":"nom_m",
                                     "type":"String",
-                                    "dimTable":"dim_niveau"
+                                    "dimTable":"matiere_dim"
+                                },
+                                {   "nom":"type_m",
+                                    "type":"String",
+                                    "dimTable":"matiere_dim"
+                                },
+                                {   "nom":"coefficient_m",
+                                    "type":"String",
+                                    "dimTable":"matiere_dim"
+                                },
+                                {   "nom":"credit_m",
+                                    "type":"String",
+                                    "dimTable":"matiere_dim"
+                                },
+                                {   "nom":"charge_horaire_m",
+                                    "type":"String",
+                                    "dimTable":"matiere_dim"
+                                }
+                            ]
+                        },
+                        {
+                            "nom":"semestre_dim",
+                            "atts": [
+                                {   "nom":"numero",
+                                    "type":"String",
+                                    "dimTable":"semestre_dim"
+                                }
+                            ]
+                        },
+                        {
+                            "nom":"ue_dim",
+                            "atts": [
+                                {   "nom":"nom_ue",
+                                    "type":"String",
+                                    "dimTable":"ue_dim"
+                                },
+                                {   "nom":"type_ue",
+                                    "type":"String",
+                                    "dimTable":"ue_dim"
+                                },
+                                {   "nom":"coefficient_ue",
+                                    "type":"String",
+                                    "dimTable":"ue_dim"
+                                },
+                                {   "nom":"credit_ue",
+                                    "type":"String",
+                                    "dimTable":"ue_dim"
+                                },
+                                {   "nom":"charge_horaire_ue",
+                                    "type":"String",
+                                    "dimTable":"ue_dim"
+                                }
+                            ]
+                        },
+                        {
+                            "nom":"formation_dim",
+                            "atts": [
+                                {   "nom":"nom",
+                                    "type":"String",
+                                    "dimTable":"formation_dim"
+                                }
+                            ]
+                        },
+                        {
+                            "nom":"niveau_dim",
+                            "atts": [
+                                {   "nom":"nom",
+                                    "type":"String",
+                                    "dimTable":"niveau_dim"
                                 }
                             ]
                         }

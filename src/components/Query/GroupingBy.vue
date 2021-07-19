@@ -30,8 +30,8 @@
                 </div>
                 <b-field v-if="form.radio != ''" label="Attribut" horizontal>
                   <b-select placeholder="Selectionne un attribut" v-model="form.att" required>
-                    <option v-for="(att, index) in this.$store.state.atts" :key="index" :value="att">
-                      {{ att.nom }}
+                    <option v-for="(att, index) in this.$store.state.attDim" :key="index" :value="att">
+                      {{ att.nom + ' : ' }} <i>{{ att.dimTable }}</i>
                     </option>
                   </b-select>
                   <b-input v-if="$route.params.sel!=null" v-model="$route.params.sel.nom" custom-class="is-static" readonly/>
@@ -100,7 +100,7 @@ export default {
         this.$store.state.isRollUp = true
         let count = 0
         for (let i = 0; i < this.$store.state.RollUp.length; i++) {
-          if (this.$store.state.RollUp[i].name === this.form.att.table) {
+          if (this.$store.state.RollUp[i].name === this.form.att.dimTable) {
             let count2 = 0
             for (let j = 0; j < this.$store.state.RollUp[i].params.length; j++) {
               if (this.$store.state.RollUp[i].params[j] === this.form.att.nom) {
@@ -115,13 +115,13 @@ export default {
           }
         }
         if (count === 0) {
-          this.$store.state.RollUp.push({ name: this.form.att.table, params: [this.form.att.nom] })
+          this.$store.state.RollUp.push({ name: this.form.att.dimTable, params: [this.form.att.nom] })
         }
       } else if (this.form.radio === 'Cube') {
         this.$store.state.isCube = true
         let count = 0
         for (let i = 0; i < this.$store.state.Cube.length; i++) {
-          if (this.$store.state.Cube[i].name === this.form.att.table) {
+          if (this.$store.state.Cube[i].name === this.form.att.dimTable) {
             let count2 = 0
             for (let j = 0; j < this.$store.state.Cube[i].params.length; j++) {
               if (this.$store.state.Cube[i].params[j] === this.form.att.nom) {
@@ -136,13 +136,13 @@ export default {
           }
         }
         if (count === 0) {
-          this.$store.state.Cube.push({ name: this.form.att.table, params: this.form.att.nom })
+          this.$store.state.Cube.push({ name: this.form.att.dimTable, params: this.form.att.nom })
         }
       } else if (this.form.radio === 'Sets') {
         this.$store.state.isGroupBy = true
         let count = 0
         for (let i = 0; i < this.$store.state.GroupBy.length; i++) {
-          if (this.$store.state.GroupBy[i].name === this.form.att.table) {
+          if (this.$store.state.GroupBy[i].name === this.form.att.dimTable) {
             let count2 = 0
             for (let j = 0; j < this.$store.state.GroupBy[i].params.length; j++) {
               if (this.$store.state.GroupBy[i].params[j] === this.form.att.nom) {
@@ -157,7 +157,7 @@ export default {
           }
         }
         if (count === 0) {
-          this.$store.state.GroupBy.push({ name: this.form.att.table, params: this.form.att.nom })
+          this.$store.state.GroupBy.push({ name: this.form.att.dimTable, params: this.form.att.nom })
         }
       } else {
         alert('tetmnyk biya?')

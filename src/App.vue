@@ -287,6 +287,11 @@ export default {
             to: '/query',
             icon: 'chart-bar',
             label: "Création d'une requete"
+          },
+          {
+            to: '/results',
+            icon: 'chart-bar',
+            label: 'Résultats sauvegardées'
           }
         ],
         'A propos',

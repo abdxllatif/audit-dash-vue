@@ -93,6 +93,7 @@ export default {
   methods: {
     log: function (evt) {
       this.$store.state.dims = []
+      this.$store.state.attDim = []
       for (let i = 0; i < this.list.length; i++) {
         const a = this.list[i].dims
         for (let j = 0; j < a.length; j++) {
@@ -104,6 +105,9 @@ export default {
           }
           if (count === 0) {
             this.$store.state.dims.push(a[j])
+            for (let k = 0; k < a[j].atts.length; k++) {
+              this.$store.state.attDim.push(a[j].atts[k])
+            }
           }
         }
       }
