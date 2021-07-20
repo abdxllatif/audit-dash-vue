@@ -127,7 +127,7 @@ export default {
         }
       }
       jsonr.tables = tables
-      // alert('this is the JSON \n' + JSON.stringify(jsonr))
+      alert('this is the JSON \n' + JSON.stringify(jsonr))
       // console.log(jsonr)
       // router.push({ name: 'QueryResult', params: { json: JSON.stringify(jsonr) } })
       // Vue.$router.push({ name: 'QueryResult' })

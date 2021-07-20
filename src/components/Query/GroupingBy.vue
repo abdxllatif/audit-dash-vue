@@ -54,39 +54,9 @@ export default {
         radio: '',
         att: null
       },
-      list1: [
-        { name: 'John', id: 1 },
-        { name: 'Joao', id: 2 },
-        { name: 'Jean', id: 3 },
-        { name: 'Gerard', id: 4 }
-      ],
       isOpen: 0,
       tables: [],
-      keys: [],
-      collapses: [
-        {
-          title: 'Fait_Etudiants',
-          att: [
-            {
-              nom: 'Moyenne'
-            },
-            {
-              nom: 'residence'
-            },
-            {
-              nom: 'khobz'
-            }
-          ]
-        },
-        {
-          title: 'Title 2',
-          text: 'Text 2'
-        },
-        {
-          title: 'Title 3',
-          text: 'Text 3'
-        }
-      ]
+      keys: []
     }
   },
   mounted () {
@@ -131,12 +101,14 @@ export default {
             }
             if (count2 === 0) {
               this.$store.state.Cube[i].params.push(this.form.att.nom)
+              console.log('zedt' + this.form.att.nom + 'bla table')
             }
             count++
           }
         }
         if (count === 0) {
-          this.$store.state.Cube.push({ name: this.form.att.dimTable, params: this.form.att.nom })
+          this.$store.state.Cube.push({ name: this.form.att.dimTable, params: [this.form.att.nom] })
+          console.log('zedt : ' + this.form.att.nom + ' b table : ' + this.form.att.dimTable)
         }
       } else if (this.form.radio === 'Sets') {
         this.$store.state.isGroupBy = true
@@ -157,7 +129,7 @@ export default {
           }
         }
         if (count === 0) {
-          this.$store.state.GroupBy.push({ name: this.form.att.dimTable, params: this.form.att.nom })
+          this.$store.state.GroupBy.push({ name: this.form.att.dimTable, params: [this.form.att.nom] })
         }
       } else {
         alert('tetmnyk biya?')
