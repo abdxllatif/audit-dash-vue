@@ -67,6 +67,7 @@ export default {
     add: function () {
       console.log(this.form.att)
       if (this.form.radio === 'Rollup') {
+        this.$store.state.isGroupBy = true
         this.$store.state.isRollUp = true
         let count = 0
         for (let i = 0; i < this.$store.state.RollUp.length; i++) {
@@ -75,7 +76,7 @@ export default {
             for (let j = 0; j < this.$store.state.RollUp[i].params.length; j++) {
               if (this.$store.state.RollUp[i].params[j] === this.form.att.nom) {
                 count2++
-                alert('deja zedtha ya na9ch')
+                alert('deja ajouté')
               }
             }
             if (count2 === 0) {
@@ -88,6 +89,7 @@ export default {
           this.$store.state.RollUp.push({ name: this.form.att.dimTable, params: [this.form.att.nom] })
         }
       } else if (this.form.radio === 'Cube') {
+        this.$store.state.isGroupBy = true
         this.$store.state.isCube = true
         let count = 0
         for (let i = 0; i < this.$store.state.Cube.length; i++) {
@@ -96,7 +98,7 @@ export default {
             for (let j = 0; j < this.$store.state.Cube[i].params.length; j++) {
               if (this.$store.state.Cube[i].params[j] === this.form.att.nom) {
                 count2++
-                alert('deja zedtha ya na9ch')
+                alert('deja ajouté')
               }
             }
             if (count2 === 0) {
@@ -119,7 +121,7 @@ export default {
             for (let j = 0; j < this.$store.state.GroupBy[i].params.length; j++) {
               if (this.$store.state.GroupBy[i].params[j] === this.form.att.nom) {
                 count2++
-                alert('deja zedtha ya na9ch')
+                alert('deja ajouté')
               }
             }
             if (count2 === 0) {
@@ -132,7 +134,7 @@ export default {
           this.$store.state.GroupBy.push({ name: this.form.att.dimTable, params: [this.form.att.nom] })
         }
       } else {
-        alert('tetmnyk biya?')
+        alert('rien ajouté')
       }
       console.log(this.form)
     },
