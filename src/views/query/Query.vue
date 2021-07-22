@@ -129,6 +129,72 @@ export default {
           tables.push({ name: atts[i].table, params: vars })
         }
       }
+      console.log('zabi tglb')
+      console.log(jsonr.Cube)
+      if (jsonr.Cube !== []) {
+        for (let i = 0; i < jsonr.Cube.length; i++) {
+          for (let j = 0; j < tables.length; j++) {
+            if (jsonr.Cube[i].name === tables[j].name) {
+              for (let k = 0; k < jsonr.Cube[i].params.length; k++) {
+                let count = 0
+                for (let z = 0; z < tables[j].params.length; z++) {
+                  if (tables[j].params[z] === jsonr.Cube[i].params[k]) {
+                    count++
+                    console.log('zedt 3and: ' + tables[j].params[z])
+                  }
+                }
+                if (count === 0) {
+                  console.log('zabi')
+                  tables[j].params.push(jsonr.Cube[i].params[k])
+                }
+              }
+            }
+          }
+        }
+      }
+      if (jsonr.GroupBy !== []) {
+        for (let i = 0; i < jsonr.GroupBy.length; i++) {
+          for (let j = 0; j < tables.length; j++) {
+            if (jsonr.GroupBy[i].name === tables[j].name) {
+              for (let k = 0; k < jsonr.GroupBy[i].params.length; k++) {
+                let count = 0
+                for (let z = 0; z < tables[j].params.length; z++) {
+                  if (tables[j].params[z] === jsonr.GroupBy[i].params[k]) {
+                    count++
+                    console.log('zedt 3and: ' + tables[j].params[z])
+                  }
+                }
+                if (count === 0) {
+                  console.log('zabi')
+                  tables[j].params.push(jsonr.GroupBy[i].params[k])
+                }
+              }
+            }
+          }
+        }
+      }
+      if (jsonr.RollUp !== []) {
+        for (let i = 0; i < jsonr.RollUp.length; i++) {
+          for (let j = 0; j < tables.length; j++) {
+            if (jsonr.RollUp[i].name === tables[j].name) {
+              for (let k = 0; k < jsonr.RollUp[i].params.length; k++) {
+                let count = 0
+                for (let z = 0; z < tables[j].params.length; z++) {
+                  if (tables[j].params[z] === jsonr.RollUp[i].params[k]) {
+                    count++
+                    console.log('zedt 3and: ' + tables[j].params[z])
+                  }
+                }
+                if (count === 0) {
+                  console.log('zabi')
+                  tables[j].params.push(jsonr.RollUp[i].params[k])
+                }
+              }
+            }
+          }
+        }
+      }
+      // tables[0].params.push('nom_prenom')
       jsonr.tables = tables
       alert('this is the JSON \n' + JSON.stringify(jsonr))
       // console.log(jsonr)
@@ -139,6 +205,7 @@ export default {
           console.log('resultat')
           console.log(JSON.parse(r.data.data))
           console.log(Object.keys(JSON.parse(r.data.data)))
+          console.log('fin resultat')
           router.push({ name: 'QueryResult', params: { json: JSON.parse(r.data.data) } })
         })
         .catch(e => {

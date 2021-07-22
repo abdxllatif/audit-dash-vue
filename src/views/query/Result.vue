@@ -63,8 +63,8 @@ export default {
     this.x = this.$store.state.attDim
     this.y = this.$store.state.checked
     // this.data = r.data.results
-    this.data.push(this.json)
-    const a = Object.keys(this.json)
+    this.data = this.json
+    const a = Object.keys(this.json[0])
     for (let z = 0; z < a.length; z++) {
       this.columns.push({ field: a[z], label: a[z], searchable: true })
     }

@@ -102,7 +102,7 @@ export default {
   },
   methods: {
     add: function () {
-      console.log(this.form.item)
+      // console.log(this.form.item)
       if (this.form.radio === 'Rollup') {
         this.$store.state.isGroupBy = true
         this.$store.state.isRollUp = true
