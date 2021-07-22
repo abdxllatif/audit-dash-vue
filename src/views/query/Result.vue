@@ -20,7 +20,7 @@
     </hero-bar>
     <section class="section is-main-section">
       <card-component class="has-table has-mobile-sort-spaced" title="Resultats" icon="account-multiple">
-          <b-table :data="data" :columns="columns"></b-table>
+          <b-table :data="this.data" :columns="columns"></b-table>
       </card-component>
     </section>
   </div>
@@ -31,7 +31,6 @@
 import CardComponent from '@/components/CardComponent'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
-import axios from 'axios'
 import ModalChart from '../../components/ModalBox/ModalChart.vue'
 import ModalSaveResult from '../../components/ModalBox/ModalSaveResult.vue'
 
@@ -48,6 +47,7 @@ export default {
     }
   },
   props: {
+    json: {}
   },
   data () {
     return {
@@ -62,30 +62,16 @@ export default {
   created () {
     this.x = this.$store.state.attDim
     this.y = this.$store.state.checked
-    axios
-      .get('http://localhost:8080/api/data/formations', { headers: { 'x-access-token': this.$session.get('jwt') } })
-      .then(r => {
-        this.isLoading = false
-        if (r.data && r.data.results) {
-          if (r.data.results.length > this.perPage) {
-            this.paginated = true
-          }
-          this.data = r.data.results
-          const a = Object.keys(this.data[0])
-          for (let z = 0; z < a.length; z++) {
-            this.columns.push({ field: a[z], label: a[z], searchable: true })
-          }
-          this.$store.state.variables = this.columns
-          this.$store.state.data = this.data
-        }
-      })
-      .catch(e => {
-        this.isLoading = false
-        this.$buefy.toast.open({
-          message: `Error: ${e.message}`,
-          type: 'is-danger'
-        })
-      })
+    // this.data = r.data.results
+    this.data.push(this.json)
+    const a = Object.keys(this.json)
+    for (let z = 0; z < a.length; z++) {
+      this.columns.push({ field: a[z], label: a[z], searchable: true })
+    }
+    this.$store.state.variables = this.columns
+    this.$store.state.data = this.json
+    console.log('wsalt')
+    console.log(this.data)
   },
   methods: {
     ChartModal () {

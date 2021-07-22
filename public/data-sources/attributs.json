@@ -11,15 +11,11 @@
                         {
                             "nom":"etudiant_dim",
                             "atts": [
+                                {   "nom":"etudiant_id",
+                                    "type":"String",
+                                    "dimTable":"etudiant_dim"
+                                },
                                 {   "nom":"nom_prenom",
-                                    "type":"String",
-                                    "dimTable":"etudiant_dim"
-                                },
-                                {   "nom":"email",
-                                    "type":"String",
-                                    "dimTable":"etudiant_dim"
-                                },
-                                {   "nom":"date_naissance",
                                     "type":"String",
                                     "dimTable":"etudiant_dim"
                                 },
@@ -27,7 +23,7 @@
                                     "type":"String",
                                     "dimTable":"etudiant_dim"
                                 },
-                                {   "nom":"reside",
+                                {   "nom":"intern",
                                     "type":"String",
                                     "dimTable":"etudiant_dim"
                                 }
@@ -41,10 +37,6 @@
                                     "dimTable":"deliberation_module_dim"
                                 },
                                 {   "nom":"Dm_moyenne",
-                                    "type":"String",
-                                    "dimTable":"deliberation_module_dim"
-                                },
-                                {   "nom":"Dm_coefficient",
                                     "type":"String",
                                     "dimTable":"deliberation_module_dim"
                                 },
@@ -69,10 +61,6 @@
                                     "type":"String",
                                     "dimTable":"matiere_dim"
                                 },
-                                {   "nom":"credit_m",
-                                    "type":"String",
-                                    "dimTable":"matiere_dim"
-                                },
                                 {   "nom":"charge_horaire_m",
                                     "type":"String",
                                     "dimTable":"matiere_dim"
@@ -82,7 +70,7 @@
                         {
                             "nom":"semestre_dim",
                             "atts": [
-                                {   "nom":"numero",
+                                {   "nom":"numero_semestre",
                                     "type":"String",
                                     "dimTable":"semestre_dim"
                                 }
@@ -116,7 +104,7 @@
                         {
                             "nom":"formation_dim",
                             "atts": [
-                                {   "nom":"nom",
+                                {   "nom":"nom_formation",
                                     "type":"String",
                                     "dimTable":"formation_dim"
                                 }
@@ -125,7 +113,7 @@
                         {
                             "nom":"niveau_dim",
                             "atts": [
-                                {   "nom":"nom",
+                                {   "nom":"nom_niveau",
                                     "type":"String",
                                     "dimTable":"niveau_dim"
                                 }
@@ -141,15 +129,11 @@
                         {
                             "nom":"etudiant_dim",
                             "atts": [
+                                {   "nom":"etudiant_id",
+                                    "type":"String",
+                                    "dimTable":"etudiant_dim"
+                                },
                                 {   "nom":"nom_prenom",
-                                    "type":"String",
-                                    "dimTable":"etudiant_dim"
-                                },
-                                {   "nom":"email",
-                                    "type":"String",
-                                    "dimTable":"etudiant_dim"
-                                },
-                                {   "nom":"date_naissance",
                                     "type":"String",
                                     "dimTable":"etudiant_dim"
                                 },
@@ -157,7 +141,7 @@
                                     "type":"String",
                                     "dimTable":"etudiant_dim"
                                 },
-                                {   "nom":"reside",
+                                {   "nom":"intern",
                                     "type":"String",
                                     "dimTable":"etudiant_dim"
                                 }
@@ -171,10 +155,6 @@
                                     "dimTable":"deliberation_module_dim"
                                 },
                                 {   "nom":"Dm_moyenne",
-                                    "type":"String",
-                                    "dimTable":"deliberation_module_dim"
-                                },
-                                {   "nom":"Dm_coefficient",
                                     "type":"String",
                                     "dimTable":"deliberation_module_dim"
                                 },
@@ -199,10 +179,6 @@
                                     "type":"String",
                                     "dimTable":"matiere_dim"
                                 },
-                                {   "nom":"credit_m",
-                                    "type":"String",
-                                    "dimTable":"matiere_dim"
-                                },
                                 {   "nom":"charge_horaire_m",
                                     "type":"String",
                                     "dimTable":"matiere_dim"
@@ -212,7 +188,7 @@
                         {
                             "nom":"semestre_dim",
                             "atts": [
-                                {   "nom":"numero",
+                                {   "nom":"numero_semestre",
                                     "type":"String",
                                     "dimTable":"semestre_dim"
                                 }
@@ -246,7 +222,7 @@
                         {
                             "nom":"formation_dim",
                             "atts": [
-                                {   "nom":"nom",
+                                {   "nom":"nom_formation",
                                     "type":"String",
                                     "dimTable":"formation_dim"
                                 }
@@ -255,7 +231,7 @@
                         {
                             "nom":"niveau_dim",
                             "atts": [
-                                {   "nom":"nom",
+                                {   "nom":"nom_niveau",
                                     "type":"String",
                                     "dimTable":"niveau_dim"
                                 }

@@ -36,12 +36,15 @@ export default new Vuex.Store({
     /* QueryCreator */
     dims: [],
     atts: [],
+    attsDetail: [],
     isRollUp: false,
     RollUp: [],
     isCube: false,
     Cube: [],
     isGroupBy: false,
     GroupBy: [],
+    isOrderBy: false,
+    OrderBy: [],
     attDim: [],
     checked: [],
 

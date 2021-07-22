@@ -32,10 +32,9 @@
 </template>
 
 <script>
-// import router from '../../router/index'
+import router from '../../router/index'
 import facts from '../../../public/data-sources/attributs.json'
 import TitleBar from '@/components/TitleBar'
-// import axios from 'axios'
 import Tiles from '../../components/Tiles.vue'
 import CardComponent from '@/components/CardComponent'
 import ListAtt from '../../components/Query/ListAtt.vue'
@@ -76,9 +75,11 @@ export default {
         isRollUp: false,
         isCube: false,
         isGroupBy: false,
+        isOrderBy: false,
         GroupBy: [],
         Cube: [],
-        RollUp: []
+        RollUp: [],
+        OrderBy: []
       }
       const atts = this.$store.state.atts
       console.log(atts)
@@ -91,6 +92,8 @@ export default {
       jsonr.Cube = this.$store.state.Cube
       jsonr.isGroupBy = this.$store.state.isGroupBy
       jsonr.GroupBy = this.$store.state.GroupBy
+      jsonr.isOrderBy = this.$store.state.isOrderBy
+      jsonr.OrderBy = this.$store.state.OrderBy
       const tables = []
       this.$store.state.checked = []
       for (let i = 0; i < atts.length; i++) {
@@ -134,7 +137,9 @@ export default {
       axios.post('http://localhost:8081/api/bi/sql', jsonr)
         .then(r => {
           console.log('resultat')
-          console.log(r)
+          console.log(JSON.parse(r.data.data))
+          console.log(Object.keys(JSON.parse(r.data.data)))
+          router.push({ name: 'QueryResult', params: { json: JSON.parse(r.data.data) } })
         })
         .catch(e => {
           console.log(e)
