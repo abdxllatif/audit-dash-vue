@@ -11,7 +11,7 @@
             <b-field label="X: " horizontal>
                   <b-select placeholder="Selectionne un type de graphe" v-model="form.x" expanded required>
                     <option v-for="(vars, index) in this.x" :key="index" :value="vars">
-                      {{ vars.nom }}
+                      {{ vars }}
                     </option>
                   </b-select>
             </b-field>
@@ -72,6 +72,9 @@ export default {
         type: ''
       }
     }
+  },
+  created () {
+    this.Xes = this.$store.state.Xes
   },
   methods: {
     cancel () {

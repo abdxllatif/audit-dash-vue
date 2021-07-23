@@ -60,14 +60,30 @@ export default {
     }
   },
   created () {
-    this.x = this.$store.state.attDim
-    this.y = this.$store.state.checked
+    this.x = this.$store.state.Xes
+    this.y = []
     // this.data = r.data.results
     this.data = this.json
     const a = Object.keys(this.json[0])
     for (let z = 0; z < a.length; z++) {
       this.columns.push({ field: a[z], label: a[z], searchable: true })
     }
+    console.log('this.x')
+    console.log(this.x)
+    for (let z = 0; z < a.length; z++) {
+      let count = 0
+      for (let i = 0; i < this.x.length; i++) {
+        if (a[z] === this.x[i]) {
+          console.log('ytchabho ' + this.x[i])
+          count++
+        }
+      }
+      if (count === 0) {
+        this.y.push(a[z])
+      }
+    }
+    console.log('this.y')
+    console.log(this.y)
     this.$store.state.variables = this.columns
     this.$store.state.data = this.json
     console.log('wsalt')

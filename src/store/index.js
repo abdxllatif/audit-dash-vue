@@ -50,7 +50,8 @@ export default new Vuex.Store({
 
     /* ChartCreator */
     variables: [],
-    data: []
+    data: [],
+    Xes: []
 
   },
   mutations: {

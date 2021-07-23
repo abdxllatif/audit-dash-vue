@@ -98,6 +98,7 @@ export default {
   mounted () {
     this.keys = Object.keys(this.tables)
     console.log(this.keys)
+    this.$store.state.Xes = []
     // this.rollup = this.$store.state.RollUp
   },
   methods: {
@@ -106,6 +107,7 @@ export default {
       if (this.form.radio === 'Rollup') {
         this.$store.state.isGroupBy = true
         this.$store.state.isRollUp = true
+        this.$store.state.Xes.push(this.form.att.nom)
         let count = 0
         for (let i = 0; i < this.$store.state.RollUp.length; i++) {
           if (this.$store.state.RollUp[i].name === this.form.att.dimTable) {
@@ -130,6 +132,7 @@ export default {
       } else if (this.form.radio === 'Cube') {
         this.$store.state.isGroupBy = true
         this.$store.state.isCube = true
+        this.$store.state.Xes.push(this.form.att.nom)
         let count = 0
         for (let i = 0; i < this.$store.state.Cube.length; i++) {
           if (this.$store.state.Cube[i].name === this.form.att.dimTable) {
@@ -153,6 +156,7 @@ export default {
         }
       } else if (this.form.radio === 'Sets') {
         this.$store.state.isGroupBy = true
+        this.$store.state.Xes.push(this.form.att.nom)
         let count = 0
         for (let i = 0; i < this.$store.state.GroupBy.length; i++) {
           if (this.$store.state.GroupBy[i].name === this.form.att.dimTable) {

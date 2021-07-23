@@ -10,6 +10,7 @@
                 <att-ch :list="list2"></att-ch>
             </card-component>
             <card-component title="Liste des dimentions" class="tile is-child">
+                <grouping-by></grouping-by>
                 <b-collapse
                     class="card"
                     animation="slide"
@@ -23,7 +24,6 @@
                     </div>
                     <simple-att :dim="dim.atts"></simple-att>
                 </b-collapse>
-                <grouping-by></grouping-by>
             </card-component>
         </tiles>
         <div><b-button class="is-success" style="float: right" v-on:click="show">Done</b-button></div>
@@ -196,7 +196,7 @@ export default {
       }
       // tables[0].params.push('nom_prenom')
       jsonr.tables = tables
-      alert('this is the JSON \n' + JSON.stringify(jsonr))
+      // alert('this is the JSON \n' + JSON.stringify(jsonr))
       // console.log(jsonr)
       // router.push({ name: 'QueryResult', params: { json: JSON.stringify(jsonr) } })
       // Vue.$router.push({ name: 'QueryResult' })
