@@ -62,7 +62,7 @@ export default {
   data () {
     return {
       total: 0,
-      list2: [],
+      list2: this.$store.state.list2,
       facts: facts,
       dims: [],
       attDims: []

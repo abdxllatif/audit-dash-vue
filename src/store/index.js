@@ -34,6 +34,8 @@ export default new Vuex.Store({
     isAsideMobileExpanded: false,
 
     /* QueryCreator */
+    list: [],
+    list2: [],
     dims: [],
     atts: [],
     attsDetail: [],
@@ -51,7 +53,8 @@ export default new Vuex.Store({
     /* ChartCreator */
     variables: [],
     data: [],
-    Xes: []
+    Xes: [],
+    result: []
 
   },
   mutations: {

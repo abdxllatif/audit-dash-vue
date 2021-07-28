@@ -19,6 +19,7 @@
     "dayjs": "^1.10.4",
     "lodash": "^4.17.20",
     "numeral": "^2.0.6",
+    "printd": "^1.5.0",
     "register-service-worker": "^1.7.2",
     "sortablejs": "^1.14.0",
     "vue": "^2.6.12",

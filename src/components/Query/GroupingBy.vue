@@ -99,6 +99,7 @@ export default {
     this.keys = Object.keys(this.tables)
     console.log(this.keys)
     this.$store.state.Xes = []
+    this.rigl()
     // this.rollup = this.$store.state.RollUp
   },
   methods: {
@@ -107,7 +108,6 @@ export default {
       if (this.form.radio === 'Rollup') {
         this.$store.state.isGroupBy = true
         this.$store.state.isRollUp = true
-        this.$store.state.Xes.push(this.form.att.nom)
         let count = 0
         for (let i = 0; i < this.$store.state.RollUp.length; i++) {
           if (this.$store.state.RollUp[i].name === this.form.att.dimTable) {
@@ -121,6 +121,7 @@ export default {
             if (count2 === 0) {
               this.$store.state.RollUp[i].params.push(this.form.att.nom)
               this.rollup.push(this.form.att.nom)
+              this.$store.state.Xes.push(this.form.att.nom)
             }
             count++
           }
@@ -128,11 +129,11 @@ export default {
         if (count === 0) {
           this.$store.state.RollUp.push({ name: this.form.att.dimTable, params: [this.form.att.nom] })
           this.rollup.push(this.form.att.nom)
+          this.$store.state.Xes.push(this.form.att.nom)
         }
       } else if (this.form.radio === 'Cube') {
         this.$store.state.isGroupBy = true
         this.$store.state.isCube = true
-        this.$store.state.Xes.push(this.form.att.nom)
         let count = 0
         for (let i = 0; i < this.$store.state.Cube.length; i++) {
           if (this.$store.state.Cube[i].name === this.form.att.dimTable) {
@@ -146,6 +147,7 @@ export default {
             if (count2 === 0) {
               this.$store.state.Cube[i].params.push(this.form.att.nom)
               this.cube.push(this.form.att.nom)
+              this.$store.state.Xes.push(this.form.att.nom)
             }
             count++
           }
@@ -153,10 +155,10 @@ export default {
         if (count === 0) {
           this.$store.state.Cube.push({ name: this.form.att.dimTable, params: [this.form.att.nom] })
           this.cube.push(this.form.att.nom)
+          this.$store.state.Xes.push(this.form.att.nom)
         }
       } else if (this.form.radio === 'Sets') {
         this.$store.state.isGroupBy = true
-        this.$store.state.Xes.push(this.form.att.nom)
         let count = 0
         for (let i = 0; i < this.$store.state.GroupBy.length; i++) {
           if (this.$store.state.GroupBy[i].name === this.form.att.dimTable) {
@@ -170,6 +172,7 @@ export default {
             if (count2 === 0) {
               this.$store.state.GroupBy[i].params.push(this.form.att.nom)
               this.sets.push(this.form.att.nom)
+              this.$store.state.Xes.push(this.form.att.nom)
             }
             count++
           }
@@ -177,6 +180,7 @@ export default {
         if (count === 0) {
           this.$store.state.GroupBy.push({ name: this.form.att.dimTable, params: [this.form.att.nom] })
           this.sets.push(this.form.att.nom)
+          this.$store.state.Xes.push(this.form.att.nom)
         }
       } else if (this.form.radio === 'Orderby') {
         this.$store.state.isOrderBy = true
@@ -195,6 +199,32 @@ export default {
         alert('rien ajouté')
       }
       // console.log(this.form)
+    },
+    rigl: function () {
+      if (this.$store.state.RollUp !== []) {
+        for (let i = 0; i < this.$store.state.RollUp.length; i++) {
+          for (let j = 0; j < this.$store.state.RollUp[i].params.length; j++) {
+            this.rollup.push(this.$store.state.RollUp[i].params[j])
+            this.$store.state.Xes.push(this.$store.state.RollUp[i].params[j])
+          }
+        }
+      }
+      if (this.$store.state.Cube !== []) {
+        for (let i = 0; i < this.$store.state.Cube.length; i++) {
+          for (let j = 0; j < this.$store.state.Cube[i].params.length; j++) {
+            this.cube.push(this.$store.state.Cube[i].params[j])
+            this.$store.state.Xes.push(this.$store.state.Cube[i].params[j])
+          }
+        }
+      }
+      if (this.$store.state.GroupBy !== []) {
+        for (let i = 0; i < this.$store.state.GroupBy.length; i++) {
+          for (let j = 0; j < this.$store.state.GroupBy[i].params.length; j++) {
+            this.sets.push(this.$store.state.GroupBy[i].params[j])
+            this.$store.state.Xes.push(this.$store.state.GroupBy[i].params[j])
+          }
+        }
+      }
     },
     replace: function () {
       this.list = [{ name: 'Edgard' }]

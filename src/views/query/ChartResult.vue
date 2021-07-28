@@ -8,13 +8,13 @@
       </p>
       <div slot="right">
         <b-button class="mr-4" type="is-success" @click="SaveChart">Imprimer</b-button>
-        <router-link to="/query/results" class="button is-dark">
+        <router-link :to="{ name:'QueryResult', params: { json: this.json }}" class="button is-dark">
           Retour
         </router-link>
       </div>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component v-bind:title="'Graphe ' + type" icon="account-multiple">
+      <card-component id='chart' v-bind:title="'Graphe ' + type" icon="account-multiple">
           <apexchart height="200%" v-bind:type="type" :options="this.options" :series="this.data"></apexchart>
           <!--x :{{ x }} <br>
           y :{{ y }} <br>
@@ -32,6 +32,7 @@ import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 // import axios from 'axios'
 import VueApexCharts from 'vue-apexcharts'
+import Printd from 'printd'
 
 /* eslint-disable */
 export default {
@@ -60,6 +61,7 @@ export default {
   },
   data () {
     return {
+      json: [],
       isModalActive: false,
       total: 0,
       columns: [],
@@ -80,6 +82,7 @@ export default {
     }
   },
   created () {
+    this.json = this.$store.state.data
     if ((this.type === 'pie' ) || (this.type === 'donut')) {
       for (let i = 0; i < this.$store.state.data.length; i++) {
         let a = parseInt(eval('this.$store.state.data[i].' + this.y))
@@ -130,6 +133,9 @@ export default {
         console.log(this.options)
     }
   },
+  mounted () {
+    // const p = new Printd()
+  },
   methods: {
     ChartModal () {
       this.isModalActive = true
@@ -141,7 +147,17 @@ export default {
       this.isModalActive = false
     },
     SaveChart () {
-      alert('not yet')
+      const d = new Printd()
+      const contentWindow = d.getIFrame()
+      contentWindow.addEventListener(
+        'beforeprint', () => console.log('before print event!')
+      )
+      contentWindow.addEventListener(
+        'afterprint', () => console.log('after print event!')
+      )
+      // alert('not yet')
+      console.log(d)
+      d.print( document.getElementById('chart', [`#chart { padding: 1000px; }`]))
     }
   }
 }
