@@ -12,7 +12,7 @@
             <card-component title="Liste des dimentions" class="tile is-child">
                 <grouping-by></grouping-by>
                 <b-collapse
-                    class="card"
+                    class="card my-1"
                     animation="slide"
                     v-for="(dim, index) of this.$store.state.dims"
                     :key="index"

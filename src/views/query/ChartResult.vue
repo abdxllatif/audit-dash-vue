@@ -14,7 +14,7 @@
       </div>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component id='chart' v-bind:title="'Graphe ' + type" icon="account-multiple">
+      <card-component id='chart' v-bind:title="'Graphe `' + type + '` : `' + this.y + '` par `' + this.x +'`'" icon="account-multiple">
           <apexchart height="200%" v-bind:type="type" :options="this.options" :series="this.data"></apexchart>
           <!--x :{{ x }} <br>
           y :{{ y }} <br>
@@ -83,7 +83,7 @@ export default {
   },
   created () {
     this.json = this.$store.state.data
-    if ((this.type === 'pie' ) || (this.type === 'donut')) {
+    if (this.type === 'pie') {
       for (let i = 0; i < this.$store.state.data.length; i++) {
         let a = parseInt(eval('this.$store.state.data[i].' + this.y))
         this.data.push(a)
@@ -94,7 +94,27 @@ export default {
       for (let j = 0; j < this.$store.state.data.length; j++) {
         b = eval('this.$store.state.data[' + j + '].' + this.x)
         if (b === null) {
-          this.options.labels.push('Total')
+          this.options.labels.push('Total ' + this.x)
+        } else {
+          this.options.labels.push(b)
+        }
+      }
+      // this.options.labels = ['Femme', 'Femme']
+      // this.options = this.optionsVide
+      console.log(this.options)
+    } else if (this.type === 'donut') {
+      console.log('nik mok')
+      for (let i = 0; i < this.$store.state.data.length; i++) {
+        let a = parseInt(eval('this.$store.state.data[' + i + '].' + this.y))
+        this.data.push(a)
+      }
+      this.options.chart.id = this.x
+      const dota = this.$store.state.data
+      let b
+      for (let j = 0; j < this.$store.state.data.length; j++) {
+        b = eval('this.$store.state.data[' + j + '].' + this.x)
+        if (b === null) {
+          this.options.labels.push('Total ' + this.x)
         } else {
           this.options.labels.push(b)
         }
@@ -124,7 +144,7 @@ export default {
         b = this.x
         for (let h = 0; h < this.columns.length; h++) {
           if (this.columns[h] === null) {
-            this.options.xaxis.categories.push('null')
+            this.options.xaxis.categories.push('Total ' + this.x)
           } else {
             this.options.xaxis.categories.push(this.columns[h])
           }
@@ -148,13 +168,6 @@ export default {
     },
     SaveChart () {
       const d = new Printd()
-      const contentWindow = d.getIFrame()
-      contentWindow.addEventListener(
-        'beforeprint', () => console.log('before print event!')
-      )
-      contentWindow.addEventListener(
-        'afterprint', () => console.log('after print event!')
-      )
       // alert('not yet')
       console.log(d)
       d.print( document.getElementById('chart', [`#chart { padding: 1000px; }`]))

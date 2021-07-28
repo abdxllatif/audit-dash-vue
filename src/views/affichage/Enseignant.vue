@@ -12,7 +12,7 @@
     </hero-bar>
     <section class="section is-main-section">
       <card-component class="has-table has-mobile-sort-spaced" title="Enseignants" icon="account-multiple">
-        <enseignant-table :data-url="`http://localhost:8080/api/data/enseignants`" :checkable="true"/>
+        <enseignant-table :data-url="`http://localhost:8080/api/data/enseignants`" :checkable="false"/>
       </card-component>
     </section>
   </div>

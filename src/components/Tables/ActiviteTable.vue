@@ -26,7 +26,7 @@
         {{ props.row.date_fin }}
       </b-table-column>
       <b-table-column label="Créateur" field="createur" sortable v-slot="props">
-        {{ props.row.clubClubId }}
+        <name :id="props.row.clubClubId" :dataUrl="'http://localhost:8080/api/data/clubs/'"/>
       </b-table-column>
       <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
         <div class="buttons is-right">
@@ -62,10 +62,11 @@
 <script>
 import axios from 'axios'
 import ModalBox from '@/components/ModalBox'
+import Name from '@/components/Tables/Adds/Name'
 
 export default {
   name: 'ActiviteTable',
-  components: { ModalBox },
+  components: { ModalBox, Name },
   props: {
     dataUrl: {
       default: null

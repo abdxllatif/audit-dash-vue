@@ -1,7 +1,7 @@
 <template>
-            <div class="card-content">
+            <div class="card-content py-1">
                   <div
-                    class="box"
+                    class="box my-1 py-1"
                     v-for="element in dim"
                     :key="element"
                   >

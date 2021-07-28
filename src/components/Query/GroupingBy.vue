@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section class="mb-2">
         <b-collapse
             class="card"
             animation="slide"
@@ -62,11 +62,11 @@
                     </div>
                   </b-field>
                 </div>
-                <b-button  type="is-primary" v-on:click="add">Ajouter</b-button>
-                <p><b>Rollup : </b> {{ this.rollup }} </p>
-                <p><b>Cube : </b> {{ this.cube }} </p>
-                <p><b>Sets : </b> {{ this.sets }} </p>
-                <p><b>OrderBy : </b> {{ this.orderby }} </p>
+                <b-button  type="is-primary mb-1" v-on:click="add">Ajouter</b-button>
+                <p><b-button class="is-rounded is-danger py-0 px-3 mx-1" size="is-small" v-on:click="NullRollup"><b-icon icon="close m-0 p-0" size="is-small"/></b-button><b>Rollup : </b> {{ this.rollup }} </p>
+                <p><b-button class="is-rounded is-danger py-0 px-3 mx-1" size="is-small" v-on:click="NullCube"><b-icon icon="close m-0 p-0" size="is-small"/></b-button><b>Cube : </b> {{ this.cube }} </p>
+                <p><b-button class="is-rounded is-danger py-0 px-3 mx-1" size="is-small" v-on:click="NullSets"><b-icon icon="close m-0 p-0" size="is-small"/></b-button><b>Sets : </b> {{ this.sets }} </p>
+                <p><b-button class="is-rounded is-danger py-0 px-3 mx-1" size="is-small" v-on:click="NullOrderby"><b-icon icon="close m-0 p-0" size="is-small"/></b-button><b>OrderBy : </b> {{ this.orderby }} </p>
             </div>
         </b-collapse>
     </section>
@@ -225,6 +225,26 @@ export default {
           }
         }
       }
+    },
+    NullRollup: function () {
+      this.$store.state.isRollUp = false
+      this.$store.state.RollUp = []
+      this.rollup = []
+    },
+    NullCube: function () {
+      this.$store.state.isCube = false
+      this.$store.state.Cube = []
+      this.cube = []
+    },
+    NullSets: function () {
+      this.$store.state.isGroupBy = false
+      this.$store.state.GroupBy = []
+      this.sets = []
+    },
+    NullOrderby: function () {
+      this.$store.state.isOrderBy = false
+      this.$store.state.OrderBy = []
+      this.orderby = []
     },
     replace: function () {
       this.list = [{ name: 'Edgard' }]

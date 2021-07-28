@@ -18,7 +18,7 @@
         {{ props.row.description }}
       </b-table-column>
       <b-table-column label="Département" field="departement" sortable v-slot="props">
-        {{ props.row.departementDepartementId }}
+        <name :id="props.row.departementDepartementId" :dataUrl="'http://localhost:8080/api/data/departements/'"/>
       </b-table-column>
       <b-table-column label="Détails" field="details" v-slot="props">
         <router-link :to="{name:'FormationDetail', params: {id: props.row.formationId}}" class="button is-small is-dark">
@@ -59,10 +59,11 @@
 <script>
 import axios from 'axios'
 import ModalBox from '@/components/ModalBox'
+import Name from './Adds/Name.vue'
 
 export default {
   name: 'FormTable',
-  components: { ModalBox },
+  components: { ModalBox, Name },
   props: {
     dataUrl: {
       type: String,

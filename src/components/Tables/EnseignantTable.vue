@@ -17,7 +17,7 @@
         {{ props.row.nom }}
       </b-table-column>
       <b-table-column label="Prénom" field="prenom" sortable v-slot="props">
-        {{ props.row.preom }}
+        {{ props.row.prenom }}
       </b-table-column>
       <b-table-column label="Date de naissance" field="DateNaissance" sortable v-slot="props">
         {{ props.row.date_naissance }}
@@ -108,15 +108,17 @@ export default {
         .get(this.dataUrl, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
-          if (r.data && r.data.data) {
-            if (r.data.data.length > this.perPage) {
+          console.log(r)
+          if (r.data && r.data.results) {
+            if (r.data.results.length > this.perPage) {
               this.paginated = true
             }
-            this.enseignants = r.data.data
+            this.enseignants = r.data.results
           }
         })
         .catch(e => {
           this.isLoading = false
+          console.log('tnaket')
           this.$buefy.toast.open({
             message: `Error: ${e.message}`,
             type: 'is-danger'
