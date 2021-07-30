@@ -57,14 +57,14 @@ export default {
       this.$emit('cancel')
     },
     confirm () {
-      this.$emit('confirm')
-      axios.post('http://localhost:8081/api/data/save', {
-        sql: 'select',
-        result: 'result',
+      axios.post('http://localhost:8082/api/data/save', {
+        sql: 'select nikmo mani 3arf 3lah gtlk ndiroha cause ma3andich min njibha',
+        result: this.$store.state.data,
         title: this.form.title,
         description: this.form.desc
       })
         .then(result => {
+          console.log('z')
           console.log(result)
           this.$buefy.snackbar.open({
             message: 'la requete "' + this.form.title + '" sauvegardée',
@@ -80,6 +80,7 @@ export default {
             queue: false
           })
         })
+      this.$emit('confirm')
     }
   },
   watch: {

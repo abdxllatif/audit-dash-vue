@@ -1,8 +1,8 @@
 <template>
-            <div class="card-content">
+            <div class="card-content py-1">
                 <draggable class="content" :list="tab" group="people" @change="log">
                   <div
-                    class="box"
+                    class="box my-2 py-2"
                     v-for="element in tab"
                     :key="element"
                   >

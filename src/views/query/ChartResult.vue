@@ -14,7 +14,7 @@
       </div>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component id='chart' v-bind:title="'Graphe `' + type + '` : `' + this.y + '` par `' + this.x +'`'" icon="account-multiple">
+      <card-component id='chart' v-bind:title="'Graphe `' + type + '` : `' + this.y + '` par `' + this.x +'`'" icon="finance">
           <apexchart height="200%" v-bind:type="type" :options="this.options" :series="this.data"></apexchart>
           <!--x :{{ x }} <br>
           y :{{ y }} <br>

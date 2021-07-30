@@ -1,7 +1,5 @@
 <template>
   <div>
-    <modal-chart :is-active="isModalActive" :vars="Object.keys(data[0])" @confirm="Confirm"
-               @cancel="Cancel"/>
     <title-bar :title-stack="titleStack"/>
     <hero-bar>
       Les résultats sauvegardées
@@ -16,7 +14,8 @@
     </hero-bar>
     <section class="section is-main-section">
       <card-component class="has-table has-mobile-sort-spaced" title="Resultats" icon="account-multiple">
-          <b-table :data="data" :columns="columns"></b-table>
+        <saved-queries-table :dataUrl="'http://localhost:8082/api/data/save'"></saved-queries-table>
+          <!--<b-table :data="data" :columns="columns"></b-table>-->
       </card-component>
     </section>
   </div>
@@ -27,12 +26,12 @@
 import CardComponent from '@/components/CardComponent'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
-import axios from 'axios'
-import ModalChart from '../../components/ModalBox/ModalChart.vue'
+// import axios from 'axios'
+import SavedQueriesTable from '../../components/Tables/SavedQueriesTable.vue'
 
 export default {
   name: 'SavedQuery',
-  components: { HeroBar, TitleBar, CardComponent, ModalChart },
+  components: { HeroBar, TitleBar, CardComponent, SavedQueriesTable },
   computed: {
     titleStack () {
       return [
@@ -45,21 +44,23 @@ export default {
   },
   data () {
     return {
-      isModalActive: false,
       columns: [],
       data: []
     }
   },
   created () {
-    axios
-      .get('http://localhost:8080/api/data/formations', { headers: { 'x-access-token': this.$session.get('jwt') } })
+    /* axios
+      .get('http://localhost:8082/api/data/save')
       .then(r => {
+        console.log('result')
+        console.log(r.data.doc)
+        console.log('end result')
         this.isLoading = false
-        if (r.data && r.data.results) {
-          if (r.data.results.length > this.perPage) {
+        if (r.data && r.data.doc) {
+          if (r.data.doc.length > this.perPage) {
             this.paginated = true
           }
-          this.data = r.data.results
+          this.data = r.data.doc
           const a = Object.keys(this.data[0])
           for (let z = 0; z < a.length; z++) {
             this.columns.push({ field: a[z], label: a[z], searchable: true })
@@ -74,7 +75,7 @@ export default {
           message: `Error: ${e.message}`,
           type: 'is-danger'
         })
-      })
+      }) */
   },
   methods: {
     ChartModal () {
