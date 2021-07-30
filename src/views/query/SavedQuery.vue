@@ -13,8 +13,8 @@
       </div>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component class="has-table has-mobile-sort-spaced" title="Resultats" icon="account-multiple">
-        <saved-queries-table :dataUrl="'http://localhost:8082/api/data/save'"></saved-queries-table>
+      <card-component class="has-table has-mobile-sort-spaced" title="Resultats" icon="account-multiple" @header-icon-click="flush" header-icon="reload">
+        <saved-queries-table ref="sevedTable" :dataUrl="'http://localhost:8082/api/data/save'"></saved-queries-table>
           <!--<b-table :data="data" :columns="columns"></b-table>-->
       </card-component>
     </section>
@@ -26,7 +26,7 @@
 import CardComponent from '@/components/CardComponent'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
-// import axios from 'axios'
+import axios from 'axios'
 import SavedQueriesTable from '../../components/Tables/SavedQueriesTable.vue'
 
 export default {
@@ -87,8 +87,25 @@ export default {
     Cancel () {
       this.isModalActive = false
     },
-    SaveChart () {
-      alert('not yet')
+    flush () {
+      axios.delete('http://localhost:8082/api/data/save', { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .then(r => {
+          console.log(r)
+          this.$refs.sevedTable.reload()
+          this.isLoading = false
+          this.$buefy.toast.open({
+            message: 'Confirmed',
+            type: 'is-success'
+          })
+        })
+        .catch(e => {
+          this.isLoading = false
+          console.log(e)
+          this.$buefy.toast.open({
+            message: `Error: ${e.message}`,
+            type: 'is-danger'
+          })
+        })
     }
   }
 }

@@ -163,6 +163,31 @@ export default {
     },
     trashCancel () {
       this.isModalActive = false
+    },
+    reload () {
+      this.isLoading = true
+      axios
+        .get(this.dataUrl, { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .then(r => {
+          console.log('result')
+          console.log(r.data.doc)
+          console.log('end result')
+          this.isLoading = false
+          if (r.data && r.data.doc) {
+            if (r.data.doc.length > this.perPage) {
+              this.paginated = true
+            }
+            this.queries = r.data.doc
+            this.$store.state.queries = r.data.doc
+          }
+        })
+        .catch(e => {
+          this.isLoading = false
+          this.$buefy.toast.open({
+            message: `Error: ${e.message}`,
+            type: 'is-danger'
+          })
+        })
     }
   }
 }
