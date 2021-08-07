@@ -13,6 +13,10 @@ export default new Vuex.Store({
     /* LoginState */
     isLog: false,
 
+    /* counts */
+    totalEtd: 0,
+    totalEns: 0,
+
     /* departements json */
     deps: [],
 

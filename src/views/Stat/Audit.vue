@@ -5,7 +5,226 @@
       Audit Social
     </hero-bar>
     <section class="section is-main-section">
-      fd
+      <!--<b-collapse
+            class="card"
+            animation="slide"
+            v-for="(collapse, index) of collapses"
+            :key="index"
+            :open="isOpen == index"
+            @open="isOpen = index">
+            <template #trigger="props">
+                <div
+                    class="card-header"
+                    role="button"
+                >
+                    <p class="card-header-title">
+                        {{ collapse.title }}
+                    </p>
+                    <a class="card-header-icon">
+                        <b-icon
+                            :icon="props.open ? 'menu-down' : 'menu-up'">
+                        </b-icon>
+                    </a>
+                </div>
+            </template>
+            <div class="card-content">
+                <div class="content">
+                    {{ collapse.text }}
+                </div>
+            </div>
+        </b-collapse>-->
+        <b-tabs position="is-centered" class="block" type="is-toggle-rounded" expanded>
+            <b-tab-item label="Pédagogie" icon="school">
+              <b-tabs position="is-centered" class="block">
+                  <b-tab-item label="Résultats" icon="view-list">
+                    <b-tabs class="block" type="is-toggle" vertical>
+                      <b-tab-item label="Départements">
+                        Nombre de départements : {{ totalDep }}
+                      </b-tab-item>
+                      <b-tab-item label="Formations">
+                        Nombre de formations : {{ totalFrm }}
+                      </b-tab-item>
+                    </b-tabs>
+                  </b-tab-item>
+                  <b-tab-item label="Graphes" icon="chart-timeline-variant">
+                    <tiles>
+                      <b-collapse class="tile is-child" style="width: 100%" :open="false" aria-id="contentIdForA11y1">
+                          <template #trigger>
+                              <b-button
+                                  label="Graphe des étudiants par sex"
+                                  type="is-primary"
+                                  aria-controls="contentIdForA11y1" />
+                          </template>
+                          <div class="notification">
+                              <div class="content">
+                                  <d-chart :chart-data="this.EnsSocData.chartData"></d-chart>
+                              </div>
+                          </div>
+                      </b-collapse>
+                      <b-collapse class="tile is-child" style="width: 100%" :open="false" aria-id="contentIdForA11y2">
+                          <template #trigger>
+                              <b-button
+                                  label="Graphe 2"
+                                  type="is-primary"
+                                  aria-controls="contentIdForA11y1" />
+                          </template>
+                          <div class="notification">
+                              <div class="content">
+                                  <d-chart :chart-data="this.EnsSocData.chartData"></d-chart>
+                              </div>
+                          </div>
+                      </b-collapse>
+                      <b-collapse class="tile is-child" style="width: 100%" :open="false" aria-id="contentIdForA11y2">
+                          <template #trigger>
+                              <b-button
+                                  label="Graphe 2"
+                                  type="is-primary"
+                                  aria-controls="contentIdForA11y1" />
+                          </template>
+                          <div class="notification">
+                              <div class="content">
+                                  <d-chart :chart-data="this.EnsSocData.chartData"></d-chart>
+                              </div>
+                          </div>
+                      </b-collapse>
+                    </tiles>
+                    <tiles>
+                      <b-collapse class="tile is-child" style="width: 100%" :open="false" aria-id="contentIdForA11y1">
+                          <template #trigger>
+                              <b-button
+                                  label="Graphe des enseignants par sex"
+                                  type="is-primary"
+                                  aria-controls="contentIdForA11y1" />
+                          </template>
+                          <div class="notification">
+                              <div class="content">
+                                  <d-chart :chart-data="this.EnsSexData.chartData"></d-chart>
+                              </div>
+                          </div>
+                      </b-collapse>
+                      <b-collapse class="tile is-child" style="width: 100%" :open="false" aria-id="contentIdForA11y2">
+                          <template #trigger>
+                              <b-button
+                                  label="Graphe etudiants par sex"
+                                  type="is-primary"
+                                  aria-controls="contentIdForA11y1" />
+                          </template>
+                          <div class="notification">
+                              <div class="content">
+                                  <d-chart :chart-data="this.EtdSexData.chartData"></d-chart>
+                              </div>
+                          </div>
+                      </b-collapse>
+                      <b-collapse class="tile is-child" style="width: 100%" :open="false" aria-id="contentIdForA11y2">
+                          <template #trigger>
+                              <b-button
+                                  label="Graphe 2"
+                                  type="is-primary"
+                                  aria-controls="contentIdForA11y1" />
+                          </template>
+                          <div class="notification">
+                              <div class="content">
+                                  <d-chart :chart-data="this.EnsSocData.chartData"></d-chart>
+                              </div>
+                          </div>
+                      </b-collapse>
+                    </tiles>
+                  </b-tab-item>
+              </b-tabs>
+            </b-tab-item>
+            <b-tab-item label="Personnel" icon="account-multiple">
+              <b-tabs position="is-centered" class="block">
+                  <b-tab-item label="Résultats" icon="view-list">
+                    <b>Nombre d'étudiants :</b> {{ totalEtd }}<br>
+                    <b>Nombre d'enseignants :</b> {{ totalEns }}<br><hr>
+                    <b>taux d'encadrement</b> <i>(enseignants/etudiants)</i> : 1/{{ this.tauxEnc.total }}<br>
+                    <b>taux d'encadrement par spécialité :</b><br>
+                    <b class="ml-5">Mathématique :</b> 1/{{ this.tauxEnc.specialite.Math }}<br>
+                    <b class="ml-5">Informatique :</b> 1/{{ this.tauxEnc.specialite.Info }}<br>
+                    <b class="ml-5">Electronique :</b> 1/{{ this.tauxEnc.specialite.Elec }}<br>
+                    <b class="ml-5">Langue :</b> 1/{{ this.tauxEnc.specialite.Lang }}<br>
+                  </b-tab-item>
+                  <b-tab-item label="Graphes" icon="chart-timeline-variant">
+                    <tiles>
+                      <card-component class="tile is-child">
+                        <p class="">Veuillez choisir un graphe:</p><br>
+                        <b-field>
+                            <b-radio v-model="radio"
+                                native-value="none">
+                                None
+                            </b-radio>
+                        </b-field>
+                        <b-field>
+                            <b-radio v-model="radio"
+                                native-value="EtdSex">
+                                étudiants par sex
+                            </b-radio>
+                        </b-field>
+                        <b-field>
+                            <b-radio v-model="radio"
+                                native-value="EtdDep">
+                                étudiants par départements
+                            </b-radio>
+                        </b-field>
+                        <b-field>
+                            <b-radio v-model="radio"
+                                native-value="EnsSex">
+                                Enseignants par sex
+                            </b-radio>
+                        </b-field>
+                        <b-field>
+                            <b-radio v-model="radio"
+                                native-value="EnsSpe">
+                                Enseignants par spécialité
+                            </b-radio>
+                        </b-field>
+                        <b-field>
+                            <b-radio v-model="radio"
+                                native-value="EnsGrd">
+                                Enseignants par Grade
+                            </b-radio>
+                        </b-field>
+                        <b-field>
+                            <b-radio v-model="radio"
+                                native-value="EnsSoc">
+                                Enseignants par Situation sociale
+                            </b-radio>
+                        </b-field>
+                      </card-component>
+                      <card-component class="tile is-child" title="Graphe choisi" icon="finance">
+                        <p v-if="this.radio === 'none'"></p>
+                        <d-chart v-if="this.radio === 'EtdSex'" :chart-data="this.EtdSexData.chartData"></d-chart>
+                        <d-chart v-if="this.radio === 'EtdDep'" :chart-data="this.SallesData.chartData"></d-chart>
+                        <d-chart v-if="this.radio === 'EnsSex'" :chart-data="this.EnsSexData.chartData"></d-chart>
+                        <d-chart v-if="this.radio === 'EnsSpe'" :chart-data="this.EnsSpeData.chartData"></d-chart>
+                        <d-chart v-if="this.radio === 'EnsGrd'" :chart-data="this.EnsGrdData.chartData"></d-chart>
+                        <d-chart v-if="this.radio === 'EnsSoc'" :chart-data="this.EnsSocData.chartData"></d-chart>
+                      </card-component>
+                    </tiles>
+                  </b-tab-item>
+              </b-tabs>
+            </b-tab-item>
+            <b-tab-item label="Logistiques" icon="tools">
+              <b-tabs position="is-centered" class="block">
+                  <b-tab-item label="Résultats" icon="view-list">
+                    <tiles>
+                      <card-widget class="tile is-child" type="is-primary" icon="tools" :number="totalSal" label="Salles"/>
+                      <card-widget class="tile is-child" type="is-info" icon="school" :number="totalOut" label="Outils"/>
+                    </tiles>
+                  </b-tab-item>
+                  <b-tab-item label="Graphes" icon="chart-timeline-variant">
+                    <tiles>
+                      <card-component class="tile is-child" title="Salles" icon="finance">
+                        <d-chart :chart-data="this.SallesData.chartData"></d-chart>
+                      </card-component>
+                      <card-component class="tile is-child" title="Salles" icon="finance">
+                        <d-chart :chart-data="this.SallesData.chartData"></d-chart>
+                      </card-component>
+                    </tiles>
+                  </b-tab-item>
+              </b-tabs>
+            </b-tab-item>
+        </b-tabs>
     </section>
   </div>
 </template>
@@ -13,18 +232,52 @@
 <script>
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
-// import Tiles from '@/components/Tiles'
-// import CardWidget from '@/components/CardWidget'
+import Tiles from '@/components/Tiles'
+import CardWidget from '@/components/CardWidget'
+import DChart from '@/components/Charts/DChart'
+import CardComponent from '@/components/CardComponent.vue'
 import axios from 'axios'
 
 export default {
   name: 'Audit',
   components: {
     HeroBar,
-    TitleBar
+    TitleBar,
+    Tiles,
+    CardWidget,
+    DChart,
+    CardComponent
   },
   data () {
     return {
+      tauxEnc: {
+        total: 0,
+        specialite: {
+          Math: 0,
+          Info: 0,
+          Elec: 0,
+          Lang: 0
+        }
+      },
+      radio: 'none',
+      SallesData: {
+        chartData: null
+      },
+      EtdSexData: {
+        chartData: null
+      },
+      EnsSexData: {
+        chartData: null
+      },
+      EnsSpeData: {
+        chartData: null
+      },
+      EnsGrdData: {
+        chartData: null
+      },
+      EnsSocData: {
+        chartData: null
+      },
       totalEtd: 0,
       totalPar: 0,
       totalEns: 0,
@@ -35,7 +288,22 @@ export default {
       totalClb: 0,
       totalSal: 0,
       totalOut: 0,
-      totalAdm: 0
+      totalAdm: 0,
+      isOpen: 0,
+      collapses: [
+        {
+          title: 'Title 1',
+          text: 'Text 1'
+        },
+        {
+          title: 'Title 2',
+          text: 'Text 2'
+        },
+        {
+          title: 'Title 3',
+          text: 'Text 3'
+        }
+      ]
     }
   },
   computed: {
@@ -49,15 +317,19 @@ export default {
   mounted () {
     this.$store.state.isFooterBarVisible = true
     this.$store.state.isAsideVisible = true
+    this.fillSallesData()
+    this.fillEtdSexData()
+    this.fillEnsData()
   },
-  created () {
+  async created () {
     // etudiants count
-    axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8080/api/stats/count', {
       table: 'etudiants'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
         console.log(response.data.count)
-        this.totalEtd = response.data.count
+        this.$store.state.totalEtd = response.data.count
+        this.totalEtd = this.$store.state.totalEtd
       })
       .catch(e => {
         this.errorMessage = e.message
@@ -69,7 +341,7 @@ export default {
         })
       })
     // partenaires count
-    axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8080/api/stats/count', {
       table: 'partenaires'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -86,12 +358,13 @@ export default {
         })
       })
       // enseignants count
-    axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8080/api/stats/count', {
       table: 'enseignants'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
         console.log(response.data.count)
-        this.totalEns = response.data.count
+        this.$store.state.totalEns = response.data.count
+        this.totalEns = this.$store.state.totalEns
       })
       .catch(e => {
         this.errorMessage = e.message
@@ -103,7 +376,7 @@ export default {
         })
       })
       // doctorants count
-    axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8080/api/stats/count', {
       table: 'doctorants'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -120,7 +393,7 @@ export default {
         })
       })
       // departements count
-    axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8080/api/stats/count', {
       table: 'departements'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -137,7 +410,7 @@ export default {
         })
       })
       // formations count
-    axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8080/api/stats/count', {
       table: 'formations'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -154,7 +427,7 @@ export default {
         })
       })
       // clubs count
-    axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8080/api/stats/count', {
       table: 'clubs'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -171,7 +444,7 @@ export default {
         })
       })
       // activites count
-    axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8080/api/stats/count', {
       table: 'activites'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -188,7 +461,7 @@ export default {
         })
       })
       // salles count
-    axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8080/api/stats/count', {
       table: 'salles'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -205,7 +478,7 @@ export default {
         })
       })
       // outils count
-    axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8080/api/stats/count', {
       table: 'outils'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -222,7 +495,7 @@ export default {
         })
       })
       // Administratifs count
-    axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8080/api/stats/count', {
       table: 'administratifs'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -238,8 +511,222 @@ export default {
           queue: false
         })
       })
+    this.tauxEnc.total = this.saha(this.$store.state.totalEns / this.$store.state.totalEtd)
+    // get data
+    await axios
+      .get('http://localhost:8080/api/data/enseignants', { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .then(r => {
+        this.isLoading = false
+        if (r.data && r.data.results) {
+          if (r.data.results.length > this.perPage) {
+            this.paginated = true
+          }
+          this.Maths = r.data.results.filter(obj => obj.specialite === 'Mathematique')
+          this.Info = r.data.results.filter(obj => obj.specialite === 'Informatique')
+          this.Elec = r.data.results.filter(obj => obj.specialite === 'electronique')
+          this.Langues = r.data.results.filter(obj => obj.specialite === 'Langues')
+        }
+      })
+      .catch(e => {
+        this.isLoading = false
+        this.$buefy.toast.open({
+          message: `Error: ${e.message}`,
+          type: 'is-danger'
+        })
+      })
+    this.tauxEnc.specialite.Math = this.saha(this.Maths.length / this.$store.state.totalEtd)
+    this.tauxEnc.specialite.Info = this.saha(this.Info.length / this.$store.state.totalEtd)
+    this.tauxEnc.specialite.Elec = this.saha(this.Elec.length / this.$store.state.totalEtd)
+    this.tauxEnc.specialite.Lang = this.saha(this.Langues.length / this.$store.state.totalEtd)
   },
   methods: {
+    fillSallesData () {
+      axios
+        .get('http://localhost:8080/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .then(r => {
+          this.isLoading = false
+          if (r.data && r.data.results) {
+            if (r.data.results.length > this.perPage) {
+              this.paginated = true
+            }
+            // this.$store.state.salles = r.data.results
+            this.sallesAmphi = r.data.results.filter(obj => obj.type === 'Amphi')
+            this.sallesTD = r.data.results.filter(obj => obj.type === 'Salle TD')
+            this.sallesTP = r.data.results.filter(obj => obj.type === 'Salle TP')
+            this.sallesBureau = r.data.results.filter(obj => obj.type === 'bureau')
+            this.sallesAutres = r.data.results.filter(obj => obj.type === 'autres')
+            this.SallesData.chartData = {
+              labels: ['Autres', 'Salle TD', 'Salle TP', 'Amphi', 'Bureau'],
+              datasets: [
+                {
+                  label: 'Data One',
+                  backgroundColor: ['#a3c7c9', '#889d9e', '#647678', '#509d9e', '#109d9e'],
+                  data: [this.sallesAutres.length, this.sallesTD.length, this.sallesTP.length, this.sallesAmphi.length, this.sallesBureau.length]
+                }
+              ]
+            }
+          }
+        })
+        .catch(e => {
+          this.isLoading = false
+          this.$buefy.toast.open({
+            message: `Error: ${e.message}`,
+            type: 'is-danger'
+          })
+        })
+    },
+    fillEtdSexData () {
+      axios
+        .get('http://localhost:8080/api/data/etudiants', { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .then(r => {
+          this.isLoading = false
+          if (r.data && r.data.results) {
+            if (r.data.results.length > this.perPage) {
+              this.paginated = true
+            }
+            // this.$store.state.etudiants = r.data.results
+            this.Homme = r.data.results.filter(obj => obj.Sex === 'Homme')
+            this.Femme = r.data.results.filter(obj => obj.Sex === 'Femme')
+            this.EtdSexData.chartData = {
+              labels: ['Homme', 'Femme'],
+              datasets: [
+                {
+                  label: 'Data One',
+                  backgroundColor: ['#0078D7', '#EA005E'],
+                  data: [this.Homme.length, this.Femme.length]
+                }
+              ]
+            }
+          }
+        })
+        .catch(e => {
+          this.isLoading = false
+          this.$buefy.toast.open({
+            message: `Error: ${e.message}`,
+            type: 'is-danger'
+          })
+        })
+    },
+    fillEnsData () {
+      axios
+        .get('http://localhost:8080/api/data/enseignants', { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .then(r => {
+          this.isLoading = false
+          if (r.data && r.data.results) {
+            if (r.data.results.length > this.perPage) {
+              this.paginated = true
+            }
+            // Enseignants par sex
+            // this.$store.state.enseignants = r.data.results
+            this.Homme = r.data.results.filter(obj => obj.Sex === 'Homme')
+            this.Femme = r.data.results.filter(obj => obj.Sex === 'Femme')
+            this.EnsSexData.chartData = {
+              labels: ['Homme', 'Femme'],
+              datasets: [
+                {
+                  label: 'Data One',
+                  backgroundColor: ['#0078D7', '#EA005E'],
+                  data: [this.Homme.length, this.Femme.length]
+                }
+              ]
+            }
+            // Enseignants par specialité
+            this.Maths = r.data.results.filter(obj => obj.specialite === 'Mathematique')
+            this.Info = r.data.results.filter(obj => obj.specialite === 'Informatique')
+            this.Elec = r.data.results.filter(obj => obj.specialite === 'electronique')
+            this.Langues = r.data.results.filter(obj => obj.specialite === 'Langues')
+            this.EnsSpeData.chartData = {
+              labels: ['Math', 'Informatique', 'Electronique', 'Langues'],
+              datasets: [
+                {
+                  label: 'Data One',
+                  backgroundColor: ['#0078D7', '#E74856', '#8E8CD8', '#00B7C3'],
+                  data: [this.Maths.length, this.Info.length, this.Elec.length, this.Langues.length]
+                }
+              ]
+            }
+            // Enseignants par grade
+            this.MCA = r.data.results.filter(obj => obj.grade === 'MCA')
+            this.MCB = r.data.results.filter(obj => obj.grade === 'MCB')
+            this.MAA = r.data.results.filter(obj => obj.grade === 'MAA')
+            this.MAB = r.data.results.filter(obj => obj.grade === 'MAB')
+            this.EnsGrdData.chartData = {
+              labels: ['MCA', 'MCB', 'MAA', 'MAB'],
+              datasets: [
+                {
+                  label: 'Grades',
+                  backgroundColor: ['#0078D7', '#E74856', '#8E8CD8', '#00B7C3'],
+                  data: [this.MCA.length, this.MCB.length, this.MAA.length, this.MAB.length]
+                }
+              ]
+            }
+            // Enseignants par situation social
+            this.Celib = r.data.results.filter(obj => obj.situationSocial === 'Célibataire')
+            this.Marie = r.data.results.filter(obj => obj.situationSocial === 'Marié')
+            this.Veuf = r.data.results.filter(obj => obj.situationSocial === 'Veuf')
+            this.Divorce = r.data.results.filter(obj => obj.situationSocial === 'Divorcé')
+            this.EnsSocData.chartData = {
+              labels: ['Célibataire', 'Marié', 'Veuf', 'Divorcé'],
+              datasets: [
+                {
+                  label: 'Grades',
+                  backgroundColor: ['#0078D7', '#E74856', '#8E8CD8', '#00B7C3'],
+                  data: [this.Celib.length, this.Marie.length, this.Veuf.length, this.Divorce.length]
+                }
+              ]
+            }
+          }
+        })
+        .catch(e => {
+          this.isLoading = false
+          this.$buefy.toast.open({
+            message: `Error: ${e.message}`,
+            type: 'is-danger'
+          })
+        })
+    },
+    simplify (str) {
+      var result = ''
+      var data = str.split('/')
+      var numOne = Number(data[0])
+      var numTwo = Number(data[1])
+      console.log('splited : ' + numOne)
+      for (var i = Math.max(numOne, numTwo); i > 1; i--) {
+        if ((numOne % i === 0) && (numTwo % i === 0)) {
+          numOne /= i
+          numTwo /= i
+        }
+      }
+      if (numTwo === 1) {
+        result = numOne.toString()
+      } else {
+        result = numOne.toString() + '/' + numTwo.toString()
+      }
+      return result
+    },
+    saha (x) {
+      var init = Math.abs(1 - x)
+      var a = 0
+      var i = 1
+      var stop = false
+      var res = 1
+      var b
+      do {
+        a = 1 / i
+        b = Math.abs(a - x)
+        console.log('b :' + b)
+        console.log('init :' + init)
+        if (init >= b) {
+          res = i
+          init = b
+        } else {
+          stop = true
+        }
+        i++
+      }
+      while (stop === false)
+      return res
+    }
   }
 }
 </script>

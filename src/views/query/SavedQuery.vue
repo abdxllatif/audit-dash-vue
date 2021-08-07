@@ -13,7 +13,7 @@
       </div>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component class="has-table has-mobile-sort-spaced" title="Resultats" icon="account-multiple" @header-icon-click="flush" header-icon="reload">
+      <card-component class="has-table has-mobile-sort-spaced" title="Resultats" icon="account-multiple" @header-icon-click="flush" header-icon="trash-can">
         <saved-queries-table ref="sevedTable" :dataUrl="'http://localhost:8082/api/data/save'"></saved-queries-table>
           <!--<b-table :data="data" :columns="columns"></b-table>-->
       </card-component>
