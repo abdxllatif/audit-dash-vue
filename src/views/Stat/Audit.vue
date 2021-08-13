@@ -1,54 +1,34 @@
 <template>
   <div>
+    <modal-chart-view :is-active="isModalChartViewActive" :data="this.data" :options="this.options" :ChartData="this.ChartData"
+               @cancel="cancel"/>
     <title-bar :title-stack="titleStack"/>
     <hero-bar :has-right-visible="false">
       Audit Social
     </hero-bar>
     <section class="section is-main-section">
-      <!--<b-collapse
-            class="card"
-            animation="slide"
-            v-for="(collapse, index) of collapses"
-            :key="index"
-            :open="isOpen == index"
-            @open="isOpen = index">
-            <template #trigger="props">
-                <div
-                    class="card-header"
-                    role="button"
-                >
-                    <p class="card-header-title">
-                        {{ collapse.title }}
-                    </p>
-                    <a class="card-header-icon">
-                        <b-icon
-                            :icon="props.open ? 'menu-down' : 'menu-up'">
-                        </b-icon>
-                    </a>
-                </div>
-            </template>
-            <div class="card-content">
-                <div class="content">
-                    {{ collapse.text }}
-                </div>
-            </div>
-        </b-collapse>-->
-        <b-tabs position="is-centered" class="block" type="is-toggle-rounded" expanded>
+      <b-tabs position="is-centered" class="block" type="is-toggle-rounded" expanded>
             <b-tab-item label="Pédagogie" icon="school">
               <b-tabs position="is-centered" class="block">
                   <b-tab-item label="Résultats" icon="view-list">
                     <b-tabs class="block" type="is-toggle" vertical>
                       <b-tab-item label="Départements">
-                        Nombre de départements : {{ totalDep }}
+                        <b style="font-size: 20px">Nombre de départements :</b><br>
+                        {{ totalDep }}
                       </b-tab-item>
                       <b-tab-item label="Formations">
-                        Nombre de formations : {{ totalFrm }}
+                        <b style="font-size: 20px">Nombre de formations :</b><br>
+                        {{ totalFrm }}
                       </b-tab-item>
                     </b-tabs>
                   </b-tab-item>
                   <b-tab-item label="Graphes" icon="chart-timeline-variant">
                     <tiles>
-                      <b-collapse class="tile is-child" style="width: 100%" :open="false" aria-id="contentIdForA11y1">
+                      <b-button class="is-info" @click="Activation(EnsSocData.chartData)" expanded>Etudiants par</b-button>
+                      <b-button class="is-info" @click="Activation(EtdSexData.chartData)" expanded>Etudiants par sex</b-button>
+                      <b-button class="is-info" @click="Activation(SallesData.chartData)" expanded>Etudiants par</b-button>
+                      <b-button class="is-info" @click="Activation(SallesData.chartData)" expanded>Etudiants par</b-button>
+                      <!--<b-collapse class="tile is-child" style="width: 100%" :open="false" aria-id="contentIdForA11y1">
                           <template #trigger>
                               <b-button
                                   label="Graphe des étudiants par sex"
@@ -60,74 +40,13 @@
                                   <d-chart :chart-data="this.EnsSocData.chartData"></d-chart>
                               </div>
                           </div>
-                      </b-collapse>
-                      <b-collapse class="tile is-child" style="width: 100%" :open="false" aria-id="contentIdForA11y2">
-                          <template #trigger>
-                              <b-button
-                                  label="Graphe 2"
-                                  type="is-primary"
-                                  aria-controls="contentIdForA11y1" />
-                          </template>
-                          <div class="notification">
-                              <div class="content">
-                                  <d-chart :chart-data="this.EnsSocData.chartData"></d-chart>
-                              </div>
-                          </div>
-                      </b-collapse>
-                      <b-collapse class="tile is-child" style="width: 100%" :open="false" aria-id="contentIdForA11y2">
-                          <template #trigger>
-                              <b-button
-                                  label="Graphe 2"
-                                  type="is-primary"
-                                  aria-controls="contentIdForA11y1" />
-                          </template>
-                          <div class="notification">
-                              <div class="content">
-                                  <d-chart :chart-data="this.EnsSocData.chartData"></d-chart>
-                              </div>
-                          </div>
-                      </b-collapse>
+                      </b-collapse>-->
                     </tiles>
                     <tiles>
-                      <b-collapse class="tile is-child" style="width: 100%" :open="false" aria-id="contentIdForA11y1">
-                          <template #trigger>
-                              <b-button
-                                  label="Graphe des enseignants par sex"
-                                  type="is-primary"
-                                  aria-controls="contentIdForA11y1" />
-                          </template>
-                          <div class="notification">
-                              <div class="content">
-                                  <d-chart :chart-data="this.EnsSexData.chartData"></d-chart>
-                              </div>
-                          </div>
-                      </b-collapse>
-                      <b-collapse class="tile is-child" style="width: 100%" :open="false" aria-id="contentIdForA11y2">
-                          <template #trigger>
-                              <b-button
-                                  label="Graphe etudiants par sex"
-                                  type="is-primary"
-                                  aria-controls="contentIdForA11y1" />
-                          </template>
-                          <div class="notification">
-                              <div class="content">
-                                  <d-chart :chart-data="this.EtdSexData.chartData"></d-chart>
-                              </div>
-                          </div>
-                      </b-collapse>
-                      <b-collapse class="tile is-child" style="width: 100%" :open="false" aria-id="contentIdForA11y2">
-                          <template #trigger>
-                              <b-button
-                                  label="Graphe 2"
-                                  type="is-primary"
-                                  aria-controls="contentIdForA11y1" />
-                          </template>
-                          <div class="notification">
-                              <div class="content">
-                                  <d-chart :chart-data="this.EnsSocData.chartData"></d-chart>
-                              </div>
-                          </div>
-                      </b-collapse>
+                      <b-button class="is-info" @click="Activation(EnsSocData.chartData)" expanded>Enseignants par situation sociale</b-button>
+                      <b-button class="is-info" @click="Activation(EnsSexData.chartData)" expanded>Enseignants par sex</b-button>
+                      <b-button class="is-info" @click="Activation(EnsGrdData.chartData)" expanded>Enseignants par grade</b-button>
+                      <b-button class="is-info" @click="Activation(EnsSpeData.chartData)" expanded>Enseignants par spécialité</b-button>
                     </tiles>
                   </b-tab-item>
               </b-tabs>
@@ -135,14 +54,26 @@
             <b-tab-item label="Personnel" icon="account-multiple">
               <b-tabs position="is-centered" class="block">
                   <b-tab-item label="Résultats" icon="view-list">
-                    <b>Nombre d'étudiants :</b> {{ totalEtd }}<br>
-                    <b>Nombre d'enseignants :</b> {{ totalEns }}<br><hr>
-                    <b>taux d'encadrement</b> <i>(enseignants/etudiants)</i> : 1/{{ this.tauxEnc.total }}<br>
-                    <b>taux d'encadrement par spécialité :</b><br>
-                    <b class="ml-5">Mathématique :</b> 1/{{ this.tauxEnc.specialite.Math }}<br>
-                    <b class="ml-5">Informatique :</b> 1/{{ this.tauxEnc.specialite.Info }}<br>
-                    <b class="ml-5">Electronique :</b> 1/{{ this.tauxEnc.specialite.Elec }}<br>
-                    <b class="ml-5">Langue :</b> 1/{{ this.tauxEnc.specialite.Lang }}<br>
+                    <b-tabs class="block" type="is-toggle" vertical>
+                      <b-tab-item label="Etudiants">
+                        <b style="font-size: 20px">Nombre d'étudiants :</b><br>
+                        {{ totalEtd }}<br>
+                      </b-tab-item>
+                      <b-tab-item label="Enseignants">
+                        <b style="font-size: 20px">Nombre d'enseignants :</b><br>
+                        {{ totalEns }}<br>
+                      </b-tab-item>
+                      <b-tab-item label="Taux d'encadrement">
+                        <b>Nombre d'étudiants :</b> {{ totalEtd }}<br>
+                        <b>Nombre d'enseignants :</b> {{ totalEns }}<br><hr>
+                        <b>taux d'encadrement</b> <i>(enseignants/etudiants)</i> : 1/{{ this.tauxEnc.total }}<br>
+                        <b>taux d'encadrement par spécialité :</b><br>
+                        <b class="ml-5">Mathématique :</b> 1/{{ this.tauxEnc.specialite.Math }}<br>
+                        <b class="ml-5">Informatique :</b> 1/{{ this.tauxEnc.specialite.Info }}<br>
+                        <b class="ml-5">Electronique :</b> 1/{{ this.tauxEnc.specialite.Elec }}<br>
+                        <b class="ml-5">Langue :</b> 1/{{ this.tauxEnc.specialite.Lang }}<br>
+                      </b-tab-item>
+                    </b-tabs>
                   </b-tab-item>
                   <b-tab-item label="Graphes" icon="chart-timeline-variant">
                     <tiles>
@@ -207,19 +138,101 @@
             <b-tab-item label="Logistiques" icon="tools">
               <b-tabs position="is-centered" class="block">
                   <b-tab-item label="Résultats" icon="view-list">
-                    <tiles>
-                      <card-widget class="tile is-child" type="is-primary" icon="tools" :number="totalSal" label="Salles"/>
-                      <card-widget class="tile is-child" type="is-info" icon="school" :number="totalOut" label="Outils"/>
-                    </tiles>
+                    <b-tabs class="block" type="is-toggle" vertical>
+                      <b-tab-item label="Salles">
+                        <tiles>
+                          <section class="tile is-child">
+                            <b style="font-size: 20px">Nombre des salles :</b><br>
+                            <b class="ml-2">Total :</b> {{ totalSal }}<br>
+                          </section>
+                          <section class="tile is-child">
+                            <b-collapse :open="false" aria-id="contentIdForA11y1">
+                                <template #trigger>
+                                    <b-button
+                                        label="Filtres"
+                                        type="is-primary"
+                                        aria-controls="contentIdForA11y1" />
+                                </template>
+                                <div class="notification">
+                                    <div class="content">
+                                        <b-field label="Type">
+                                          <b-radio v-model="salles.salleFilter.type" @input="UpdateSalleData"
+                                              native-value="none">
+                                              Total
+                                          </b-radio>
+                                          <b-radio v-model="salles.salleFilter.type" @input="UpdateSalleData"
+                                              native-value="Salle TD">
+                                              TD
+                                          </b-radio>
+                                          <b-radio v-model="salles.salleFilter.type" @input="UpdateSalleData"
+                                              native-value="Salle TP">
+                                              TP
+                                          </b-radio>
+                                          <b-radio v-model="salles.salleFilter.type" @input="UpdateSalleData"
+                                              native-value="Amphi">
+                                              Amphi
+                                          </b-radio>
+                                          <b-radio v-model="salles.salleFilter.type" @input="UpdateSalleData"
+                                              native-value="bureau">
+                                              Bureau
+                                          </b-radio>
+                                          <b-radio v-model="salles.salleFilter.type" @input="UpdateSalleData"
+                                              native-value="autres">
+                                              Autres
+                                          </b-radio>
+                                      </b-field>
+                                      <b-field label="Capacité">
+                                          <b-radio v-model="salles.salleFilter.capacite" @input="UpdateSalleData"
+                                              native-value="none">
+                                              Total
+                                          </b-radio>
+                                          <b-radio v-model="salles.salleFilter.capacite" @input="UpdateSalleData"
+                                              native-value="Bas">
+                                              Moins de 50
+                                          </b-radio>
+                                          <b-radio v-model="salles.salleFilter.capacite" @input="UpdateSalleData"
+                                              native-value="Moyen">
+                                              Entre 50 et 100
+                                          </b-radio>
+                                          <b-radio v-model="salles.salleFilter.capacite" @input="UpdateSalleData"
+                                              native-value="Haut">
+                                              Plus que 100
+                                          </b-radio>
+                                      </b-field>
+                                    </div>
+                                </div>
+                            </b-collapse>
+                          </section>
+                        </tiles>
+                        <tiles>
+                          <section class="tile is-child">
+                            <b class="ml-2">Par type :</b> <br>
+                            <b class="ml-5">Amphi :</b> {{ this.salles.data.filter(obj => obj.type === 'Amphi').length }}<br>
+                            <b class="ml-5">Salle TD :</b> {{ this.salles.data.filter(obj => obj.type === 'Salle TD').length }}<br>
+                            <b class="ml-5">Salle TP :</b> {{ this.salles.data.filter(obj => obj.type === 'Salle TP').length }}<br>
+                            <b class="ml-5">Bureau :</b> {{ this.salles.data.filter(obj => obj.type === 'bureau').length }}<br>
+                            <b class="ml-5">Autres :</b> {{ this.salles.data.filter(obj => obj.type === 'autres').length }}<br>
+                          </section>
+                          <section class="tile is-child">
+                            <b class="ml-2">Par capacité :</b> <br>
+                            <b class="ml-5">Moins de 50 :</b> {{/* eslint-disable */ this.salles.data.filter(obj => obj.capacite < 50).length /* eslint-disable */}}<br>
+                            <b class="ml-5">Entre 50 et 100 :</b> {{ this.salles.data.filter(obj => ((obj.capacite >= 50) && (obj.capacite < 100))).length }}<br>
+                            <b class="ml-5">Plus que 100 :</b> {{ this.salles.data.filter(obj => obj.capacite >= 100).length }}<br>
+                          </section>
+                        </tiles>
+                      </b-tab-item>
+                      <b-tab-item label="Outils">
+                        Nombre des types d'outils : {{ totalOut }}
+                      </b-tab-item>
+                    </b-tabs>
                   </b-tab-item>
                   <b-tab-item label="Graphes" icon="chart-timeline-variant">
                     <tiles>
-                      <card-component class="tile is-child" title="Salles" icon="finance">
+                      <!--<card-component class="tile is-child" title="Salles" icon="finance">
+                        <apexchart height="200%" type="pie" :options="options" :series="data"></apexchart>
                         <d-chart :chart-data="this.SallesData.chartData"></d-chart>
-                      </card-component>
-                      <card-component class="tile is-child" title="Salles" icon="finance">
-                        <d-chart :chart-data="this.SallesData.chartData"></d-chart>
-                      </card-component>
+                      </card-component>-->
+                      <b-button class="is-info" @click="Activation(SallesData.chartData)">Graphe des salles</b-button>
                     </tiles>
                   </b-tab-item>
               </b-tabs>
@@ -233,23 +246,43 @@
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 import Tiles from '@/components/Tiles'
-import CardWidget from '@/components/CardWidget'
 import DChart from '@/components/Charts/DChart'
 import CardComponent from '@/components/CardComponent.vue'
+import ModalChartView from '@/components/ModalBox/ModalChartView.vue'
 import axios from 'axios'
+import VueApexCharts from 'vue-apexcharts'
 
+/* eslint-disable */
 export default {
   name: 'Audit',
   components: {
     HeroBar,
     TitleBar,
     Tiles,
-    CardWidget,
     DChart,
-    CardComponent
+    CardComponent,
+    ModalChartView,
+    VueApexCharts
   },
   data () {
     return {
+      data: [14, 15],
+      options: {
+        chart: {
+          id: ''
+        },
+        labels: ['hey', 'hey2']
+      },
+      salles: {
+        salleFilter: {
+          type: 'none',
+          capacite: 'none'
+        },
+        dataset: [],
+        data: []
+      },
+      ChartData: null,
+      isModalChartViewActive: false,
       tauxEnc: {
         total: 0,
         specialite: {
@@ -289,21 +322,7 @@ export default {
       totalSal: 0,
       totalOut: 0,
       totalAdm: 0,
-      isOpen: 0,
-      collapses: [
-        {
-          title: 'Title 1',
-          text: 'Text 1'
-        },
-        {
-          title: 'Title 2',
-          text: 'Text 2'
-        },
-        {
-          title: 'Title 3',
-          text: 'Text 3'
-        }
-      ]
+      isOpen: 0
     }
   },
   computed: {
@@ -540,6 +559,59 @@ export default {
     this.tauxEnc.specialite.Lang = this.saha(this.Langues.length / this.$store.state.totalEtd)
   },
   methods: {
+    cancel () {
+      this.isModalChartViewActive = false
+    },
+    Activation (x) {
+      this.ChartData = x
+      this.options.labels = x.labels
+      this.data = x.datasets[0].data
+      this.isModalChartViewActive = true
+      console.log(x)
+    },
+    UpdateSalleData () {
+      this.salles.data = this.salles.dataset
+      if (this.salles.salleFilter.capacite === 'none') {
+        if (this.salles.salleFilter.type !== 'none') {
+          console.log('filter with type')
+          this.salles.data = this.salles.data.filter(obj => obj.type === this.salles.salleFilter.type)
+        } else {
+          this.salles.data = this.salles.dataset
+        }
+      } else {
+        console.log('filter with capacite')
+        if (this.salles.salleFilter.type !== 'none') {
+          console.log('filter with type')
+          this.salles.data = this.salles.data.filter(obj => obj.type === this.salles.salleFilter.type)
+          switch (this.salles.salleFilter.capacite) {
+            case 'Bas':
+              this.salles.data = this.salles.data.filter(obj => obj.capacite < 50)
+              break
+            case 'Moyen':
+              this.salles.data = this.salles.data.filter(obj => ((obj.capacite >= 50) && (obj.capacite < 100)))
+              break
+            case 'Haut':
+              this.salles.data = this.salles.data.filter(obj => obj.capacite >= 100)
+              break
+          }
+        } else {
+          switch (this.salles.salleFilter.capacite) {
+            case 'none':
+              this.salles.data = this.salles.dataset
+              break
+            case 'Bas':
+              this.salles.data = this.salles.data.filter(obj => obj.capacite < 50)
+              break
+            case 'Moyen':
+              this.salles.data = this.salles.data.filter(obj => ((obj.capacite >= 50) && (obj.capacite < 100)))
+              break
+            case 'Haut':
+              this.salles.data = this.salles.data.filter(obj => obj.capacite >= 100)
+              break
+          }
+        }
+      }
+    },
     fillSallesData () {
       axios
         .get('http://localhost:8080/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
@@ -550,6 +622,7 @@ export default {
               this.paginated = true
             }
             // this.$store.state.salles = r.data.results
+            this.salles.data = this.salles.dataset = r.data.results
             this.sallesAmphi = r.data.results.filter(obj => obj.type === 'Amphi')
             this.sallesTD = r.data.results.filter(obj => obj.type === 'Salle TD')
             this.sallesTP = r.data.results.filter(obj => obj.type === 'Salle TP')
