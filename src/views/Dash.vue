@@ -6,9 +6,17 @@
     </hero-bar>
     <section class="section is-main-section">
       <tiles>
-        <card-widget class="tile is-child" type="is-primary" icon="account-multiple" :number="512" label="Etudiants"/>
-        <card-widget class="tile is-child" type="is-primary" icon="account-multiple" :number="3" label="Formations"/>
-        <card-widget class="tile is-child" type="is-primary" icon="account-multiple" :number="2" label="Départements"/>
+          <tiles class="tile is-child">
+            <card-widget class="tile is-child" type="is-primary" icon="account-multiple" :number="2" label="Départements"/>
+            <card-widget class="tile is-child" type="is-primary" icon="account-multiple" :number="512" label="Etudiants"/>
+          </tiles>
+          <tiles class="tile is-child">
+            <card-widget class="tile is-child" type="is-primary" icon="account-multiple" :number="3" label="Formations"/>
+            <card-widget class="tile is-child" type="is-primary" icon="account-multiple" :number="45" label="Enseignants"/>
+          </tiles>
+        <section class="tile is-child">
+            <apexchart id="chart" height="100%" type="pie" :options="this.options" :series="this.data"></apexchart>
+        </section>
       </tiles>
 
       <card-component title="Performance" @header-icon-click="fillChartData" icon="finance" header-icon="reload">
@@ -33,7 +41,9 @@ import Tiles from '@/components/Tiles'
 import CardWidget from '@/components/CardWidget'
 import CardComponent from '@/components/CardComponent'
 import LineChart from '@/components/Charts/LineChart'
+import VueApexCharts from 'vue-apexcharts'
 
+/* eslint-disable */
 export default {
   name: 'dash',
   components: {
@@ -42,10 +52,18 @@ export default {
     CardWidget,
     Tiles,
     HeroBar,
-    TitleBar
+    TitleBar,
+    VueApexCharts
   },
   data () {
     return {
+      options: {
+        chart: {
+          id: ''
+        },
+        labels: ['CPI', 'CS']
+      },
+      data: [300, 350],
       defaultChart: {
         chartData: null,
         extraOptions: chartConfig.chartOptionsMain
