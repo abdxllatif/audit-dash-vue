@@ -20,6 +20,10 @@
                         <b style="font-size: 20px">Nombre de formations :</b><br>
                         {{ totalFrm }}
                       </b-tab-item>
+                      <b-tab-item label="Partenaires">
+                        <b style="font-size: 20px">Nombre de partenaires :</b><br>
+                        {{ totalPar }}
+                      </b-tab-item>
                     </b-tabs>
                   </b-tab-item>
                   <b-tab-item label="Graphes" icon="chart-timeline-variant">
@@ -44,6 +48,12 @@
                     </tiles>
                     <tiles>
                       <b-button class="is-info" @click="Activation(EnsSocData.chartData)" expanded>Enseignants par situation sociale</b-button>
+                      <b-button class="is-info" @click="Activation(EnsSexData.chartData)" expanded>Enseignants par sex</b-button>
+                      <b-button class="is-info" @click="Activation(EnsGrdData.chartData)" expanded>Enseignants par grade</b-button>
+                      <b-button class="is-info" @click="Activation(EnsSpeData.chartData)" expanded>Enseignants par spécialité</b-button>
+                    </tiles>
+                    <tiles>
+                      <b-button class="is-info" @click="Activation(EnsSocData.chartData)" expanded>Partenaires par type</b-button>
                       <b-button class="is-info" @click="Activation(EnsSexData.chartData)" expanded>Enseignants par sex</b-button>
                       <b-button class="is-info" @click="Activation(EnsGrdData.chartData)" expanded>Enseignants par grade</b-button>
                       <b-button class="is-info" @click="Activation(EnsSpeData.chartData)" expanded>Enseignants par spécialité</b-button>

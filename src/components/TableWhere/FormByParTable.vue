@@ -8,23 +8,25 @@
       :per-page="perPage"
       :striped="true"
       :hoverable="true"
-      default-sort="Titre"
-      :data="outils">
+      default-sort="titre"
+      :data="formations">
 
-      <b-table-column label="Titre" field="Titre" sortable v-slot="props">
-        <attribut-table :id="props.row.outilId" :dataUrl="'http://localhost:8080/api/data/outils/'" :att="'titre'" ></attribut-table>
+      <b-table-column label="Titre" field="titre" sortable v-slot="props">
+        {{ props.row.nom }}
       </b-table-column>
-      <b-table-column label="Type" field="Type" sortable v-slot="props">
-        <attribut-table :id="props.row.outilId" :dataUrl="'http://localhost:8080/api/data/outils/'" :att="'type'" ></attribut-table>
+      <b-table-column label="Description" field="description" sortable v-slot="props">
+        {{ props.row.description }}
       </b-table-column>
-      <b-table-column label="Quantité" field="Quantité" sortable v-slot="props">
-        {{ props.row.quantity }}
+      <b-table-column label="Détails" field="details" v-slot="props">
+        <router-link :to="{name:'FormationDetail', params: {id: props.row.formationId}}" class="button is-small is-dark">
+          Détails
+        </router-link>
       </b-table-column>
       <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
         <div class="buttons is-right">
-          <!--<router-link :to="{name:'client.edit', params: {id: props.row.id}}" class="button is-small is-primary">
+          <router-link :to="{name:'client.edit', params: {id: props.row.id}}" class="button is-small is-primary">
             <b-icon icon="account-edit" size="is-small"/>
-          </router-link>-->
+          </router-link>
           <button class="button is-small is-danger" type="button" @click.prevent="trashModal(props.row)">
             <b-icon icon="trash-can" size="is-small"/>
           </button>
@@ -54,11 +56,10 @@
 <script>
 import axios from 'axios'
 import ModalBox from '@/components/ModalBox'
-import AttributTable from '@/components/Tables/Adds/AttributTable'
 
 export default {
-  name: 'outilTable',
-  components: { ModalBox, AttributTable },
+  name: 'FormationTable',
+  components: { ModalBox },
   props: {
     dataUrl: {
       type: String,
@@ -77,8 +78,7 @@ export default {
     return {
       isModalActive: false,
       trashObject: null,
-      outils: [],
-      last: [],
+      formations: [],
       isLoading: false,
       paginated: false,
       perPage: 10,
@@ -97,7 +97,7 @@ export default {
   async mounted () {
     if (this.dataUrl) {
       this.isLoading = true
-      await axios.get(this.dataUrl + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      await axios.get(this.dataUrl, { partenaireId: this.id }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           console.log(r)
@@ -106,17 +106,8 @@ export default {
             if (r.data.data.length > this.perPage) {
               this.paginated = true
             }
-            this.outils = r.data.data
-            /* for (let i = 0; i < this.outils.length; i++) {
-              axios.get('http://localhost:8080/api/data/outils/' + this.outils[i].outilId, { headers: { 'x-access-token': this.$session.get('jwt') } })
-                .then(r2 => {
-                  console.log(r2.data.data)
-                  this.outils[i].titre = r2.data.data.titre
-                  this.outils[i].type = r2.data.data.type
-                })
-            } */
-            console.log(this.outils)
-            this.last = this.outils
+            this.formations = r.data.data
+            console.log(this.formations)
           }
         })
         .catch(e => {
@@ -136,9 +127,14 @@ export default {
 
       this.isModalActive = true
     },
+    niveauxModal (trashObject) {
+      this.trashObject = trashObject
+
+      this.isNivModalActive = true
+    },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8080/api/data/outils/' + this.trashObject.outilId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8080/api/data/formations/' + this.trashObject.formationId, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({
@@ -153,7 +149,7 @@ export default {
                 if (r.data.results.length > this.perPage) {
                   this.paginated = true
                 }
-                this.outils = r.data.results
+                this.formations = r.data.results
               }
             })
             .catch(e => {
@@ -173,8 +169,14 @@ export default {
           })
         })
     },
+    niveauxConfirm () {
+      this.isNivModalActive = false
+    },
     trashCancel () {
       this.isModalActive = false
+    },
+    niveauxCancel () {
+      this.isNivModalActive = false
     }
   }
 }

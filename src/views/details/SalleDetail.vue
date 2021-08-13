@@ -1,5 +1,7 @@
 <template>
   <div>
+    <modal-salle-outils :is-active="isSalleOutilsModalActive" :salleId="this.id" @confirm="SalleOutilsConfirm"
+               @cancel="SalleOutilsCancel"/>
     <title-bar :title-stack="titleStack"/>
     <hero-bar>
       {{ heroTitle }}
@@ -30,7 +32,7 @@
           </b-field>
         </b-tab-item>
         <b-tab-item label="équipements" icon="account">
-          <card-component v-if="isProfileExists" title="Outils" icon="tools" class="tile is-child">
+          <card-component v-if="isProfileExists" title="Outils" icon="tools" class="tile is-child" vers-title="nouveau" todo="ModalNewOutil" @doit="SalleOutilsModal">
             <outil-table :data-url="`http://localhost:8080/api/data/outils/salles/`" :id="parseInt(this.id)"/>
           </card-component>
         </b-tab-item>
@@ -47,10 +49,11 @@ import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 import CardComponent from '@/components/CardComponent'
 import outilTable from '@/components/TableWhere/OutilTable.vue'
+import ModalSalleOutils from '@/components/ModalBox/ModalSalleOutils.vue'
 
 export default {
   name: 'SalleDetail',
-  components: { CardComponent, HeroBar, TitleBar, outilTable },
+  components: { CardComponent, HeroBar, TitleBar, outilTable, ModalSalleOutils },
   props: {
     id: {
       default: null
@@ -58,6 +61,7 @@ export default {
   },
   data () {
     return {
+      isSalleOutilsModalActive: false,
       isLoading: false,
       form: this.getClearFormObject(),
       createdReadable: null,
@@ -107,6 +111,16 @@ export default {
     this.getData()
   },
   methods: {
+    SalleOutilsModal () {
+      this.isSalleOutilsModalActive = true
+    },
+    SalleOutilsConfirm () {
+      this.isSalleOutilsModalActive = false
+      // this.$refs.outilTable.mounted
+    },
+    SalleOutilsCancel () {
+      this.isSalleOutilsModalActive = false
+    },
     getClearFormObject () {
       return {
         id: null,

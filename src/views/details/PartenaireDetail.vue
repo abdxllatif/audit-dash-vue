@@ -1,5 +1,7 @@
 <template>
   <div>
+    <modal-par-form :is-active="isParFormModalActive" :parId="this.id" @confirm="ParFormConfirm"
+               @cancel="ParFormCancel"/>
     <title-bar :title-stack="titleStack"/>
     <hero-bar>
       {{ heroTitle }}
@@ -8,25 +10,27 @@
       </router-link>
     </hero-bar>
     <section class="section is-main-section">
-      <tiles>
-        <card-component v-if="isProfileExists" title="Profil du partenaire" icon="account" class="tile is-child">
-          <b-field label="ID" horizontal>
-              <b-input v-model="form.partenaireId" custom-class="is-static" readonly />
-          </b-field>
-          <b-field label="Nom" horizontal>
-            <b-input :value="form.Nom" custom-class="is-static" readonly/>
-          </b-field>
-          <b-field label="Type" horizontal>
-            <b-input :value="form.type" custom-class="is-static" readonly/>
-          </b-field>
-          <b-field label="Created" horizontal>
-            <b-input :value="form.createdAt" custom-class="is-static" readonly/>
-          </b-field>
-        </card-component>
-        <card-component v-if="isProfileExists" title="Formations" icon="account" class="tile is-child">
-            <form-table :data-url="`http://localhost:8080/api/data/formations`" :checkable="true"/>
-        </card-component>
-      </tiles>
+      <b-tabs>
+        <b-tab-item label="Profil du partenaire" icon="information">
+            <b-field label="ID" horizontal>
+                <b-input v-model="form.partenaireId" custom-class="is-static" readonly />
+            </b-field>
+            <b-field label="Nom" horizontal>
+              <b-input :value="form.Nom" custom-class="is-static" readonly/>
+            </b-field>
+            <b-field label="Type" horizontal>
+              <b-input :value="form.type" custom-class="is-static" readonly/>
+            </b-field>
+            <b-field label="Created" horizontal>
+              <b-input :value="form.createdAt" custom-class="is-static" readonly/>
+            </b-field>
+        </b-tab-item>
+        <b-tab-item label="Formations" icon="account">
+          <card-component title="Table des formations reliées" icon="account" vers-title="Nouveau" todo="ModalNewFormation" @doit="ParFormModal">
+            <form-table :data-url="`http://localhost:8080/api/data/partenaire/formations`" :id="this.id"/>
+          </card-component>
+        </b-tab-item>
+      </b-tabs>
     </section>
   </div>
 </template>
@@ -37,13 +41,14 @@ import dayjs from 'dayjs'
 import find from 'lodash/find'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
-import Tiles from '@/components/Tiles'
+// import Tiles from '@/components/Tiles'
 import CardComponent from '@/components/CardComponent'
-import FormTable from '@/components/Tables/FormTable.vue'
+import FormTable from '@/components/TableWhere/FormByParTable'
+import ModalParForm from '@/components/ModalBox/ModalParForm.vue'
 
 export default {
   name: 'PartenaireDetail',
-  components: { CardComponent, Tiles, HeroBar, TitleBar, FormTable },
+  components: { CardComponent, HeroBar, TitleBar, FormTable, ModalParForm },
   props: {
     id: {
       default: null
@@ -51,6 +56,7 @@ export default {
   },
   data () {
     return {
+      isParFormModalActive: false,
       isLoading: false,
       form: this.getClearFormObject(),
       createdReadable: null,
@@ -79,6 +85,16 @@ export default {
     this.getData()
   },
   methods: {
+    ParFormModal () {
+      this.isParFormModalActive = true
+    },
+    ParFormConfirm () {
+      this.isParFormModalActive = false
+      // this.$refs.outilTable.mounted
+    },
+    ParFormCancel () {
+      this.isParFormModalActive = false
+    },
     getClearFormObject () {
       return {
         id: null,

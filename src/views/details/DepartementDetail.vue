@@ -24,7 +24,7 @@
             </b-field>
         </b-tab-item>
         <b-tab-item label="Formation" icon="google-photos">
-          <card-component v-if="isProfileExists" v-bind:selected="this.form" vers="newForm" title="Formations" icon="account" class="tile is-child">
+          <card-component v-if="isProfileExists" v-bind:selected="this.form" vers-title="nouveau" vers="newForm" title="Formations" icon="account" class="tile is-child">
               <formation-table :data-url="`http://localhost:8080/api/stats/data`" :id="parseInt(this.id)"/>
           </card-component>
         </b-tab-item>

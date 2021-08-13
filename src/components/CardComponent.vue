@@ -8,8 +8,11 @@
         </p>
         <div v-if="this.vers!=null" class="level-right">
           <router-link :to="{ name: vers, params: { sel: this.selected }}" class="button level-item">
-            nouveau
+            {{ versTitle }}
           </router-link>
+        </div>
+        <div v-if="this.todo!=null" class="level-right">
+          <b-button v-on:click="done" class="level-item">{{ versTitle }}</b-button>
         </div>
       </div>
       <a v-if="headerIcon" href="#" class="card-header-icon" aria-label="more options" @click.prevent="headerIconClick">
@@ -45,9 +48,21 @@ export default {
     vers: {
       type: String,
       default: null
+    },
+    versTitle: {
+      type: String,
+      default: null
+    },
+    todo: {
+      type: String,
+      default: null
     }
   },
   methods: {
+    done () {
+      console.log('nik mok rahi tkhdm')
+      this.$emit('doit')
+    },
     headerIconClick () {
       this.$emit('header-icon-click')
     }

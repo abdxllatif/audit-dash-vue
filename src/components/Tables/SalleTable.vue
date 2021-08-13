@@ -20,6 +20,9 @@
       <b-table-column label="Capacité" field="capacite" sortable v-slot="props">
         {{ props.row.capacite }}
       </b-table-column>
+      <b-table-column label="Département" field="departement" sortable v-slot="props">
+        <name :id="props.row.departementDepartementId" :dataUrl="'http://localhost:8080/api/data/departements/'"/>
+      </b-table-column>
       <b-table-column label="Created" v-slot="props">
         <small class="has-text-grey is-abbr-like" :title="props.row.created">{{ props.row.createdAt }}</small>
       </b-table-column>
@@ -62,10 +65,11 @@
 <script>
 import axios from 'axios'
 import ModalBox from '@/components/ModalBox'
+import Name from './Adds/Name.vue'
 
 export default {
   name: 'SalleTable',
-  components: { ModalBox },
+  components: { ModalBox, Name },
   props: {
     dataUrl: {
       default: null
