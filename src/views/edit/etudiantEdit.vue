@@ -12,14 +12,35 @@
         <card-component :title="formCardTitle" icon="account-edit" class="tile is-child">
           <form @submit.prevent="submit">
             <b-field label="ID" horizontal>
-              <b-input v-model="form.departementId" custom-class="is-static" readonly />
+              <b-input v-model="form.etudiantId" custom-class="is-static" readonly />
             </b-field>
             <hr>
-            <b-field label="Nom" message="Nom du departement" horizontal>
-              <b-input placeholder="e.g. John Doe" v-model="form.nom" required />
+            <b-field label="Nom" message="Nom du doctorant" horizontal>
+              <b-input placeholder="e.g. Beldjelti" v-model="form.nom" required />
             </b-field>
-            <b-field label="Description" message="Description du departement" horizontal>
-              <b-input placeholder="e.g. Berton & Steinway" v-model="form.description" required />
+            <b-field label="Prénom" message="Prénom du doctorant" horizontal>
+              <b-input placeholder="e.g. Abdellatif" v-model="form.prenom" required />
+            </b-field>
+            <b-field label="Date de naissance" horizontal>
+              <b-datepicker
+                @input="input"
+                v-model="this.date_naissance"
+                placeholder="Choisir une date"
+                icon="calendar-today">
+              </b-datepicker>
+            </b-field>
+            <b-field label="Lieu de naissance" message="Lieu de naissance" horizontal>
+              <b-input placeholder="e.g. Sidi Bel Abbes" v-model="form.lieu_naissance" required />
+            </b-field>
+            <b-field label="Adresse" message="Adresse de résidence" horizontal>
+              <b-input placeholder="e.g. Sidi Bel Abbes" v-model="form.adresse" required />
+            </b-field>
+            <b-field label="Sex" horizontal>
+                <b-select placeholder="Sex du doctorant" v-model="form.Sex" expanded required>
+                    <option v-for="(sex, index) in sex" :key="index" :value="sex">
+                        {{ sex }}
+                    </option>
+                </b-select>
             </b-field>
             <!--<b-field label="Created" horizontal>
               <b-datepicker
@@ -35,17 +56,26 @@
             </b-field>
           </form>
         </card-component>
-        <card-component v-if="isProfileExists" title="Ancien profile du département" icon="account" class="tile is-child">
-          <b-field label="Nom">
+        <card-component v-if="isProfileExists" title="Ancien profile d'étudiant" icon="account" class="tile is-child">
+          <b-field label="Nom" horizontal>
             <b-input :value="last.nom" custom-class="is-static" readonly/>
           </b-field>
-          <b-field label="Description">
-            <b-input :value="last.description" custom-class="is-static" readonly/>
+          <b-field label="Prénom" horizontal>
+            <b-input :value="last.prenom" custom-class="is-static" readonly/>
           </b-field>
-          <b-field label="Date de création">
+          <b-field label="Date et lieu de naissance" horizontal>
+            <b-input :value="getdate(last.data_naissance) + ' - ' + last.lieu_naissance" custom-class="is-static" readonly/>
+          </b-field>
+          <b-field label="Adresse" horizontal>
+            <b-input :value="last.adresse" custom-class="is-static" readonly/>
+          </b-field>
+          <b-field label="Sex" horizontal>
+            <b-input :value="last.Sex" custom-class="is-static" readonly/>
+          </b-field>
+          <b-field label="Date de création" horizontal>
             <b-input :value="getdateminute(last.createdAt)" custom-class="is-static" readonly/>
           </b-field>
-          <b-field label="Date de la derniere modification">
+          <b-field label="Date de la derniere modification" horizontal>
             <b-input :value="getdateminute(last.updatedAt)" custom-class="is-static" readonly/>
           </b-field>
         </card-component>
@@ -64,7 +94,7 @@ import Tiles from '@/components/Tiles'
 import CardComponent from '@/components/CardComponent'
 
 export default {
-  name: 'dep.edit',
+  name: 'etudiantEdit',
   components: { CardComponent, Tiles, HeroBar, TitleBar },
   props: {
     id: {
@@ -73,11 +103,16 @@ export default {
   },
   data () {
     return {
+      date_naissance: new Date(),
       last: Object,
       isLoading: false,
       form: this.getClearFormObject(),
       createdReadable: null,
-      isProfileExists: false
+      isProfileExists: false,
+      sex: [
+        'Homme',
+        'Femme'
+      ]
     }
   },
   computed: {
@@ -85,43 +120,43 @@ export default {
       let lastCrumb
 
       if (this.isProfileExists) {
-        lastCrumb = this.form.nom
+        lastCrumb = this.last.nom + ' ' + this.last.prenom
       } else {
-        lastCrumb = 'Nouveau département'
+        lastCrumb = 'Nouveau étudiant'
       }
 
       return [
         'Admin',
-        'Departement',
+        'Etudiant',
         lastCrumb
       ]
     },
     heroTitle () {
       if (this.isProfileExists) {
-        return this.form.nom
+        return this.last.nom + ' ' + this.last.prenom
       } else {
-        return 'Nouveau Département'
+        return 'Nouveau étudiant'
       }
     },
     heroRouterLinkTo () {
       if (this.isProfileExists) {
-        return { name: 'newDep' }
+        return { name: 'newEtu' }
       } else {
         return '/'
       }
     },
     heroRouterLinkLabel () {
       if (this.isProfileExists) {
-        return 'Nouveau département'
+        return 'Nouveau étudiant'
       } else {
-        return 'Dashboard'
+        return 'Nouveau étudiant'
       }
     },
     formCardTitle () {
       if (this.isProfileExists) {
-        return 'Modifier Département'
+        return 'Modifier étudiant'
       } else {
-        return 'Nouveau département'
+        return 'Nouveau étudiant'
       }
     }
   },
@@ -149,9 +184,9 @@ export default {
     async getData () {
       if (this.id) {
         await axios
-          .get('http://localhost:8080/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8080/api/data/etudiants', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
-            const item = find(r.data.results, item => item.departementId === parseInt(this.id))
+            const item = find(r.data.results, item => item.etudiantId === parseInt(this.id))
 
             if (item) {
               // this.last = item
@@ -160,6 +195,7 @@ export default {
               // this.last = item
               this.form.created_date = new Date(item.created_mm_dd_yyyy)
               this.createdReadable = dayjs(item.created_at).format('DD-MM-YYYY')
+              this.date_naissance = new Date(this.form.data_naissance)
             } else {
               this.$router.push({ name: '404' })
             }
@@ -171,7 +207,7 @@ export default {
               queue: false
             })
           })
-        await axios.get('http://localhost:8080/api/data/departements/' + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
+        await axios.get('http://localhost:8080/api/data/etudiants/' + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             console.log('Last:')
             console.log(r.data.data)
@@ -193,10 +229,11 @@ export default {
 
         const utc = require('dayjs/plugin/utc')
         dayjs.extend(utc)
-        alert('nom ' + this.form.nom + ' ' + 'desc ' + this.form.description + ' ' + 'updatedAt ' + dayjs.utc().format())
-        axios.post('http://localhost:8080/api/data/departements/' + this.id, {
+        alert('nom ' + this.form.nom + ' ' + 'type ' + this.form.type + ' ' + 'updatedAt ' + dayjs.utc().format())
+        axios.post('http://localhost:8080/api/data/etudiants/' + this.id, {
           nom: this.form.nom,
-          description: this.form.description,
+          prenom: this.form.prenom,
+          type: this.form.type,
           updatedAt: dayjs.utc().format()
         }, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {

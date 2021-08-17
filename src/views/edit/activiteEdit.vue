@@ -12,35 +12,66 @@
         <card-component :title="formCardTitle" icon="account-edit" class="tile is-child">
           <form @submit.prevent="submit">
             <b-field label="ID" horizontal>
-              <b-input v-model="form.departementId" custom-class="is-static" readonly />
+              <b-input v-model="form.activiteId" custom-class="is-static" readonly />
             </b-field>
             <hr>
-            <b-field label="Nom" message="Nom du departement" horizontal>
-              <b-input placeholder="e.g. John Doe" v-model="form.nom" required />
+            <b-field label="Titre" message="Titre d'activité" horizontal>
+              <b-input placeholder="e.g. Welcome day" v-model="form.titre" required />
             </b-field>
-            <b-field label="Description" message="Description du departement" horizontal>
-              <b-input placeholder="e.g. Berton & Steinway" v-model="form.description" required />
+            <b-field label="Type" horizontal>
+                <b-select placeholder="Type d'activité" v-model="form.type" required>
+                    <option v-for="(type, index) in types" :key="index" :value="type">
+                        {{ type }}
+                    </option>
+                </b-select>
             </b-field>
-            <!--<b-field label="Created" horizontal>
+            <b-field label="Lieu" horizontal>
+                <b-select placeholder="Lieu d'activité" v-model="form.salleSalleId" required>
+                    <option v-for="(type, index) in types" :key="index" :value="type">
+                        {{ type }}
+                    </option>
+                </b-select>
+            </b-field>
+            <b-field label="Date début" horizontal>
               <b-datepicker
                 @input="input"
-                v-model="form.created_date"
+                v-model="this.date_debut"
                 placeholder="Click to select..."
                 icon="calendar-today">
               </b-datepicker>
-            </b-field>-->
+            </b-field>
+            <b-field label="Date fin" horizontal>
+              <b-datepicker
+                @input="input"
+                v-model="this.date_fin"
+                placeholder="Click to select..."
+                icon="calendar-today">
+              </b-datepicker>
+            </b-field>
             <hr>
             <b-field horizontal>
               <b-button type="is-primary" :loading="isLoading" native-type="submit">Submit</b-button>
             </b-field>
           </form>
         </card-component>
-        <card-component v-if="isProfileExists" title="Ancien profile du département" icon="account" class="tile is-child">
+        <card-component v-if="isProfileExists" title="Ancien profile d'activité" icon="account" class="tile is-child">
           <b-field label="Nom">
-            <b-input :value="last.nom" custom-class="is-static" readonly/>
+            <b-input :value="last.titre" custom-class="is-static" readonly/>
           </b-field>
-          <b-field label="Description">
-            <b-input :value="last.description" custom-class="is-static" readonly/>
+          <b-field label="Type">
+            <b-input :value="last.type" custom-class="is-static" readonly/>
+          </b-field>
+          <b-field label="Salle principale">
+            <b-input :value="last.salleSalleId" custom-class="is-static" readonly/>
+          </b-field>
+          <b-field label="Responsable">
+            <b-input :value="last.clubClubId" custom-class="is-static" readonly/>
+          </b-field>
+          <b-field label="Date du début">
+            <b-input :value="getdateminute(last.date_debut)" custom-class="is-static" readonly/>
+          </b-field>
+          <b-field label="Date de fin">
+            <b-input :value="getdateminute(last.date_fin)" custom-class="is-static" readonly/>
           </b-field>
           <b-field label="Date de création">
             <b-input :value="getdateminute(last.createdAt)" custom-class="is-static" readonly/>
@@ -64,7 +95,7 @@ import Tiles from '@/components/Tiles'
 import CardComponent from '@/components/CardComponent'
 
 export default {
-  name: 'dep.edit',
+  name: 'activiteEdit',
   components: { CardComponent, Tiles, HeroBar, TitleBar },
   props: {
     id: {
@@ -73,11 +104,18 @@ export default {
   },
   data () {
     return {
+      date_debut: new Date(),
+      date_fin: new Date(),
       last: Object,
       isLoading: false,
-      form: this.getClearFormObject(),
+      form: Object,
       createdReadable: null,
-      isProfileExists: false
+      isProfileExists: false,
+      types: [
+        'scientifique',
+        'culturel',
+        'autre'
+      ]
     }
   },
   computed: {
@@ -85,73 +123,66 @@ export default {
       let lastCrumb
 
       if (this.isProfileExists) {
-        lastCrumb = this.form.nom
+        lastCrumb = this.last.titre
       } else {
-        lastCrumb = 'Nouveau département'
+        lastCrumb = 'Nouvelle activité'
       }
 
       return [
         'Admin',
-        'Departement',
+        'Activité',
         lastCrumb
       ]
     },
     heroTitle () {
       if (this.isProfileExists) {
-        return this.form.nom
+        return this.last.titre
       } else {
-        return 'Nouveau Département'
+        return 'Nouvelle activité'
       }
     },
     heroRouterLinkTo () {
       if (this.isProfileExists) {
-        return { name: 'newDep' }
+        return { name: 'newAct' }
       } else {
         return '/'
       }
     },
     heroRouterLinkLabel () {
       if (this.isProfileExists) {
-        return 'Nouveau département'
+        return 'Nouvelle activité'
       } else {
         return 'Dashboard'
       }
     },
     formCardTitle () {
       if (this.isProfileExists) {
-        return 'Modifier Département'
+        return 'Modifier acitivité'
       } else {
-        return 'Nouveau département'
+        return 'Nouvelle activité'
       }
     }
   },
-  created () {
-    this.getData()
+  async created () {
+    await this.getData()
+    console.log(dayjs(this.date_debut).format('YYYY-MM-DD'))
   },
   methods: {
     getdate: function (t) {
       return dayjs(t).format('DD-MM-YYYY')
     },
+    getdates: function (t) {
+      return dayjs(t).format('DD/MM/YYYY')
+    },
     getdateminute: function (t) {
       return dayjs(t).format('DD-MM-YYYY HH:mm')
-    },
-    getClearFormObject () {
-      return {
-        id: null,
-        name: null,
-        company: null,
-        city: null,
-        created_date: new Date(),
-        created_mm_dd_yyyy: null,
-        progress: 0
-      }
     },
     async getData () {
       if (this.id) {
         await axios
-          .get('http://localhost:8080/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8080/api/data/activites', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
-            const item = find(r.data.results, item => item.departementId === parseInt(this.id))
+            const item = find(r.data.results, item => item.activiteId === parseInt(this.id))
 
             if (item) {
               // this.last = item
@@ -160,6 +191,8 @@ export default {
               // this.last = item
               this.form.created_date = new Date(item.created_mm_dd_yyyy)
               this.createdReadable = dayjs(item.created_at).format('DD-MM-YYYY')
+              this.date_debut = new Date(this.form.date_debut)
+              this.date_fin = new Date(this.form.date_fin)
             } else {
               this.$router.push({ name: '404' })
             }
@@ -171,7 +204,7 @@ export default {
               queue: false
             })
           })
-        await axios.get('http://localhost:8080/api/data/departements/' + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
+        await axios.get('http://localhost:8080/api/data/activites/' + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             console.log('Last:')
             console.log(r.data.data)
@@ -193,15 +226,15 @@ export default {
 
         const utc = require('dayjs/plugin/utc')
         dayjs.extend(utc)
-        alert('nom ' + this.form.nom + ' ' + 'desc ' + this.form.description + ' ' + 'updatedAt ' + dayjs.utc().format())
-        axios.post('http://localhost:8080/api/data/departements/' + this.id, {
-          nom: this.form.nom,
-          description: this.form.description,
+        alert('nom ' + this.form.titre + ' ' + 'type ' + this.form.type + ' ' + 'updatedAt ' + dayjs.utc().format())
+        axios.post('http://localhost:8080/api/data/activites/' + this.id, {
+          titre: this.form.titre,
+          type: this.form.type,
           updatedAt: dayjs.utc().format()
         }, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             this.$buefy.snackbar.open({
-              message: this.form.nom + ' Modifié',
+              message: this.form.titre + ' Modifié',
               queue: false
             })
             this.getData()

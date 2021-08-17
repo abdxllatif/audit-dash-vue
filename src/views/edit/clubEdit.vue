@@ -12,14 +12,25 @@
         <card-component :title="formCardTitle" icon="account-edit" class="tile is-child">
           <form @submit.prevent="submit">
             <b-field label="ID" horizontal>
-              <b-input v-model="form.departementId" custom-class="is-static" readonly />
+              <b-input v-model="form.clubId" custom-class="is-static" readonly />
             </b-field>
             <hr>
-            <b-field label="Nom" message="Nom du departement" horizontal>
-              <b-input placeholder="e.g. John Doe" v-model="form.nom" required />
+            <b-field label="Nom" message="Nom du club" horizontal>
+              <b-input placeholder="e.g. Alphabit" v-model="form.nom" required />
             </b-field>
-            <b-field label="Description" message="Description du departement" horizontal>
-              <b-input placeholder="e.g. Berton & Steinway" v-model="form.description" required />
+            <b-field label="Type" horizontal>
+                <b-select placeholder="Type du club" v-model="form.type" required>
+                    <option v-for="(type, index) in types" :key="index" :value="type">
+                        {{ type }}
+                    </option>
+                </b-select>
+            </b-field>
+            <b-field label="Local" horizontal>
+                <b-select placeholder="Local du club" v-model="form.salleSalleId" required>
+                    <option v-for="(type, index) in types" :key="index" :value="type">
+                        {{ type }}
+                    </option>
+                </b-select>
             </b-field>
             <!--<b-field label="Created" horizontal>
               <b-datepicker
@@ -35,12 +46,15 @@
             </b-field>
           </form>
         </card-component>
-        <card-component v-if="isProfileExists" title="Ancien profile du département" icon="account" class="tile is-child">
+        <card-component v-if="isProfileExists" title="Ancien profile du partenaire" icon="account" class="tile is-child">
           <b-field label="Nom">
             <b-input :value="last.nom" custom-class="is-static" readonly/>
           </b-field>
-          <b-field label="Description">
-            <b-input :value="last.description" custom-class="is-static" readonly/>
+          <b-field label="Type">
+            <b-input :value="last.type" custom-class="is-static" readonly/>
+          </b-field>
+          <b-field label="Salle">
+            <b-input :value="last.salleSalleId" custom-class="is-static" readonly/>
           </b-field>
           <b-field label="Date de création">
             <b-input :value="getdateminute(last.createdAt)" custom-class="is-static" readonly/>
@@ -64,7 +78,7 @@ import Tiles from '@/components/Tiles'
 import CardComponent from '@/components/CardComponent'
 
 export default {
-  name: 'dep.edit',
+  name: 'partenaireEdit',
   components: { CardComponent, Tiles, HeroBar, TitleBar },
   props: {
     id: {
@@ -77,7 +91,13 @@ export default {
       isLoading: false,
       form: this.getClearFormObject(),
       createdReadable: null,
-      isProfileExists: false
+      isProfileExists: false,
+      types: [
+        'Scientifique',
+        'Culturel',
+        'Scietifique et culturel',
+        'autre'
+      ]
     }
   },
   computed: {
@@ -85,43 +105,43 @@ export default {
       let lastCrumb
 
       if (this.isProfileExists) {
-        lastCrumb = this.form.nom
+        lastCrumb = this.last.nom
       } else {
-        lastCrumb = 'Nouveau département'
+        lastCrumb = 'Nouveau club'
       }
 
       return [
         'Admin',
-        'Departement',
+        'Club',
         lastCrumb
       ]
     },
     heroTitle () {
       if (this.isProfileExists) {
-        return this.form.nom
+        return this.last.nom
       } else {
-        return 'Nouveau Département'
+        return 'Nouveau club'
       }
     },
     heroRouterLinkTo () {
       if (this.isProfileExists) {
-        return { name: 'newDep' }
+        return { name: 'newClub' }
       } else {
         return '/'
       }
     },
     heroRouterLinkLabel () {
       if (this.isProfileExists) {
-        return 'Nouveau département'
+        return 'Nouveau club'
       } else {
         return 'Dashboard'
       }
     },
     formCardTitle () {
       if (this.isProfileExists) {
-        return 'Modifier Département'
+        return 'Modifier club'
       } else {
-        return 'Nouveau département'
+        return 'Nouveau club'
       }
     }
   },
@@ -149,9 +169,9 @@ export default {
     async getData () {
       if (this.id) {
         await axios
-          .get('http://localhost:8080/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8080/api/data/clubs', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
-            const item = find(r.data.results, item => item.departementId === parseInt(this.id))
+            const item = find(r.data.results, item => item.clubId === parseInt(this.id))
 
             if (item) {
               // this.last = item
@@ -171,7 +191,7 @@ export default {
               queue: false
             })
           })
-        await axios.get('http://localhost:8080/api/data/departements/' + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
+        await axios.get('http://localhost:8080/api/data/clubs/' + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             console.log('Last:')
             console.log(r.data.data)
@@ -193,10 +213,10 @@ export default {
 
         const utc = require('dayjs/plugin/utc')
         dayjs.extend(utc)
-        alert('nom ' + this.form.nom + ' ' + 'desc ' + this.form.description + ' ' + 'updatedAt ' + dayjs.utc().format())
-        axios.post('http://localhost:8080/api/data/departements/' + this.id, {
-          nom: this.form.nom,
-          description: this.form.description,
+        alert('nom ' + this.form.nom + ' ' + 'type ' + this.form.type + ' ' + 'updatedAt ' + dayjs.utc().format())
+        axios.post('http://localhost:8080/api/data/clubs/' + this.id, {
+          Nom: this.form.nom,
+          type: this.form.type,
           updatedAt: dayjs.utc().format()
         }, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {

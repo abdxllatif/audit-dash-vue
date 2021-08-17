@@ -12,14 +12,21 @@
         <card-component :title="formCardTitle" icon="account-edit" class="tile is-child">
           <form @submit.prevent="submit">
             <b-field label="ID" horizontal>
-              <b-input v-model="form.departementId" custom-class="is-static" readonly />
+              <b-input v-model="form.salleId" custom-class="is-static" readonly />
             </b-field>
             <hr>
-            <b-field label="Nom" message="Nom du departement" horizontal>
-              <b-input placeholder="e.g. John Doe" v-model="form.nom" required />
+            <b-field label="Nom" message="Nom de la salle" horizontal>
+              <b-input placeholder="e.g. Salle TD xx" v-model="form.nom" required />
             </b-field>
-            <b-field label="Description" message="Description du departement" horizontal>
-              <b-input placeholder="e.g. Berton & Steinway" v-model="form.description" required />
+            <b-field label="Type" horizontal>
+                <b-select placeholder="Type de la salle" v-model="form.type" required>
+                    <option v-for="(type, index) in types" :key="index" :value="type">
+                        {{ type }}
+                    </option>
+                </b-select>
+            </b-field>
+            <b-field label="Capacité" message="Capacité de la salle (entre 1 et 1500)" horizontal>
+              <b-input placeholder="e.g. 40" type="Number" min="1" max="1500" v-model="form.capacite" required />
             </b-field>
             <!--<b-field label="Created" horizontal>
               <b-datepicker
@@ -35,12 +42,15 @@
             </b-field>
           </form>
         </card-component>
-        <card-component v-if="isProfileExists" title="Ancien profile du département" icon="account" class="tile is-child">
+        <card-component v-if="isProfileExists" title="Ancien profile de la salle" icon="account" class="tile is-child">
           <b-field label="Nom">
             <b-input :value="last.nom" custom-class="is-static" readonly/>
           </b-field>
-          <b-field label="Description">
-            <b-input :value="last.description" custom-class="is-static" readonly/>
+          <b-field label="Type">
+            <b-input :value="last.type" custom-class="is-static" readonly/>
+          </b-field>
+          <b-field label="Capacité">
+            <b-input :value="last.capacite" custom-class="is-static" readonly/>
           </b-field>
           <b-field label="Date de création">
             <b-input :value="getdateminute(last.createdAt)" custom-class="is-static" readonly/>
@@ -64,7 +74,7 @@ import Tiles from '@/components/Tiles'
 import CardComponent from '@/components/CardComponent'
 
 export default {
-  name: 'dep.edit',
+  name: 'salleEdit',
   components: { CardComponent, Tiles, HeroBar, TitleBar },
   props: {
     id: {
@@ -77,7 +87,14 @@ export default {
       isLoading: false,
       form: this.getClearFormObject(),
       createdReadable: null,
-      isProfileExists: false
+      isProfileExists: false,
+      types: [
+        'Salle TD',
+        'Salle TP',
+        'Bureau',
+        'Amphi',
+        'Autres'
+      ]
     }
   },
   computed: {
@@ -85,43 +102,43 @@ export default {
       let lastCrumb
 
       if (this.isProfileExists) {
-        lastCrumb = this.form.nom
+        lastCrumb = this.last.nom
       } else {
-        lastCrumb = 'Nouveau département'
+        lastCrumb = 'Nouvelle salle'
       }
 
       return [
         'Admin',
-        'Departement',
+        'Salle',
         lastCrumb
       ]
     },
     heroTitle () {
       if (this.isProfileExists) {
-        return this.form.nom
+        return this.last.nom
       } else {
-        return 'Nouveau Département'
+        return 'Nouvelle salle'
       }
     },
     heroRouterLinkTo () {
       if (this.isProfileExists) {
-        return { name: 'newDep' }
+        return { name: 'newSal' }
       } else {
         return '/'
       }
     },
     heroRouterLinkLabel () {
       if (this.isProfileExists) {
-        return 'Nouveau département'
+        return 'Nouvelle salle'
       } else {
         return 'Dashboard'
       }
     },
     formCardTitle () {
       if (this.isProfileExists) {
-        return 'Modifier Département'
+        return 'Modifier salle'
       } else {
-        return 'Nouveau département'
+        return 'Nouvelle salle'
       }
     }
   },
@@ -149,9 +166,9 @@ export default {
     async getData () {
       if (this.id) {
         await axios
-          .get('http://localhost:8080/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8080/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
-            const item = find(r.data.results, item => item.departementId === parseInt(this.id))
+            const item = find(r.data.results, item => item.salleId === parseInt(this.id))
 
             if (item) {
               // this.last = item
@@ -171,7 +188,7 @@ export default {
               queue: false
             })
           })
-        await axios.get('http://localhost:8080/api/data/departements/' + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
+        await axios.get('http://localhost:8080/api/data/salles/' + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             console.log('Last:')
             console.log(r.data.data)
@@ -193,15 +210,16 @@ export default {
 
         const utc = require('dayjs/plugin/utc')
         dayjs.extend(utc)
-        alert('nom ' + this.form.nom + ' ' + 'desc ' + this.form.description + ' ' + 'updatedAt ' + dayjs.utc().format())
-        axios.post('http://localhost:8080/api/data/departements/' + this.id, {
+        alert('nom ' + this.form.Nom + ' ' + 'type ' + this.form.type + ' ' + 'updatedAt ' + dayjs.utc().format())
+        axios.post('http://localhost:8080/api/data/salles/' + this.id, {
           nom: this.form.nom,
-          description: this.form.description,
-          updatedAt: dayjs.utc().format()
+          description: this.form.type,
+          capacite: this.form.capacite,
+          departementId: this.form.departementDepartementId
         }, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             this.$buefy.snackbar.open({
-              message: this.form.nom + ' Modifié',
+              message: this.form.Nom + ' Modifié',
               queue: false
             })
             this.getData()

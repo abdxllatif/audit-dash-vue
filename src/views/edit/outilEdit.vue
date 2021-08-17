@@ -12,14 +12,18 @@
         <card-component :title="formCardTitle" icon="account-edit" class="tile is-child">
           <form @submit.prevent="submit">
             <b-field label="ID" horizontal>
-              <b-input v-model="form.departementId" custom-class="is-static" readonly />
+              <b-input v-model="form.outilId" custom-class="is-static" readonly />
             </b-field>
             <hr>
-            <b-field label="Nom" message="Nom du departement" horizontal>
-              <b-input placeholder="e.g. John Doe" v-model="form.nom" required />
+            <b-field label="Nom" message="Nom d'outil" horizontal>
+              <b-input placeholder="e.g. Salle TD xx" v-model="form.titre" required />
             </b-field>
-            <b-field label="Description" message="Description du departement" horizontal>
-              <b-input placeholder="e.g. Berton & Steinway" v-model="form.description" required />
+            <b-field label="Type" horizontal>
+                <b-select placeholder="Type d'outil" v-model="form.type" required>
+                    <option v-for="(type, index) in types" :key="index" :value="type">
+                        {{ type }}
+                    </option>
+                </b-select>
             </b-field>
             <!--<b-field label="Created" horizontal>
               <b-datepicker
@@ -35,12 +39,12 @@
             </b-field>
           </form>
         </card-component>
-        <card-component v-if="isProfileExists" title="Ancien profile du département" icon="account" class="tile is-child">
+        <card-component v-if="isProfileExists" title="Ancien profile de l'outil" icon="account" class="tile is-child">
           <b-field label="Nom">
-            <b-input :value="last.nom" custom-class="is-static" readonly/>
+            <b-input :value="last.titre" custom-class="is-static" readonly/>
           </b-field>
-          <b-field label="Description">
-            <b-input :value="last.description" custom-class="is-static" readonly/>
+          <b-field label="Type">
+            <b-input :value="last.type" custom-class="is-static" readonly/>
           </b-field>
           <b-field label="Date de création">
             <b-input :value="getdateminute(last.createdAt)" custom-class="is-static" readonly/>
@@ -64,7 +68,7 @@ import Tiles from '@/components/Tiles'
 import CardComponent from '@/components/CardComponent'
 
 export default {
-  name: 'dep.edit',
+  name: 'outilEdit',
   components: { CardComponent, Tiles, HeroBar, TitleBar },
   props: {
     id: {
@@ -77,7 +81,12 @@ export default {
       isLoading: false,
       form: this.getClearFormObject(),
       createdReadable: null,
-      isProfileExists: false
+      isProfileExists: false,
+      types: [
+        'Electronique',
+        'Meubles',
+        'Autres'
+      ]
     }
   },
   computed: {
@@ -85,43 +94,43 @@ export default {
       let lastCrumb
 
       if (this.isProfileExists) {
-        lastCrumb = this.form.nom
+        lastCrumb = this.last.titre
       } else {
-        lastCrumb = 'Nouveau département'
+        lastCrumb = 'Nouveau outil'
       }
 
       return [
         'Admin',
-        'Departement',
+        'Outil',
         lastCrumb
       ]
     },
     heroTitle () {
       if (this.isProfileExists) {
-        return this.form.nom
+        return this.last.titre
       } else {
-        return 'Nouveau Département'
+        return 'Nouveau outil'
       }
     },
     heroRouterLinkTo () {
       if (this.isProfileExists) {
-        return { name: 'newDep' }
+        return { name: 'newOut' }
       } else {
         return '/'
       }
     },
     heroRouterLinkLabel () {
       if (this.isProfileExists) {
-        return 'Nouveau département'
+        return 'Nouveau outil'
       } else {
         return 'Dashboard'
       }
     },
     formCardTitle () {
       if (this.isProfileExists) {
-        return 'Modifier Département'
+        return 'Modifier outil'
       } else {
-        return 'Nouveau département'
+        return 'Nouveau outil'
       }
     }
   },
@@ -149,9 +158,9 @@ export default {
     async getData () {
       if (this.id) {
         await axios
-          .get('http://localhost:8080/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8080/api/data/outils', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
-            const item = find(r.data.results, item => item.departementId === parseInt(this.id))
+            const item = find(r.data.results, item => item.outilId === parseInt(this.id))
 
             if (item) {
               // this.last = item
@@ -171,7 +180,7 @@ export default {
               queue: false
             })
           })
-        await axios.get('http://localhost:8080/api/data/departements/' + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
+        await axios.get('http://localhost:8080/api/data/outils/' + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             console.log('Last:')
             console.log(r.data.data)
@@ -193,15 +202,15 @@ export default {
 
         const utc = require('dayjs/plugin/utc')
         dayjs.extend(utc)
-        alert('nom ' + this.form.nom + ' ' + 'desc ' + this.form.description + ' ' + 'updatedAt ' + dayjs.utc().format())
-        axios.post('http://localhost:8080/api/data/departements/' + this.id, {
-          nom: this.form.nom,
-          description: this.form.description,
+        alert('nom ' + this.form.titre + ' ' + 'type ' + this.form.type + ' ' + 'updatedAt ' + dayjs.utc().format())
+        axios.post('http://localhost:8080/api/data/outils/' + this.id, {
+          titre: this.form.titre,
+          type: this.form.type,
           updatedAt: dayjs.utc().format()
         }, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             this.$buefy.snackbar.open({
-              message: this.form.nom + ' Modifié',
+              message: this.form.Nom + ' Modifié',
               queue: false
             })
             this.getData()

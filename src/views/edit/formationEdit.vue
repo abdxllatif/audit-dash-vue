@@ -12,7 +12,7 @@
         <card-component :title="formCardTitle" icon="account-edit" class="tile is-child">
           <form @submit.prevent="submit">
             <b-field label="ID" horizontal>
-              <b-input v-model="form.departementId" custom-class="is-static" readonly />
+              <b-input v-model="form.formationId" custom-class="is-static" readonly />
             </b-field>
             <hr>
             <b-field label="Nom" message="Nom du departement" horizontal>
@@ -35,7 +35,7 @@
             </b-field>
           </form>
         </card-component>
-        <card-component v-if="isProfileExists" title="Ancien profile du département" icon="account" class="tile is-child">
+        <card-component v-if="isProfileExists" title="Ancien profile du formation" icon="account" class="tile is-child">
           <b-field label="Nom">
             <b-input :value="last.nom" custom-class="is-static" readonly/>
           </b-field>
@@ -64,7 +64,7 @@ import Tiles from '@/components/Tiles'
 import CardComponent from '@/components/CardComponent'
 
 export default {
-  name: 'dep.edit',
+  name: 'formationEdit',
   components: { CardComponent, Tiles, HeroBar, TitleBar },
   props: {
     id: {
@@ -85,43 +85,43 @@ export default {
       let lastCrumb
 
       if (this.isProfileExists) {
-        lastCrumb = this.form.nom
+        lastCrumb = this.last.nom
       } else {
-        lastCrumb = 'Nouveau département'
+        lastCrumb = 'Nouvelle formation'
       }
 
       return [
         'Admin',
-        'Departement',
+        'Formation',
         lastCrumb
       ]
     },
     heroTitle () {
       if (this.isProfileExists) {
-        return this.form.nom
+        return this.last.nom
       } else {
-        return 'Nouveau Département'
+        return 'Nouvelle formation'
       }
     },
     heroRouterLinkTo () {
       if (this.isProfileExists) {
-        return { name: 'newDep' }
+        return { name: 'newForm' }
       } else {
         return '/'
       }
     },
     heroRouterLinkLabel () {
       if (this.isProfileExists) {
-        return 'Nouveau département'
+        return 'Nouvelle formation'
       } else {
         return 'Dashboard'
       }
     },
     formCardTitle () {
       if (this.isProfileExists) {
-        return 'Modifier Département'
+        return 'Modifier formation'
       } else {
-        return 'Nouveau département'
+        return 'Nouvelle formation'
       }
     }
   },
@@ -149,9 +149,9 @@ export default {
     async getData () {
       if (this.id) {
         await axios
-          .get('http://localhost:8080/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8080/api/data/formations', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
-            const item = find(r.data.results, item => item.departementId === parseInt(this.id))
+            const item = find(r.data.results, item => item.formationId === parseInt(this.id))
 
             if (item) {
               // this.last = item
@@ -171,7 +171,7 @@ export default {
               queue: false
             })
           })
-        await axios.get('http://localhost:8080/api/data/departements/' + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
+        await axios.get('http://localhost:8080/api/data/formations/' + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             console.log('Last:')
             console.log(r.data.data)
@@ -194,7 +194,7 @@ export default {
         const utc = require('dayjs/plugin/utc')
         dayjs.extend(utc)
         alert('nom ' + this.form.nom + ' ' + 'desc ' + this.form.description + ' ' + 'updatedAt ' + dayjs.utc().format())
-        axios.post('http://localhost:8080/api/data/departements/' + this.id, {
+        axios.post('http://localhost:8080/api/data/formations/' + this.id, {
           nom: this.form.nom,
           description: this.form.description,
           updatedAt: dayjs.utc().format()
