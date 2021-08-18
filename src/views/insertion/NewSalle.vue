@@ -96,11 +96,15 @@ export default {
   methods: {
     submit () {
       this.isLoading = true
+      if (this.$route.params.sel != null) {
+        this.form.department = this.$route.params.sel
+      }
       axios.post('http://localhost:8080/api/data/salles', {
         nom: this.form.name,
         description: this.form.type,
         capacite: this.form.capacite,
-        departementId: this.$route.params.sel.departementId
+        departementId: this.form.department.departementId
+        // departementId: this.$route.params.sel.departementId
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({

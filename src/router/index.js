@@ -114,6 +114,7 @@ const routes = [
       if (store.state.isLog) { next() } else { next({ name: 'home' }) }
     } */
   },
+  /* edit */
   {
     meta: {
       title: 'Edit client'
@@ -128,11 +129,131 @@ const routes = [
   },
   {
     meta: {
-      title: 'Edit department'
+      title: 'Modifier département'
     },
     path: '/department/:id',
     name: 'dep.edit',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/Departement/Edit.vue'),
+    props: true
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Modifier formation'
+    },
+    path: '/formation/:id',
+    name: 'formationEdit',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/edit/formationEdit.vue'),
+    props: true
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Modifier partenaire'
+    },
+    path: '/partenaire/:id',
+    name: 'partenaireEdit',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/edit/partenaireEdit.vue'),
+    props: true
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Modifier club'
+    },
+    path: '/club/:id',
+    name: 'clubEdit',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/edit/clubEdit.vue'),
+    props: true
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Modifier activité'
+    },
+    path: '/activite/:id',
+    name: 'activiteEdit',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/edit/activiteEdit.vue'),
+    props: true
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Modifier salle'
+    },
+    path: '/salle/:id',
+    name: 'salleEdit',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/edit/salleEdit.vue'),
+    props: true
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Modifier outil'
+    },
+    path: '/outil/:id',
+    name: 'outilEdit',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/edit/outilEdit.vue'),
+    props: true
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Modifier administratif'
+    },
+    path: '/administratif/:id',
+    name: 'administratifEdit',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/edit/administratifEdit.vue'),
+    props: true
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Modifier étudiant'
+    },
+    path: '/etudiant/:id',
+    name: 'etudiantEdit',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/edit/etudiantEdit.vue'),
+    props: true
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Modifier enseignant'
+    },
+    path: '/enseignant/:id',
+    name: 'enseignantEdit',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/edit/enseignantEdit.vue'),
+    props: true
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Modifier doctorant'
+    },
+    path: '/doctorant/:id',
+    name: 'doctorantEdit',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/edit/doctorantEdit.vue'),
     props: true
     /* beforeEnter (to, from, next) {
       if (store.state.isLog) { next() } else { next({ name: 'home' }) }
@@ -450,6 +571,42 @@ const routes = [
     path: '/club/:id',
     name: 'ClubDetail',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/details/ClubDetail.vue'),
+    props: true
+  },
+  {
+    meta: {
+      title: "Détails de l'étudiant"
+    },
+    path: '/etudiant/:id',
+    name: 'EtudiantDetail',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/details/EtudiantDetail.vue'),
+    props: true
+  },
+  {
+    meta: {
+      title: "Détails de l'enseignant"
+    },
+    path: '/enseignant/:id',
+    name: 'EnseignantDetail',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/details/EnseignantDetail.vue'),
+    props: true
+  },
+  {
+    meta: {
+      title: "Détails de l'administratif"
+    },
+    path: '/administratif/:id',
+    name: 'AdministratifDetail',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/details/AdministratifDetail.vue'),
+    props: true
+  },
+  {
+    meta: {
+      title: 'Détails du module'
+    },
+    path: '/module/:id',
+    name: 'DelibDetail',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/details/DelibDetail.vue'),
     props: true
   },
   /* Query */

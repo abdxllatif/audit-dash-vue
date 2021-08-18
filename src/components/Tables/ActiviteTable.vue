@@ -20,17 +20,20 @@
         {{ props.row.type }}
       </b-table-column>
       <b-table-column label="Date début" field="date debut" sortable v-slot="props">
-        {{ props.row.date_debut }}
+        {{ getdate(props.row.date_debut) }}
       </b-table-column>
       <b-table-column label="Date fin" field="date fin" sortable v-slot="props">
-        {{ props.row.date_fin }}
+        {{ getdate(props.row.date_fin) }}
       </b-table-column>
-      <b-table-column label="Créateur" field="createur" sortable v-slot="props">
+      <b-table-column label="Salle principale" field="salle" sortable v-slot="props">
+        <name :id="props.row.salleSalleId" :dataUrl="'http://localhost:8080/api/data/salles/'"/>
+      </b-table-column>
+      <b-table-column label="Responsable" field="responsable" sortable v-slot="props">
         <name :id="props.row.clubClubId" :dataUrl="'http://localhost:8080/api/data/clubs/'"/>
       </b-table-column>
       <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
         <div class="buttons is-right">
-          <router-link :to="{name:'dep.edit', params: {id: props.row.clubId}}" class="button is-small is-primary">
+          <router-link :to="{name:'activiteEdit', params: {id: props.row.activiteId}}" class="button is-small is-primary">
             <b-icon icon="account-edit" size="is-small"/>
           </router-link>
           <button class="button is-small is-danger" type="button" @click.prevent="trashModal(props.row)">
@@ -63,6 +66,10 @@
 import axios from 'axios'
 import ModalBox from '@/components/ModalBox'
 import Name from '@/components/Tables/Adds/Name'
+// import { moment } from 'moment'
+import dayjs from 'dayjs'
+// import Vue from 'vue'
+// const moment = require('moment')
 
 export default {
   name: 'ActiviteTable',
@@ -89,6 +96,14 @@ export default {
     }
   },
   computed: {
+    // getDate (date) {
+    // const dateString = date.toString()
+    // const momentObj = moment(date, 'YYYY-MM-DDTHH:mm:ss.SSZ')
+    // return momentObj.format('YYYY-MM-DD')
+    // return moment(date).format('DD-MM-YYYY')
+    // return moment(date, 'DD-MM-YYYY').isValid()
+    // return moment(date, 'YYYY-MM-DDTHH:mm:ss.SSSZ').format('DD/MM/YYYY')
+    // },
     trashObjectName () {
       if (this.trashObject) {
         return this.trashObject.nom
@@ -131,6 +146,9 @@ export default {
     }
   },
   methods: {
+    getdate: function (t) {
+      return dayjs(t).format('DD-MM-YYYY')
+    },
     trashModal (trashObject) {
       this.trashObject = trashObject
       this.isModalActive = true

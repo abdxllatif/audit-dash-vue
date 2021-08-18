@@ -18,6 +18,7 @@
     "core-js": "^3.9.0",
     "dayjs": "^1.10.4",
     "lodash": "^4.17.20",
+    "moment": "^2.29.1",
     "numeral": "^2.0.6",
     "printd": "^1.5.0",
     "register-service-worker": "^1.7.2",

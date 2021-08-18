@@ -12,20 +12,25 @@
       :data="etudiants">
 
       <b-table-column label="Nom" field="nom" sortable v-slot="props">
-        {{ props.row.Nom }}
+        {{ props.row.nom }}
       </b-table-column>
       <b-table-column label="Prénom" field="prenom" sortable v-slot="props">
         {{ props.row.prenom }}
       </b-table-column>
       <b-table-column label="Date de naissance" field="date" sortable v-slot="props">
-        {{ props.row.data_naissance }}
+        {{ getdate(props.row.data_naissance) }}
       </b-table-column>
       <b-table-column label="Lieu de naissance" field="lieu" sortable v-slot="props">
         {{ props.row.lieu_naissance }}
       </b-table-column>
+      <b-table-column label="Détails" field="details" v-slot="props">
+        <router-link :to="{name:'EtudiantDetail', params: {id: props.row.etudiantId}}" class="button is-small is-dark">
+          Détails
+        </router-link>
+      </b-table-column>
       <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
         <div class="buttons is-right">
-          <router-link :to="{name:'dep.edit', params: {id: props.row.departementId}}" class="button is-small is-primary">
+          <router-link :to="{name:'etudiantEdit', params: {id: props.row.etudiantId}}" class="button is-small is-primary">
             <b-icon icon="account-edit" size="is-small"/>
           </router-link>
           <button class="button is-small is-danger" type="button" @click.prevent="trashModal(props.row)">
@@ -57,6 +62,7 @@
 <script>
 import axios from 'axios'
 import ModalBox from '@/components/ModalBox'
+import dayjs from 'dayjs'
 
 export default {
   name: 'EtudiantTable',
@@ -123,6 +129,9 @@ export default {
     }
   },
   methods: {
+    getdate: function (t) {
+      return dayjs(t).format('DD-MM-YYYY')
+    },
     trashModal (trashObject) {
       this.trashObject = trashObject
       this.isModalActive = true

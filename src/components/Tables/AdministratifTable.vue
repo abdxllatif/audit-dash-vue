@@ -17,9 +17,17 @@
       <b-table-column label="Prénom" field="prenom" sortable v-slot="props">
         {{ props.row.prenom }}
       </b-table-column>
+      <b-table-column label="Role" field="role" sortable v-slot="props">
+        {{ props.row.role }}
+      </b-table-column>
+      <b-table-column label="Détails" field="details" v-slot="props">
+        <router-link :to="{name:'AdministratifDetail', params: {id: props.row.administratifId}}" class="button is-small is-dark">
+          Détails
+        </router-link>
+      </b-table-column>
       <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
         <div class="buttons is-right">
-          <router-link :to="{name:'dep.edit', params: {id: props.row.administratifId}}" class="button is-small is-primary">
+          <router-link :to="{name:'administratifEdit', params: {id: props.row.administratifId}}" class="button is-small is-primary">
             <b-icon icon="account-edit" size="is-small"/>
           </router-link>
           <button class="button is-small is-danger" type="button" @click.prevent="trashModal(props.row)">

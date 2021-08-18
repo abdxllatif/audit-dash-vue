@@ -58,7 +58,8 @@ export default {
       },
       types: [
         'Electronique',
-        'Meubles'
+        'Meubles',
+        'Autres'
       ]
     }
   },

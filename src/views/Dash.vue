@@ -14,11 +14,25 @@
             <card-widget class="tile is-child" type="is-primary" icon="account-multiple" :number="3" label="Formations"/>
             <card-widget class="tile is-child" type="is-primary" icon="account-multiple" :number="45" label="Enseignants"/>
           </tiles>
-        <section class="tile is-child">
-            <apexchart id="chart" height="100%" type="pie" :options="this.options" :series="this.data"></apexchart>
-        </section>
+          <span>
+              <b-datepicker
+                  inline
+                  v-model="date"
+                  :events="events"
+                  indicators="dots"
+                  :unselectable-dates="unselectableDates"
+                  >
+              </b-datepicker>
+          </span>
       </tiles>
-
+      <tiles>
+        <card-component title="Etudiants par département" class="tile is-child p-0">
+              <apexchart id="chart" width="100%" type="donut" :options="this.options" :series="this.data"></apexchart>
+        </card-component>
+        <card-component title="Etudiants par département" class="tile is-child p-0">
+              <apexchart id="chart" width="100%" type="pie" :options="this.options" :series="this.data"></apexchart>
+        </card-component>
+      </tiles>
       <card-component title="Performance" @header-icon-click="fillChartData" icon="finance" header-icon="reload">
         <div v-if="defaultChart.chartData" class="chart-area">
           <line-chart style="height: 100%"
@@ -67,7 +81,55 @@ export default {
       defaultChart: {
         chartData: null,
         extraOptions: chartConfig.chartOptionsMain
-      }
+      },
+      date: new Date(),
+      events: [
+        new Date(2021, 7, 2),
+        new Date(2021, 7, 6),
+        {
+          date: new Date(2021, 7, 6),
+          type: 'is-info'
+        },
+        {
+          date: new Date(2021, 7, 8),
+          type: 'is-danger'
+        },
+        {
+          date: new Date(2021, 7, 10),
+          type: 'is-success'
+        },
+        {
+          date: new Date(2021, 7, 10),
+          type: 'is-link'
+        },
+        new Date(2021, 7, 12),
+        {
+          date: new Date(2021, 7, 12),
+          type: 'is-warning'
+        },
+        {
+          date: new Date(2021, 7, 16),
+          type: 'is-danger'
+        },
+        new Date(2021, 7, 20),
+        {
+          date: new Date(2021, 6, 29),
+          type: 'is-success'
+        },
+        {
+          date: new Date(2021, 6, 29),
+          type: 'is-success'
+        },  
+        {
+          date: new Date(2021, 7, 29),
+          type: 'is-warning'
+        },
+        {
+          date: new Date(2021, 8, 29),
+          type: 'is-info'
+        }
+      ],
+      bars: false
     }
   },
   computed: {

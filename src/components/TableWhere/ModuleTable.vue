@@ -12,6 +12,21 @@
                     <b-table-column field="id" label="Crédit" sortable v-slot="props">
                         {{ props.row.credit }}
                     </b-table-column>
+                    <b-table-column field="delib" label="Déliberation" sortable v-slot="props">
+                        <router-link :to="{name:'DelibDetail', params: {id: props.row.matiereId}}" class="button is-small is-dark">
+                          Déliberation
+                        </router-link>
+                    </b-table-column>
+                    <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
+                      <div class="buttons is-right">
+                        <router-link :to="{name:'dep.edit', params: {id: props.row.clubId}}" class="button is-small is-primary">
+                          <b-icon icon="account-edit" size="is-small"/>
+                        </router-link>
+                        <button class="button is-small is-danger" type="button" @click.prevent="trashModal(props.row)">
+                          <b-icon icon="trash-can" size="is-small"/>
+                        </button>
+                      </div>
+                    </b-table-column>
                 </b-table>
 </template>
 <script>

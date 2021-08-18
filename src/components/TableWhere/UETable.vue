@@ -2,6 +2,7 @@
     <section>
       <modal-box :is-active="isModalActive" :trash-object-name="trashObjectName" @confirm="trashConfirm"
                @cancel="trashCancel"/>
+      <card-component title="Table des unités" icon="account" vers-title="Nouveau" todo="ModalNewUE" @doit="ParFormModal">
         <b-table
             :data="data"
             ref="table"
@@ -45,6 +46,9 @@
             </b-table-column>
             <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
               <div class="buttons is-right">
+                <button class="button is-small is-success" type="button" @click.prevent="">
+                  <b-icon icon="plus" size="is-small"/>
+                </button>
                 <router-link :to="{name:'dep.edit', params: {id: props.row.clubId}}" class="button is-small is-primary">
                   <b-icon icon="account-edit" size="is-small"/>
                 </router-link>
@@ -72,7 +76,7 @@
                 </b-table>-->
             </template>
         </b-table>
-
+      </card-component>
     </section>
 </template>
 
@@ -80,11 +84,12 @@
 import axios from 'axios'
 import ModuleTable from './ModuleTable.vue'
 import ModalBox from '../ModalBox.vue'
+import CardComponent from '../CardComponent.vue'
 
 // const data = [{ id: 1, nom: 'UEF1', type: 'Fondamentale', coefficient: '9', credit: '9', charge: '450', modules: { id: 2, nom: 'Analyse', type: 'Math', coefficient: '5', credit: '5', charge: '250' } }]
 export default {
   name: 'UETable',
-  components: { ModuleTable, ModalBox },
+  components: { ModuleTable, ModalBox, CardComponent },
   props: {
     dataUrl: {
       type: String,

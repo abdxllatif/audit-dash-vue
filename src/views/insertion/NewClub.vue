@@ -56,7 +56,8 @@ export default {
       types: [
         'Scientifique',
         'Culturel',
-        'Scietifique et culturel'
+        'Scietifique et culturel',
+        'autre'
       ]
     }
   },

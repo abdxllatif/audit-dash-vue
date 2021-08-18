@@ -83,6 +83,10 @@
                         <b class="ml-5">Electronique :</b> 1/{{ this.tauxEnc.specialite.Elec }}<br>
                         <b class="ml-5">Langue :</b> 1/{{ this.tauxEnc.specialite.Lang }}<br>
                       </b-tab-item>
+                      <b-tab-item label="Administratifs">
+                        <b style="font-size: 20px">Nombre d'administratifs :</b><br>
+                        {{ totalAdm }}<br>
+                      </b-tab-item>
                     </b-tabs>
                   </b-tab-item>
                   <b-tab-item label="Graphes" icon="chart-timeline-variant">

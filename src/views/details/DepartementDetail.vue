@@ -24,17 +24,17 @@
             </b-field>
         </b-tab-item>
         <b-tab-item label="Formation" icon="google-photos">
-          <card-component v-if="isProfileExists" v-bind:selected="this.form" vers-title="nouveau" vers="newForm" title="Formations" icon="account" class="tile is-child">
+          <card-component v-if="isProfileExists" v-bind:selected="this.form" vers-title="nouveau" vers="newForm" title="Formations" icon="account">
               <formation-table :data-url="`http://localhost:8080/api/stats/data`" :id="parseInt(this.id)"/>
           </card-component>
         </b-tab-item>
         <b-tab-item label="Les salles" icon="google-photos">
-          <card-component v-if="isProfileExists" v-bind:selected="this.form" vers="newSalle" title="Salles" icon="account" class="tile is-child">
+          <card-component v-if="isProfileExists" v-bind:selected="this.form" vers="newSalle" vers-title="nouveau" title="Salles" icon="account">
               <salle-table :data-url="`http://localhost:8080/api/stats/data`" :id="parseInt(this.id)"/>
           </card-component>
         </b-tab-item>
         <b-tab-item label="Les enseignants" icon="google-photos">
-          <card-component v-if="isProfileExists" title="Enseignants" icon="account" class="tile is-child">
+          <card-component v-if="isProfileExists" title="Enseignants" vers-title="nouveau" vers="newSalle" icon="account">
           </card-component>
         </b-tab-item>
       </b-tabs>

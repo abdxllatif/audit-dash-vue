@@ -18,10 +18,17 @@ import './registerServiceWorker'
 /* Vue. Main component */
 import App from './App.vue'
 
+/* moment.js */
+import { moment } from 'moment'
+
 /* Vue Apex Chart */
 import VueApexCharts from 'vue-apexcharts'
 Vue.use(VueApexCharts)
 Vue.component('apexchart', VueApexCharts)
+
+/* moment.js */
+// var moment = require('moment')
+Vue.prototype.moment = moment
 
 /* Default title tag */
 const defaultDocumentTitle = 'Audit Dash'
