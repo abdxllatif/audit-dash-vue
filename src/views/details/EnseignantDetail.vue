@@ -9,7 +9,7 @@
     </hero-bar>
     <section class="section is-main-section">
       <b-tabs>
-            <b-tab-item label="Profil de l'enseignant" icon="google-photos">
+            <b-tab-item label="Profil de l'enseignant" icon="account-details">
                 <b-field label="ID" horizontal>
                   <b-input v-model="form.enseignantId" custom-class="is-static" readonly />
                 </b-field>
@@ -29,7 +29,11 @@
                   <b-input :value="form.Sex" custom-class="is-static" readonly/>
                 </b-field>
             </b-tab-item>
-            <b-tab-item label="Formations"></b-tab-item>
+            <b-tab-item label="Formations">
+              <card-component title="Formations" icon="account" class="tile is-child" vers-title="Nouveau" todo="ModalNewFormation" @doit="FormEnsModal">
+                <form-table :data-url="`http://localhost:8080/api/data/enseignants/formations`" :id="form.eneignantId"/>
+              </card-component>
+            </b-tab-item>
             <b-tab-item label="..."></b-tab-item>
       </b-tabs>
     </section>
@@ -43,10 +47,11 @@ import find from 'lodash/find'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 // import CardComponent from '@/components/CardComponent'
+import FormTable from '@/components/TableWhere/FormByEnsTable'
 
 export default {
   name: 'EtudiantDetail',
-  components: { HeroBar, TitleBar },
+  components: { HeroBar, TitleBar, FormTable },
   props: {
     id: {
       default: null

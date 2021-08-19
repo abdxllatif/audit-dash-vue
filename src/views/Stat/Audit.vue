@@ -24,6 +24,14 @@
                         <b style="font-size: 20px">Nombre de partenaires :</b><br>
                         {{ totalPar }}
                       </b-tab-item>
+                      <b-tab-item label="Clubs">
+                        <b style="font-size: 20px">Nombre de clubs :</b><br>
+                        {{ totalClb }}
+                      </b-tab-item>
+                      <b-tab-item label="Activités">
+                        <b style="font-size: 20px">Nombre d'activités :</b><br>
+                        {{ totalAct }}
+                      </b-tab-item>
                     </b-tabs>
                   </b-tab-item>
                   <b-tab-item label="Graphes" icon="chart-timeline-variant">
@@ -86,6 +94,10 @@
                       <b-tab-item label="Administratifs">
                         <b style="font-size: 20px">Nombre d'administratifs :</b><br>
                         {{ totalAdm }}<br>
+                      </b-tab-item>
+                      <b-tab-item label="Doctorants">
+                        <b style="font-size: 20px">Nombre des doctorants :</b><br>
+                        {{ totalDoc }}<br>
                       </b-tab-item>
                     </b-tabs>
                   </b-tab-item>
@@ -236,18 +248,27 @@
                         </tiles>
                       </b-tab-item>
                       <b-tab-item label="Outils">
-                        Nombre des types d'outils : {{ totalOut }}
+                        <b style="font-size: 20px">Nombre de outils :</b><br>
+                        {{ totalOut }}
                       </b-tab-item>
                     </b-tabs>
                   </b-tab-item>
                   <b-tab-item label="Graphes" icon="chart-timeline-variant">
-                    <tiles>
-                      <!--<card-component class="tile is-child" title="Salles" icon="finance">
-                        <apexchart height="200%" type="pie" :options="options" :series="data"></apexchart>
-                        <d-chart :chart-data="this.SallesData.chartData"></d-chart>
-                      </card-component>-->
-                      <b-button class="is-info" @click="Activation(SallesData.chartData)">Graphe des salles</b-button>
-                    </tiles>
+                    <b-tabs class="block" type="is-toggle" vertical>
+                      <b-tab-item label="Salles">
+                        <tiles>
+                          <!--<card-component class="tile is-child" title="Salles" icon="finance">
+                            <apexchart height="200%" type="pie" :options="options" :series="data"></apexchart>
+                            <d-chart :chart-data="this.SallesData.chartData"></d-chart>
+                          </card-component>-->
+                          <b-button class="is-info" @click="Activation(SallesData.chartData)" expanded>Salles par type</b-button>
+                          <b-button class="is-info" @click="Activation(SallesData.chartData)" expanded>Salles par département</b-button>
+                        </tiles>
+                      </b-tab-item>
+                      <b-tab-item label="Outils">
+                          <b-button class="is-info" @click="Activation(SallesData.chartData)">Outils par type</b-button>
+                      </b-tab-item>
+                    </b-tabs>
                   </b-tab-item>
               </b-tabs>
             </b-tab-item>

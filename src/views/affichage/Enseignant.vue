@@ -6,7 +6,7 @@
       <p class="subtitle">
         Total : {{ total }} enseignants
       </p>
-      <router-link slot="right" to="/insertion/administratif" class="button">
+      <router-link slot="right" to="/enseignant/new" class="button">
         Nouveau enseignant
       </router-link>
     </hero-bar>

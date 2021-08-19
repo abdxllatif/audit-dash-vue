@@ -6,7 +6,7 @@
       <p class="subtitle">
         Total : {{ total }} administratifs
       </p>
-      <router-link slot="right" to="/insertion/administratif" class="button">
+      <router-link slot="right" to="/administratif/new" class="button">
         Nouveau administratif
       </router-link>
     </hero-bar>

@@ -6,7 +6,7 @@
       <p class="subtitle">
         Total : {{ total }} formations
       </p>
-      <router-link slot="right" to="/insertion/formation" class="button">
+      <router-link slot="right" to="/formation/new" class="button">
         Nouvelle formation
       </router-link>
     </hero-bar>

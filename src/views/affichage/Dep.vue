@@ -6,7 +6,7 @@
       <p class="subtitle">
         Total : {{ total }} départements
       </p>
-      <router-link slot="right" to="/insertion/departement" class="button">
+      <router-link slot="right" to="/departement/new" class="button">
         Nouveau département
       </router-link>
     </hero-bar>

@@ -1,5 +1,7 @@
 <template>
   <div>
+    <modal-form-par :is-active="isFormParModalActive" :formId="this.id" @confirm="FormParConfirm"
+               @cancel="FormParCancel"/>
     <title-bar :title-stack="titleStack"/>
     <hero-bar>
       {{ heroTitle }}
@@ -32,11 +34,15 @@
               </card-component>
             </b-tab-item>
             <b-tab-item label="Partenaires">
-              <card-component v-if="isProfileExists" title="Partenaires" icon="account" class="tile is-child">
-                <par-table :data-url="`http://localhost:8080/api/data/partenaires`"/>
+              <card-component v-if="isProfileExists" title="Partenaires" icon="account" class="tile is-child" vers-title="Nouveau" todo="ModalNewPartenaire" @doit="FormParModal">
+                <par-table :data-url="`http://localhost:8080/api/data/formation/partenaires`" :id="this.id"/>
               </card-component>
             </b-tab-item>
-            <b-tab-item label="Enseignants"></b-tab-item>
+            <b-tab-item label="Enseignants">
+              <card-component v-if="isProfileExists" title="Partenaires" icon="account" class="tile is-child" vers-title="Nouveau" todo="ModalNewPartenaire" @doit="FormParModal">
+                <par-table :data-url="`http://localhost:8080/api/data/formation/partenaires`" :id="this.id"/>
+              </card-component>
+            </b-tab-item>
             <b-tab-item label="..."></b-tab-item>
       </b-tabs>
     </section>
@@ -50,13 +56,14 @@ import find from 'lodash/find'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 import CardComponent from '@/components/CardComponent'
-import ParTable from '@/components/Tables/ParTable.vue'
+import ParTable from '@/components/TableWhere/ParByFormTable'
 // import EtudiantTable from '@/components/Tables/EtudiantTable.vue'
 import NiveauxTable from '@/components/Tables/NiveauxTable.vue'
+import ModalFormPar from '@/components/ModalBox/ModalFormPar.vue'
 
 export default {
   name: 'FormationDetail',
-  components: { CardComponent, HeroBar, TitleBar, ParTable, NiveauxTable },
+  components: { CardComponent, HeroBar, TitleBar, ParTable, NiveauxTable, ModalFormPar },
   props: {
     id: {
       default: null
@@ -64,6 +71,7 @@ export default {
   },
   data () {
     return {
+      isFormParModalActive: false,
       isLoading: false,
       form: this.getClearFormObject(),
       createdReadable: null,
@@ -95,6 +103,16 @@ export default {
     this.getData()
   },
   methods: {
+    FormParModal () {
+      this.isFormParModalActive = true
+    },
+    FormParConfirm () {
+      this.isFormParModalActive = false
+      // this.$refs.outilTable.mounted
+    },
+    FormParCancel () {
+      this.isFormParModalActive = false
+    },
     getClearFormObject () {
       return {
         id: null,

@@ -30,7 +30,7 @@
               <b-datepicker ref="datepicker" expanded placeholder="Selectionner une date" v-model="form.dateNaissance" required></b-datepicker>
             </b-field>
             <b-field>
-              <b-input v-model="form.LieuNaissance" placeholder="Lieu de naissance" required />
+              <b-input v-model="form.lieuNaissance" placeholder="Lieu de naissance" required />
             </b-field>
           </b-field>
           <b-field label="Sex" horizontal>
@@ -40,16 +40,20 @@
               </option>
             </b-select>
           </b-field>
-          <b-field label="Adresse" horizontal>
-              <b-input v-model="form.adresse" placeholder="Adresse" name="Adresse" required />
+          <b-field label="Résidence" horizontal>
+            <b-select placeholder="Selectionne une wilaya" v-model="form.adresse" required>
+              <option v-for="(wilaya, index) in wilayas" :key="index" :value="wilaya.name">
+                {{ wilaya.code + ': ' + wilaya.name }}
+              </option>
+            </b-select>
           </b-field>
           <b-field label="Diplome" horizontal>
-            <b-field>
-              <b-input v-model="form.diplome" placeholder="Diplome" name="Diplome" required />
-            </b-field>
-            <b-field>
-              <b-input v-model="form.specialite" placeholder="Spécialité" name="Spécialité" required />
-            </b-field>
+            <b-select placeholder="Selectionne une diplome" v-model="form.diplome" required expanded>
+              <option v-for="(diplome, index) in diplomes" :key="index" :value="diplome">
+                {{ diplome }}
+              </option>
+            </b-select>
+            <b-input v-model="form.specialite" placeholder="Spécialité" name="Spécialité" required expanded/>
           </b-field>
           <b-field label="Role" horizontal>
               <b-input v-model="form.role" placeholder="Role" name="Role" required />
@@ -72,12 +76,14 @@ import TitleBar from '@/components/TitleBar'
 import CardComponent from '@/components/CardComponent'
 import HeroBar from '@/components/HeroBar'
 import axios from 'axios'
+import wilayas from '../../../public/data-sources/algeria_cities.json'
 
 export default {
   name: 'newAdm',
   components: { HeroBar, CardComponent, TitleBar },
   data () {
     return {
+      wilayas: wilayas,
       isLoading: false,
       form: {
         department: null,
@@ -88,6 +94,19 @@ export default {
       sex: [
         'Homme',
         'Femme'
+      ],
+      diplomes: [
+        'Sans diplome',
+        'BAC',
+        'TS: Technicien Superieur',
+        'BTS: Brevet Technicien Superieur',
+        'Licence',
+        'Master 1',
+        'Master 2',
+        "Ingenieur d'état",
+        'Doctorat',
+        'Professeur',
+        'Autres'
       ]
     }
   },
@@ -114,13 +133,20 @@ export default {
     submit () {
       this.isLoading = true
       axios.post('http://localhost:8080/api/data/administratifs', {
-        nom: this.form.titre,
-        description: this.form.description,
+        nom: this.form.nom,
+        prenom: this.form.prenom,
+        date_naissance: this.form.dateNaissance,
+        lieu_naissance: this.form.lieuNaissance,
+        adresse: this.form.adresse,
+        diplome: this.form.diplome,
+        specialite: this.form.specialite,
+        role: this.form.role,
+        sex: this.form.sex,
         depId: this.form.department.departementId
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({
-            message: 'administratif: ' + this.form.name + ' ajouté',
+            message: 'administratif: ' + this.form.nom + ' ajouté',
             queue: false
           })
         })

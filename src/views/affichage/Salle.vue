@@ -6,7 +6,7 @@
       <p class="subtitle">
         Total : {{ total }} salles
       </p>
-      <router-link slot="right" to="/insertion/salle" class="button">
+      <router-link slot="right" to="/salle/new" class="button">
         Nouvelle salle
       </router-link>
     </hero-bar>

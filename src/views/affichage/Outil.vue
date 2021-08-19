@@ -6,7 +6,7 @@
       <p class="subtitle">
         Total : {{ total }} outils
       </p>
-      <router-link slot="right" to="/insertion/outil" class="button">
+      <router-link slot="right" to="/outil/new" class="button">
         Nouveau outil
       </router-link>
     </hero-bar>

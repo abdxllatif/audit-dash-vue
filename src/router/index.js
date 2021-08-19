@@ -131,7 +131,7 @@ const routes = [
     meta: {
       title: 'Modifier département'
     },
-    path: '/department/:id',
+    path: '/department/:id/edit',
     name: 'dep.edit',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/Departement/Edit.vue'),
     props: true
@@ -143,7 +143,7 @@ const routes = [
     meta: {
       title: 'Modifier formation'
     },
-    path: '/formation/:id',
+    path: '/formation/:id/edit',
     name: 'formationEdit',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/edit/formationEdit.vue'),
     props: true
@@ -155,7 +155,7 @@ const routes = [
     meta: {
       title: 'Modifier partenaire'
     },
-    path: '/partenaire/:id',
+    path: '/partenaire/:id/edit',
     name: 'partenaireEdit',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/edit/partenaireEdit.vue'),
     props: true
@@ -167,7 +167,7 @@ const routes = [
     meta: {
       title: 'Modifier club'
     },
-    path: '/club/:id',
+    path: '/club/:id/edit',
     name: 'clubEdit',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/edit/clubEdit.vue'),
     props: true
@@ -179,7 +179,7 @@ const routes = [
     meta: {
       title: 'Modifier activité'
     },
-    path: '/activite/:id',
+    path: '/activite/:id/edit',
     name: 'activiteEdit',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/edit/activiteEdit.vue'),
     props: true
@@ -191,7 +191,7 @@ const routes = [
     meta: {
       title: 'Modifier salle'
     },
-    path: '/salle/:id',
+    path: '/salle/:id/edit',
     name: 'salleEdit',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/edit/salleEdit.vue'),
     props: true
@@ -203,7 +203,7 @@ const routes = [
     meta: {
       title: 'Modifier outil'
     },
-    path: '/outil/:id',
+    path: '/outil/:id/edit',
     name: 'outilEdit',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/edit/outilEdit.vue'),
     props: true
@@ -215,7 +215,7 @@ const routes = [
     meta: {
       title: 'Modifier administratif'
     },
-    path: '/administratif/:id',
+    path: '/administratif/:id/edit',
     name: 'administratifEdit',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/edit/administratifEdit.vue'),
     props: true
@@ -227,7 +227,7 @@ const routes = [
     meta: {
       title: 'Modifier étudiant'
     },
-    path: '/etudiant/:id',
+    path: '/etudiant/:id/edit',
     name: 'etudiantEdit',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/edit/etudiantEdit.vue'),
     props: true
@@ -239,7 +239,7 @@ const routes = [
     meta: {
       title: 'Modifier enseignant'
     },
-    path: '/enseignant/:id',
+    path: '/enseignant/:id/edit',
     name: 'enseignantEdit',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/edit/enseignantEdit.vue'),
     props: true
@@ -251,7 +251,7 @@ const routes = [
     meta: {
       title: 'Modifier doctorant'
     },
-    path: '/doctorant/:id',
+    path: '/doctorant/:id/edit',
     name: 'doctorantEdit',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/edit/doctorantEdit.vue'),
     props: true
@@ -263,7 +263,7 @@ const routes = [
     meta: {
       title: 'Nouveau Departement'
     },
-    path: '/insertion/departement',
+    path: '/departement/new',
     name: 'newDep',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewDep.vue')
     /* beforeEnter (to, from, next) {
@@ -274,7 +274,7 @@ const routes = [
     meta: {
       title: 'Nouvelle formation'
     },
-    path: '/insertion/formation',
+    path: '/formation/new',
     name: 'newForm',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewForm.vue')
     /* beforeEnter (to, from, next) {
@@ -285,7 +285,7 @@ const routes = [
     meta: {
       title: 'Nouveau partenaire'
     },
-    path: '/insertion/partenaire',
+    path: '/partenaire/new',
     name: 'newPar',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewPar.vue')
     /* beforeEnter (to, from, next) {
@@ -296,7 +296,7 @@ const routes = [
     meta: {
       title: 'Nouveau administratif'
     },
-    path: '/insertion/administratif',
+    path: '/administratif/new',
     name: 'newAdm',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewAdministratif.vue')
     /* beforeEnter (to, from, next) {
@@ -307,7 +307,7 @@ const routes = [
     meta: {
       title: 'Nouveau étudiant'
     },
-    path: '/insertion/etudiant',
+    path: '/etudiant/new',
     name: 'newEtu',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewEtu.vue')
     /* beforeEnter (to, from, next) {
@@ -316,9 +316,31 @@ const routes = [
   },
   {
     meta: {
+      title: 'Nouveau enseignant'
+    },
+    path: '/enseignant/new',
+    name: 'newEns',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewEnseignant.vue')
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
+      title: 'Nouveau doctorant'
+    },
+    path: '/doctorant/new',
+    name: 'newDoc',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewDoctorant.vue')
+    /* beforeEnter (to, from, next) {
+      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
+    } */
+  },
+  {
+    meta: {
       title: 'Nouveau outil'
     },
-    path: '/insertion/outil',
+    path: '/outil/new',
     name: 'newOutil',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewOutil.vue')
     /* beforeEnter (to, from, next) {
@@ -329,7 +351,7 @@ const routes = [
     meta: {
       title: 'Nouvelle salle'
     },
-    path: '/insertion/salle',
+    path: '/salle/new',
     name: 'newSalle',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewSalle.vue')
     /* beforeEnter (to, from, next) {
@@ -340,7 +362,7 @@ const routes = [
     meta: {
       title: 'Nouveau club'
     },
-    path: '/insertion/club',
+    path: '/club/new',
     name: 'newClub',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewClub.vue')
     /* beforeEnter (to, from, next) {
@@ -351,7 +373,7 @@ const routes = [
     meta: {
       title: 'Nouvelle activité'
     },
-    path: '/insertion/activite',
+    path: '/activite/new',
     name: 'newActivite',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/insertion/NewActivite.vue')
     /* beforeEnter (to, from, next) {
@@ -598,6 +620,15 @@ const routes = [
     path: '/administratif/:id',
     name: 'AdministratifDetail',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/details/AdministratifDetail.vue'),
+    props: true
+  },
+  {
+    meta: {
+      title: 'Détails du doctorant'
+    },
+    path: '/doctorant/:id',
+    name: 'DoctorantDetail',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/details/DoctorantDetail.vue'),
     props: true
   },
   {

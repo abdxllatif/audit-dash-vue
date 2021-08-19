@@ -23,10 +23,11 @@ export default {
       a: ''
     }
   },
-  mounted () {
+  created () {
     if (this.dataUrl) {
       axios.get(this.dataUrl + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
+          console.log(r)
           this.a = r.data.data.nom
         })
         .catch(e => {

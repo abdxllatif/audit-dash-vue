@@ -6,7 +6,7 @@
       <p class="subtitle">
         Total : {{ total }} doctorants
       </p>
-      <router-link slot="right" to="/insertion/administratif" class="button">
+      <router-link slot="right" to="/doctorant/new" class="button">
         Nouveau doctorant
       </router-link>
     </hero-bar>

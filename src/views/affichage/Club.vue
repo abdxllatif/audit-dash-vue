@@ -6,7 +6,7 @@
       <p class="subtitle">
         Total : {{ total }} clubs
       </p>
-      <router-link slot="right" to="/insertion/club" class="button">
+      <router-link slot="right" to="/club/new" class="button">
         Nouveau club
       </router-link>
     </hero-bar>

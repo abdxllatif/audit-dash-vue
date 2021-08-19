@@ -6,7 +6,7 @@
       <p class="subtitle">
         Total : {{ total }} etudiants
       </p>
-      <router-link slot="right" to="/insertion/etudiant" class="button">
+      <router-link slot="right" to="/etudiant/new" class="button">
         Nouveau étudiant
       </router-link>
     </hero-bar>

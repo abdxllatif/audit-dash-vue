@@ -6,7 +6,7 @@
       <p class="subtitle">
         Total : {{ total }} partenaires
       </p>
-      <router-link slot="right" to="/insertion/partenaire" class="button">
+      <router-link slot="right" to="/partenaire/new" class="button">
         Nouveau partenaire
       </router-link>
     </hero-bar>

@@ -9,7 +9,7 @@
     </hero-bar>
     <section class="section is-main-section">
       <b-tabs>
-            <b-tab-item label="Profil de l'administratif" icon="google-photos">
+            <b-tab-item label="Profil de l'administratif" icon="account-details">
                 <b-field label="ID" horizontal>
                   <b-input v-model="form.administratifId" custom-class="is-static" readonly />
                 </b-field>

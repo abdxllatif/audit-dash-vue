@@ -40,8 +40,12 @@
               </option>
             </b-select>
           </b-field>
-          <b-field label="Adresse" horizontal>
-              <b-input v-model="form.adresse" placeholder="Adresse" name="Adresse" required />
+          <b-field label="Résidence" horizontal>
+            <b-select placeholder="Selectionne une wilaya" v-model="form.adresse" required>
+              <option v-for="(wilaya, index) in wilayas" :key="index" :value="wilaya.name">
+                {{ wilaya.code + ': ' + wilaya.name }}
+              </option>
+            </b-select>
           </b-field>
           <b-field label="Diplome" horizontal>
             <b-field>
@@ -72,12 +76,14 @@ import TitleBar from '@/components/TitleBar'
 import CardComponent from '@/components/CardComponent'
 import HeroBar from '@/components/HeroBar'
 import axios from 'axios'
+import wilayas from '../../../public/data-sources/algeria_cities.json'
 
 export default {
   name: 'newEtu',
   components: { HeroBar, CardComponent, TitleBar },
   data () {
     return {
+      wilayas: wilayas,
       isLoading: false,
       form: {
         department: null,

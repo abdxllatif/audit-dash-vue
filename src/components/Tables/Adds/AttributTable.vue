@@ -27,10 +27,11 @@ export default {
       a: ''
     }
   },
-  mounted () {
+  async mounted () {
     if (this.dataUrl) {
-      axios.get(this.dataUrl + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      await axios.get(this.dataUrl + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
+          // this.a = r.data.data.nom
           this.a = eval('r.data.data.' + this.att)
         })
         .catch(e => {
