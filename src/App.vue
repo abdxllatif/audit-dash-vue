@@ -138,6 +138,11 @@ export default {
             to: '/dash',
             icon: 'desktop-mac',
             label: 'Dashboard'
+          },
+          {
+            to: '/history',
+            icon: 'file-edit',
+            label: 'Historique'
           }
         ],
         'Tables',
@@ -270,14 +275,14 @@ export default {
         [
           {
             to: '/stats',
-            icon: 'chart-bar',
+            icon: 'database',
             label: 'Générale'
           },
-          {
+          /* {
             to: '/charts',
             icon: 'chart-bar',
             label: 'Graphes'
-          },
+          }, */
           {
             to: '/audit',
             icon: 'finance',
@@ -290,7 +295,7 @@ export default {
           },
           {
             to: '/results',
-            icon: 'chart-bar',
+            icon: 'file-chart',
             label: 'Résultats sauvegardées'
           }
         ],

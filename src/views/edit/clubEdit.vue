@@ -25,8 +25,8 @@
                     </option>
                 </b-select>
             </b-field>
-            <b-field label="Local" horizontal>
-                <b-select placeholder="Local du club" v-model="form.salleSalleId" required>
+            <b-field label="Salle" horizontal>
+                <b-select placeholder="Local du club" v-model="form.salleId">
                     <option v-for="(type, index) in types" :key="index" :value="type">
                         {{ type }}
                     </option>
@@ -78,7 +78,7 @@ import Tiles from '@/components/Tiles'
 import CardComponent from '@/components/CardComponent'
 
 export default {
-  name: 'partenaireEdit',
+  name: 'clubEdit',
   components: { CardComponent, Tiles, HeroBar, TitleBar },
   props: {
     id: {
@@ -214,8 +214,9 @@ export default {
         const utc = require('dayjs/plugin/utc')
         dayjs.extend(utc)
         axios.post('http://localhost:8080/api/data/clubs/' + this.id, {
-          Nom: this.form.nom,
-          type: this.form.type
+          nom: this.form.nom,
+          type: this.form.type,
+          salleId: this.form.salleId
         }, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             this.$buefy.snackbar.open({

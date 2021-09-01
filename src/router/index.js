@@ -678,6 +678,15 @@ const routes = [
     props: true
   },
   {
+    meta: {
+      title: 'Historique'
+    },
+    path: '/history',
+    name: 'History',
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/History.vue'),
+    props: true
+  },
+  {
     path: '*', redirect: '/404'
   }
 ]

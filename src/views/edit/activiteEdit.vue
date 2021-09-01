@@ -55,7 +55,7 @@
           </form>
         </card-component>
         <card-component v-if="isProfileExists" title="Ancien profile d'activité" icon="account" class="tile is-child">
-          <b-field label="Nom">
+          <b-field label="Titre">
             <b-input :value="last.titre" custom-class="is-static" readonly/>
           </b-field>
           <b-field label="Type">
@@ -143,7 +143,7 @@ export default {
     },
     heroRouterLinkTo () {
       if (this.isProfileExists) {
-        return { name: 'newAct' }
+        return { name: 'newActivite' }
       } else {
         return '/'
       }
