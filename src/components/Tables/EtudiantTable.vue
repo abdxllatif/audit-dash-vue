@@ -2,6 +2,7 @@
   <div>
     <modal-box :is-active="isModalActive" :trash-object-name="trashObjectName" @confirm="trashConfirm"
                @cancel="trashCancel"/>
+    <b-button>Exporter</b-button>
     <b-table
       :loading="isLoading"
       :paginated="paginated"

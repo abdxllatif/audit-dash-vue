@@ -21,6 +21,9 @@ import App from './App.vue'
 /* moment.js */
 import { moment } from 'moment'
 
+/* vue-json-to-csv */
+import VueJsonToCsv from 'vue-json-to-csv'
+
 /* Vue Apex Chart */
 import VueApexCharts from 'vue-apexcharts'
 Vue.use(VueApexCharts)
@@ -29,6 +32,9 @@ Vue.component('apexchart', VueApexCharts)
 /* moment.js */
 // var moment = require('moment')
 Vue.prototype.moment = moment
+
+/* vue-json-to-csv */
+Vue.use(VueJsonToCsv)
 
 /* Default title tag */
 const defaultDocumentTitle = 'Audit Dash'

@@ -210,7 +210,6 @@ export default {
 
         const utc = require('dayjs/plugin/utc')
         dayjs.extend(utc)
-        alert('nom ' + this.form.Nom + ' ' + 'type ' + this.form.type + ' ' + 'updatedAt ' + dayjs.utc().format())
         axios.post('http://localhost:8080/api/data/salles/' + this.id, {
           nom: this.form.nom,
           description: this.form.type,

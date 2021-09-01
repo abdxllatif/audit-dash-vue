@@ -11,6 +11,13 @@
         requete :
       </p>
       <div slot="right">
+        <vue-json-to-csv :json-data='this.json'
+          csv-title="Résultats"
+          >
+          <b-button class="mr-4" type="is-primary">
+            Exporter
+          </b-button>
+        </vue-json-to-csv>
         <b-button class="mr-4" type="is-info" @click="ChartModal">Génerer un graphe</b-button>
         <b-button class="mr-4" type="is-success" @click="SaveChart">Sauvegarder</b-button>
         <router-link to="/query" class="button is-dark">
@@ -33,10 +40,11 @@ import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 import ModalChart from '../../components/ModalBox/ModalChart.vue'
 import ModalSaveResult from '../../components/ModalBox/ModalSaveResult.vue'
+import VueJsonToCsv from 'vue-json-to-csv'
 
 export default {
   name: 'QueryResult',
-  components: { HeroBar, TitleBar, CardComponent, ModalChart, ModalSaveResult },
+  components: { HeroBar, TitleBar, CardComponent, ModalChart, ModalSaveResult, VueJsonToCsv },
   computed: {
     titleStack () {
       return [

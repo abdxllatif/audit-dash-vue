@@ -213,11 +213,9 @@ export default {
 
         const utc = require('dayjs/plugin/utc')
         dayjs.extend(utc)
-        alert('nom ' + this.form.nom + ' ' + 'type ' + this.form.type + ' ' + 'updatedAt ' + dayjs.utc().format())
         axios.post('http://localhost:8080/api/data/clubs/' + this.id, {
           Nom: this.form.nom,
-          type: this.form.type,
-          updatedAt: dayjs.utc().format()
+          type: this.form.type
         }, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             this.$buefy.snackbar.open({

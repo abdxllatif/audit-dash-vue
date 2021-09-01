@@ -9,7 +9,7 @@
     </hero-bar>
     <section class="section is-main-section">
       <b-tabs>
-        <b-tab-item label="Profil du département" icon="google-photos">
+        <b-tab-item label="Profil du département" icon="information-outline">
             <b-field label="ID" horizontal>
                 <b-input v-model="form.departementId" custom-class="is-static" readonly />
             </b-field>
@@ -23,17 +23,17 @@
               <b-input :value="this.FormCount" custom-class="is-static" readonly/>
             </b-field>
         </b-tab-item>
-        <b-tab-item label="Formation" icon="google-photos">
+        <b-tab-item label="Formation" icon="school">
           <card-component v-if="isProfileExists" v-bind:selected="this.form" vers-title="nouveau" vers="newForm" title="Formations" icon="account">
               <formation-table :data-url="`http://localhost:8080/api/stats/data`" :id="parseInt(this.id)"/>
           </card-component>
         </b-tab-item>
-        <b-tab-item label="Les salles" icon="google-photos">
+        <b-tab-item label="Les salles" icon="table">
           <card-component v-if="isProfileExists" v-bind:selected="this.form" vers="newSalle" vers-title="nouveau" title="Salles" icon="account">
               <salle-table :data-url="`http://localhost:8080/api/stats/data`" :id="parseInt(this.id)"/>
           </card-component>
         </b-tab-item>
-        <b-tab-item label="Les enseignants" icon="google-photos">
+        <b-tab-item label="Les enseignants" icon="account">
           <card-component v-if="isProfileExists" title="Enseignants" vers-title="nouveau" vers="newSalle" icon="account">
           </card-component>
         </b-tab-item>

@@ -162,117 +162,117 @@
               </b-tabs>
             </b-tab-item>
             <b-tab-item label="Logistiques" icon="tools">
-              <b-tabs position="is-centered" class="block">
-                  <b-tab-item label="Résultats" icon="view-list">
-                    <b-tabs class="block" type="is-toggle" vertical>
+                    <b-tabs class="block" type="is-boxed" vertical>
                       <b-tab-item label="Salles">
-                        <tiles>
-                          <section class="tile is-child">
-                            <b style="font-size: 20px">Nombre des salles :</b><br>
-                            <b class="ml-2">Total :</b> {{ totalSal }}<br>
-                          </section>
-                          <section class="tile is-child">
-                            <b-collapse :open="false" aria-id="contentIdForA11y1">
-                                <template #trigger>
-                                    <b-button
-                                        label="Filtres"
-                                        type="is-primary"
-                                        aria-controls="contentIdForA11y1" />
-                                </template>
-                                <div class="notification">
-                                    <div class="content">
-                                        <b-field label="Type">
-                                          <b-radio v-model="salles.salleFilter.type" @input="UpdateSalleData"
-                                              native-value="none">
-                                              Total
-                                          </b-radio>
-                                          <b-radio v-model="salles.salleFilter.type" @input="UpdateSalleData"
-                                              native-value="Salle TD">
-                                              TD
-                                          </b-radio>
-                                          <b-radio v-model="salles.salleFilter.type" @input="UpdateSalleData"
-                                              native-value="Salle TP">
-                                              TP
-                                          </b-radio>
-                                          <b-radio v-model="salles.salleFilter.type" @input="UpdateSalleData"
-                                              native-value="Amphi">
-                                              Amphi
-                                          </b-radio>
-                                          <b-radio v-model="salles.salleFilter.type" @input="UpdateSalleData"
-                                              native-value="bureau">
-                                              Bureau
-                                          </b-radio>
-                                          <b-radio v-model="salles.salleFilter.type" @input="UpdateSalleData"
-                                              native-value="autres">
-                                              Autres
-                                          </b-radio>
-                                      </b-field>
-                                      <b-field label="Capacité">
-                                          <b-radio v-model="salles.salleFilter.capacite" @input="UpdateSalleData"
-                                              native-value="none">
-                                              Total
-                                          </b-radio>
-                                          <b-radio v-model="salles.salleFilter.capacite" @input="UpdateSalleData"
-                                              native-value="Bas">
-                                              Moins de 50
-                                          </b-radio>
-                                          <b-radio v-model="salles.salleFilter.capacite" @input="UpdateSalleData"
-                                              native-value="Moyen">
-                                              Entre 50 et 100
-                                          </b-radio>
-                                          <b-radio v-model="salles.salleFilter.capacite" @input="UpdateSalleData"
-                                              native-value="Haut">
-                                              Plus que 100
-                                          </b-radio>
-                                      </b-field>
+                        <b-tabs position="is-centered" class="block">
+                          <b-tab-item label="Résultats" icon="view-list">
+                            <tiles>
+                              <section class="tile is-child">
+                                <b style="font-size: 20px">Nombre des salles :</b><br>
+                                <b class="ml-2">Total :</b> {{ totalSal }}<br>
+                              </section>
+                              <section class="tile is-child">
+                                <b-collapse :open="false" aria-id="contentIdForA11y1">
+                                    <template #trigger>
+                                        <b-button
+                                            label="Filtres"
+                                            type="is-primary"
+                                            aria-controls="contentIdForA11y1" />
+                                    </template>
+                                    <div class="notification">
+                                        <div class="content">
+                                            <b-field label="Type">
+                                              <b-radio v-model="salles.salleFilter.type" @input="UpdateSalleData"
+                                                  native-value="none">
+                                                  Total
+                                              </b-radio>
+                                              <b-radio v-model="salles.salleFilter.type" @input="UpdateSalleData"
+                                                  native-value="Salle TD">
+                                                  TD
+                                              </b-radio>
+                                              <b-radio v-model="salles.salleFilter.type" @input="UpdateSalleData"
+                                                  native-value="Salle TP">
+                                                  TP
+                                              </b-radio>
+                                              <b-radio v-model="salles.salleFilter.type" @input="UpdateSalleData"
+                                                  native-value="Amphi">
+                                                  Amphi
+                                              </b-radio>
+                                              <b-radio v-model="salles.salleFilter.type" @input="UpdateSalleData"
+                                                  native-value="bureau">
+                                                  Bureau
+                                              </b-radio>
+                                              <b-radio v-model="salles.salleFilter.type" @input="UpdateSalleData"
+                                                  native-value="autres">
+                                                  Autres
+                                              </b-radio>
+                                          </b-field>
+                                          <b-field label="Capacité">
+                                              <b-radio v-model="salles.salleFilter.capacite" @input="UpdateSalleData"
+                                                  native-value="none">
+                                                  Total
+                                              </b-radio>
+                                              <b-radio v-model="salles.salleFilter.capacite" @input="UpdateSalleData"
+                                                  native-value="Bas">
+                                                  Moins de 50
+                                              </b-radio>
+                                              <b-radio v-model="salles.salleFilter.capacite" @input="UpdateSalleData"
+                                                  native-value="Moyen">
+                                                  Entre 50 et 100
+                                              </b-radio>
+                                              <b-radio v-model="salles.salleFilter.capacite" @input="UpdateSalleData"
+                                                  native-value="Haut">
+                                                  Plus que 100
+                                              </b-radio>
+                                          </b-field>
+                                        </div>
                                     </div>
-                                </div>
-                            </b-collapse>
-                          </section>
-                        </tiles>
-                        <tiles>
-                          <section class="tile is-child">
-                            <b class="ml-2">Par type :</b> <br>
-                            <b class="ml-5">Amphi :</b> {{ this.salles.data.filter(obj => obj.type === 'Amphi').length }}<br>
-                            <b class="ml-5">Salle TD :</b> {{ this.salles.data.filter(obj => obj.type === 'Salle TD').length }}<br>
-                            <b class="ml-5">Salle TP :</b> {{ this.salles.data.filter(obj => obj.type === 'Salle TP').length }}<br>
-                            <b class="ml-5">Bureau :</b> {{ this.salles.data.filter(obj => obj.type === 'bureau').length }}<br>
-                            <b class="ml-5">Autres :</b> {{ this.salles.data.filter(obj => obj.type === 'autres').length }}<br>
-                          </section>
-                          <section class="tile is-child">
-                            <b class="ml-2">Par capacité :</b> <br>
-                            <b class="ml-5">Moins de 50 :</b> {{/* eslint-disable */ this.salles.data.filter(obj => obj.capacite < 50).length /* eslint-disable */}}<br>
-                            <b class="ml-5">Entre 50 et 100 :</b> {{ this.salles.data.filter(obj => ((obj.capacite >= 50) && (obj.capacite < 100))).length }}<br>
-                            <b class="ml-5">Plus que 100 :</b> {{ this.salles.data.filter(obj => obj.capacite >= 100).length }}<br>
-                          </section>
-                        </tiles>
+                                </b-collapse>
+                              </section>
+                            </tiles>
+                            <tiles>
+                              <section class="tile is-child">
+                                <b class="ml-2">Par type :</b> <br>
+                                <b class="ml-5">Amphi :</b> {{ this.salles.data.filter(obj => obj.type === 'Amphi').length }}<br>
+                                <b class="ml-5">Salle TD :</b> {{ this.salles.data.filter(obj => obj.type === 'Salle TD').length }}<br>
+                                <b class="ml-5">Salle TP :</b> {{ this.salles.data.filter(obj => obj.type === 'Salle TP').length }}<br>
+                                <b class="ml-5">Bureau :</b> {{ this.salles.data.filter(obj => obj.type === 'bureau').length }}<br>
+                                <b class="ml-5">Autres :</b> {{ this.salles.data.filter(obj => obj.type === 'autres').length }}<br>
+                              </section>
+                              <section class="tile is-child">
+                                <b class="ml-2">Par capacité :</b> <br>
+                                <b class="ml-5">Moins de 50 :</b> {{/* eslint-disable */ this.salles.data.filter(obj => obj.capacite < 50).length /* eslint-disable */}}<br>
+                                <b class="ml-5">Entre 50 et 100 :</b> {{ this.salles.data.filter(obj => ((obj.capacite >= 50) && (obj.capacite < 100))).length }}<br>
+                                <b class="ml-5">Plus que 100 :</b> {{ this.salles.data.filter(obj => obj.capacite >= 100).length }}<br>
+                              </section>
+                            </tiles>
+                          </b-tab-item>
+                          <b-tab-item label="Graphes" icon="view-list">
+                            <tiles>
+                              <!--<card-component class="tile is-child" title="Salles" icon="finance">
+                                <apexchart height="200%" type="pie" :options="options" :series="data"></apexchart>
+                                <d-chart :chart-data="this.SallesData.chartData"></d-chart>
+                              </card-component>-->
+                              <b-button class="is-info" @click="Activation(SallesData.chartData)" expanded>Salles par type</b-button>
+                              <b-button class="is-info" @click="Activation(SallesData.chartData)" expanded>Salles par département</b-button>
+                            </tiles>
+                          </b-tab-item>
+                        </b-tabs>
                       </b-tab-item>
                       <b-tab-item label="Outils">
-                        <b style="font-size: 20px">Nombre de outils :</b><br>
-                        {{ totalOut }}
+                        <b-tabs position="is-centered" class="block">
+                          <b-tab-item label="Résultats" icon="view-list">
+                            <b style="font-size: 20px">Nombre de outils :</b><br>
+                              {{ totalOut }}
+                          </b-tab-item>
+                          <b-tab-item label="Graphes" icon="chart-timeline-variant">
+                            <b-button class="is-info" @click="Activation(SallesData.chartData)">Outils par type</b-button>
+                          </b-tab-item>
+                        </b-tabs>
                       </b-tab-item>
                     </b-tabs>
-                  </b-tab-item>
-                  <b-tab-item label="Graphes" icon="chart-timeline-variant">
-                    <b-tabs class="block" type="is-toggle" vertical>
-                      <b-tab-item label="Salles">
-                        <tiles>
-                          <!--<card-component class="tile is-child" title="Salles" icon="finance">
-                            <apexchart height="200%" type="pie" :options="options" :series="data"></apexchart>
-                            <d-chart :chart-data="this.SallesData.chartData"></d-chart>
-                          </card-component>-->
-                          <b-button class="is-info" @click="Activation(SallesData.chartData)" expanded>Salles par type</b-button>
-                          <b-button class="is-info" @click="Activation(SallesData.chartData)" expanded>Salles par département</b-button>
-                        </tiles>
-                      </b-tab-item>
-                      <b-tab-item label="Outils">
-                          <b-button class="is-info" @click="Activation(SallesData.chartData)">Outils par type</b-button>
-                      </b-tab-item>
-                    </b-tabs>
-                  </b-tab-item>
-              </b-tabs>
             </b-tab-item>
-        </b-tabs>
+      </b-tabs>
     </section>
   </div>
 </template>
