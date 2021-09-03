@@ -8,7 +8,7 @@
       </router-link>
     </hero-bar>
     <section class="section is-main-section">
-      <import-component/>
+      <!--<import-component/>-->
       <card-component title="Nouvelle activité" icon="ballot">
         <form @submit.prevent="submit">
             <b-field label="Organisateur" horizontal>
@@ -31,12 +31,17 @@
               </b-select>
           </b-field>
           <b-field  label="Période" horizontal>
-            <b-field label="Date de début">
+            <!--<b-field label="Date de début">
               <b-datepicker ref="datepicker" expanded placeholder="Selectionner une date" v-model="form.dateDebut" required></b-datepicker>
             </b-field>
             <b-field label="Date de fin">
               <b-datepicker ref="datepicker" placeholder="Selectionner une date" v-model="form.dateFin" required></b-datepicker>
-            </b-field>
+            </b-field>-->
+                <b-datepicker
+                    placeholder="Click to select..."
+                    v-model="dates"
+                    range>
+                </b-datepicker>
           </b-field>
           <b-field label="Salle principale" horizontal>
                 <b-select placeholder="Selectionne une salle" v-model="form.salle" required>
@@ -62,12 +67,12 @@
 import TitleBar from '@/components/TitleBar'
 import CardComponent from '@/components/CardComponent'
 import HeroBar from '@/components/HeroBar'
-import ImportComponent from '@/components/ImportComponent'
+// import ImportComponent from '@/components/ImportComponent'
 import axios from 'axios'
 
 export default {
   name: 'newActivite',
-  components: { HeroBar, CardComponent, TitleBar, ImportComponent },
+  components: { HeroBar, CardComponent, TitleBar },
   data () {
     return {
       isLoading: false,
@@ -77,6 +82,7 @@ export default {
       },
       clubs: [],
       salles: [],
+      dates: [],
       types: [
         'Scientifique',
         'Culturelle',
@@ -118,8 +124,8 @@ export default {
         titre: this.form.titre,
         clubId: this.form.club.clubId,
         type: this.form.type,
-        date_debut: this.form.dateDebut,
-        date_fin: this.form.dateFin,
+        date_debut: this.dates[0],
+        date_fin: this.dates[1],
         salleId: this.form.salle.salleId
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {

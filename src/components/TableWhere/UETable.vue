@@ -2,7 +2,11 @@
     <section>
       <modal-box :is-active="isModalActive" :trash-object-name="trashObjectName" @confirm="trashConfirm"
                @cancel="trashCancel"/>
-      <card-component title="Table des unités" icon="account" vers-title="Nouveau" todo="ModalNewUE" @doit="ParFormModal">
+      <new-u-e-modal :is-active="isNewUEModalActive" :Semid="this.idS" @confirm="NewUEConfirm"
+               @cancel="NewUECancel"/>
+      <new-matiere-modal :is-active="isNewMatiereModalActive" :UE="UeId" @confirm="NewMatiereConfirm"
+               @cancel="NewMatiereCancel"/>
+      <card-component title="Table des unités" icon="account" vers-title="Nouvelle unité" todo="ModalNewUE" @doit="NewUEModal">
         <b-table
             :data="data"
             ref="table"
@@ -46,7 +50,7 @@
             </b-table-column>
             <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
               <div class="buttons is-right">
-                <button class="button is-small is-success" type="button" @click.prevent="">
+                <button class="button is-small is-success" type="button" @click.prevent="NewMatiereModal(props.row)">
                   <b-icon icon="plus" size="is-small"/>
                 </button>
                 <router-link :to="{name:'dep.edit', params: {id: props.row.clubId}}" class="button is-small is-primary">
@@ -85,11 +89,13 @@ import axios from 'axios'
 import ModuleTable from './ModuleTable.vue'
 import ModalBox from '../ModalBox.vue'
 import CardComponent from '../CardComponent.vue'
+import NewUEModal from '../ModalBox/ModalNewUE.vue'
+import NewMatiereModal from '../ModalBox/ModalNewMatiere.vue'
 
 // const data = [{ id: 1, nom: 'UEF1', type: 'Fondamentale', coefficient: '9', credit: '9', charge: '450', modules: { id: 2, nom: 'Analyse', type: 'Math', coefficient: '5', credit: '5', charge: '250' } }]
 export default {
   name: 'UETable',
-  components: { ModuleTable, ModalBox, CardComponent },
+  components: { ModuleTable, ModalBox, CardComponent, NewUEModal, NewMatiereModal },
   props: {
     dataUrl: {
       type: String,
@@ -102,12 +108,16 @@ export default {
     return {
       idS: this.id,
       isModalActive: false,
+      isNewUEModalActive: false,
+      isNewMatiereModalActive: false,
       trashObject: null,
       ues: [],
       data: [],
       defaultOpenedDetails: [1],
       showDetailIcon: true,
-      useTransition: false
+      useTransition: false,
+      UEid: null,
+      Ue: null
     }
   },
   async mounted () {
@@ -150,12 +160,40 @@ export default {
       }
 
       return null
+    },
+    UeId () {
+      if (this.Ue) {
+        return this.Ue.ueId
+      }
+
+      return null
     }
   },
   methods: {
     trashModal (trashObject) {
       this.trashObject = trashObject
       this.isModalActive = true
+    },
+    NewMatiereModal (Ue) {
+      // this.UEid = a
+      this.Ue = Ue
+      console.log(this.UEid)
+      this.isNewMatiereModalActive = true
+    },
+    NewMatiereConfirm () {
+      this.isNewMatiereModalActive = false
+    },
+    NewMatiereCancel () {
+      this.isNewMatiereModalActive = false
+    },
+    NewUEModal () {
+      this.isNewUEModalActive = true
+    },
+    NewUEConfirm () {
+      this.isNewUEModalActive = false
+    },
+    NewUECancel () {
+      this.isNewUEModalActive = false
     },
     trashConfirm () {
       this.isModalActive = false

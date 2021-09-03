@@ -26,7 +26,7 @@
                 </card-component>
             </b-tab-item>
             <b-tab-item label="Etudiants" icon="account">
-                <etud-delib-table v-if="this.yes" :matiereId="this.form.matiereId" :listetudiants="this.listetudiants" :data-url="`http://localhost:8080/api/stats/data`"></etud-delib-table>
+                <etud-delib-table v-if="this.yes" :matiereId="form.matiereId" :listetudiants="this.listetudiants" :data-url="`http://localhost:8080/api/stats/data`"></etud-delib-table>
             </b-tab-item>
         </b-tabs>
     </section>

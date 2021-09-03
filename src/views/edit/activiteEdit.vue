@@ -25,14 +25,21 @@
                     </option>
                 </b-select>
             </b-field>
-            <b-field label="Lieu" horizontal>
-                <b-select placeholder="Lieu d'activité" v-model="form.salleSalleId" required>
-                    <option v-for="(type, index) in types" :key="index" :value="type">
-                        {{ type }}
+            <b-field label="Responsable" horizontal>
+                <b-select placeholder="Responsable d'activité" v-model="form.clubClubId" required>
+                    <option v-for="(club, index) in clubs" :key="index" :value="club.clubId">
+                        {{ club.nom }}
                     </option>
                 </b-select>
             </b-field>
-            <b-field label="Date début" horizontal>
+            <b-field label="Lieu" horizontal>
+                <b-select placeholder="Lieu d'activité" v-model="form.salleSalleId" required>
+                    <option v-for="(salle, index) in salles" :key="index" :value="salle.salleId">
+                        {{ salle.nom }}
+                    </option>
+                </b-select>
+            </b-field>
+            <!--<b-field label="Date début" horizontal>
               <b-datepicker
                 @input="input"
                 v-model="this.date_debut"
@@ -47,6 +54,13 @@
                 placeholder="Click to select..."
                 icon="calendar-today">
               </b-datepicker>
+            </b-field>-->
+            <b-field label="Date début et date fin">
+                <b-datepicker
+                    placeholder="Click to select..."
+                    v-model="dates"
+                    range>
+                </b-datepicker>
             </b-field>
             <hr>
             <b-field horizontal>
@@ -61,7 +75,7 @@
           <b-field label="Type">
             <b-input :value="last.type" custom-class="is-static" readonly/>
           </b-field>
-          <b-field label="Salle principale">
+          <b-field label="Lieu">
             <b-input :value="last.salleSalleId" custom-class="is-static" readonly/>
           </b-field>
           <b-field label="Responsable">
@@ -115,7 +129,10 @@ export default {
         'scientifique',
         'culturel',
         'autre'
-      ]
+      ],
+      salles: [],
+      clubs: [],
+      dates: []
     }
   },
   computed: {
@@ -164,6 +181,22 @@ export default {
     }
   },
   async created () {
+    axios.get('http://localhost:8080/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .then((response) => {
+        this.listings = response.data
+        this.salles = this.listings.results
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    axios.get('http://localhost:8080/api/data/clubs', { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .then((response) => {
+        this.listings = response.data
+        this.clubs = this.listings.results
+      })
+      .catch((error) => {
+        console.log(error)
+      })
     await this.getData()
     console.log(dayjs(this.date_debut).format('YYYY-MM-DD'))
   },
@@ -191,6 +224,7 @@ export default {
               // this.last = item
               this.form.created_date = new Date(item.created_mm_dd_yyyy)
               this.createdReadable = dayjs(item.created_at).format('DD-MM-YYYY')
+              this.dates = [new Date(this.form.date_debut), new Date(this.form.date_fin)]
               this.date_debut = new Date(this.form.date_debut)
               this.date_fin = new Date(this.form.date_fin)
             } else {
@@ -226,9 +260,16 @@ export default {
 
         const utc = require('dayjs/plugin/utc')
         dayjs.extend(utc)
+        // console.log(dayjs(this.date_debut).format())
+        // console.log(dayjs(this.date_debut).format('YYYY-MM-DD HH:mm:ss.SSSZ'))
+        console.log(this.dates[1])
         axios.post('http://localhost:8080/api/data/activites/' + this.id, {
           titre: this.form.titre,
-          type: this.form.type
+          type: this.form.type,
+          date_debut: dayjs(this.dates[0]).format('YYYY-MM-DD HH:mm:ss.SSSZ'),
+          date_fin: dayjs(this.dates[1]).format('YYYY-MM-DD HH:mm:ss.SSSZ'),
+          salleId: this.form.salleSalleId,
+          clubId: this.form.clubClubId
         }, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             this.$buefy.snackbar.open({

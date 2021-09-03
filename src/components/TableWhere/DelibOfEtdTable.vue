@@ -11,42 +11,23 @@
       :striped="true"
       :hoverable="true"
       default-sort="nom"
-      :data="etudiants">
+      :data="delibs">
 
-      <b-table-column label="Nom" field="nom" sortable v-slot="props">
-        <attribut-table :id="props.row.etudiantId" :dataUrl="'http://localhost:8080/api/data/etudiants/'" :att="'nom'" ></attribut-table>
+      <b-table-column label="Module" field="module" sortable v-slot="props">
+        <name :id="props.row.matiereMatiereId" :dataUrl="'http://localhost:8080/api/data/matieres/'" ></name>
       </b-table-column>
-      <b-table-column label="Prénom" field="prenom" sortable v-slot="props">
-          <attribut-table :id="props.row.etudiantId" :dataUrl="'http://localhost:8080/api/data/etudiants/'" :att="'prenom'" ></attribut-table>
+      <b-table-column label="Coefficient" field="coefficient" sortable v-slot="props">
+          {{ props.row.Coefficient }}
+          <!--<attribut-table :id="props.row.etudiantId" :dataUrl="'http://localhost:8080/api/data/etudiants/'" :att="'prenom'" ></attribut-table>-->
       </b-table-column>
       <b-table-column label="Détails" field="details" v-slot="props">
-        <router-link :to="{name:'EtudiantDetail', params: {id: props.row.etudiantId}}" class="button is-small is-dark">
+        <router-link :to="{name:'DelibDetail', params: {id: props.row.matiereMatiereId}}" class="button is-small is-dark">
           Détails
         </router-link>
       </b-table-column>
-      <!--<b-table-column :visible="!this.edit" label="Déliberation" field="deliberation" sortable v-slot="props">
-        {{ props.row.Moyenne }}
-      </b-table-column>
-      <b-table-column :visible="this.edit" label="Déliberation" field="deliberation" sortable>
-        <b-field>
-            <b-input placeholder="Moyenne"
-                value=""
-                min="0"
-                max="20">
-            </b-input>
-        </b-field>-->
       <b-table-column label="Déliberation" field="deliberation" sortable v-slot="props">
-        <moyenne-delib :Etdid="props.row.etudiantId" :Matid="matiereId"></moyenne-delib>
-      </b-table-column>
-      <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
-        <div class="buttons is-right">
-          <button class="button is-small is-primary" type="button" @click.prevent="DelibEtdModal(props.row)">
-            Modifier
-          </button>
-          <button class="button is-small is-danger" type="button" @click.prevent="trashModal(props.row)">
-            <b-icon icon="trash-can" size="is-small"/>
-          </button>
-        </div>
+        {{ props.row.Moyenne }}
+        <!--<moyenne-delib :Etdid="props.row.etudiantId" :Matid="matiereId"></moyenne-delib>-->
       </b-table-column>
 
       <section class="section" slot="empty">
@@ -72,31 +53,26 @@
 <script>
 import axios from 'axios'
 import ModalBox from '@/components/ModalBox'
-import AttributTable from '@/components/Tables/Adds/AttributTable'
+// import AttributTable from '@/components/Tables/Adds/AttributTable'
+import Name from '@/components/Tables/Adds/Name'
 import ModalDelibEtd from '@/components/ModalBox/ModalDelibEtd'
-import MoyenneDelib from '@/components/Tables/Adds/MoyenneDelib'
+// import MoyenneDelib from '@/components/Tables/Adds/MoyenneDelib'
 
 export default {
-  name: 'FormationTable',
-  components: { ModalBox, AttributTable, ModalDelibEtd, MoyenneDelib },
+  name: 'DelibOfEtdTable',
+  components: { ModalBox, Name, ModalDelibEtd },
   props: {
-    matiereId: {
-      type: String,
-      default: null
-    },
-    listetudiants: {
-      default: []
-    }
+    etdid: null
   },
   data () {
     return {
       edit: false,
       isModalActive: false,
       trashObject: null,
-      etudiants: [],
+      delibs: [],
       isLoading: false,
       paginated: true,
-      perPage: 20,
+      perPage: 10,
       checkedRows: [],
       isDelibEtdModalActive: false
     }
@@ -110,24 +86,20 @@ export default {
       return null
     }
   },
-  mounted () {
-    this.etudiants = this.listetudiants
-    if (this.dataUrl) {
+  async mounted () {
+    // const etd = this.etdid
+    const a = 0
+    if (a === 0) {
       this.isLoading = true
-      axios.post(this.dataUrl, {
-        table: 'formations',
-        fk: 'departementDepartementId',
-        value: parseInt(this.id)
-      }, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      await axios.get('http://localhost:8080/api/data/DelibModuless/' + 2, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           console.log(r.data)
-          console.log(parseInt(this.id))
           if (r && r.data) {
             if (r.data.length > this.perPage) {
               this.paginated = true
             }
-            this.formations = r.data
+            this.delibs = r.data.results
           }
         })
         .catch(e => {
@@ -135,7 +107,7 @@ export default {
           console.log('There was an error!', e)
           this.$buefy.snackbar.open({
             type: 'is-warning',
-            message: 'Erreur fl count',
+            message: e,
             queue: false
           })
         })

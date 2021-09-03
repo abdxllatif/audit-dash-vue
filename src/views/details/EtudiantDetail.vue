@@ -3,7 +3,7 @@
     <title-bar :title-stack="titleStack"/>
     <hero-bar>
       {{ heroTitle }}
-      <router-link slot="right" :to="{ name: 'newEtd', params: { sels: this.department }}" class="button">
+      <router-link slot="right" :to="'/etudiant/new'" class="button">
         {{ heroRouterLinkLabel }}
       </router-link>
     </hero-bar>
@@ -42,7 +42,9 @@
                   <b-input :value="dep" custom-class="is-static" readonly/>
                 </b-field>
             </b-tab-item>
-            <b-tab-item label="Notes"></b-tab-item>
+            <b-tab-item label="Notes">
+              <delib-of-etd-table :etdid='form.etudiantId'></delib-of-etd-table>
+            </b-tab-item>
             <b-tab-item label="..."></b-tab-item>
       </b-tabs>
     </section>
@@ -55,11 +57,12 @@ import dayjs from 'dayjs'
 import find from 'lodash/find'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
+import DelibOfEtdTable from '@/components/TableWhere/DelibOfEtdTable'
 // import CardComponent from '@/components/CardComponent'
 
 export default {
   name: 'EtudiantDetail',
-  components: { HeroBar, TitleBar },
+  components: { HeroBar, TitleBar, DelibOfEtdTable },
   props: {
     id: {
       default: null

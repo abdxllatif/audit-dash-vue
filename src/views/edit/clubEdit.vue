@@ -26,9 +26,9 @@
                 </b-select>
             </b-field>
             <b-field label="Salle" horizontal>
-                <b-select placeholder="Local du club" v-model="form.salleId">
-                    <option v-for="(type, index) in types" :key="index" :value="type">
-                        {{ type }}
+                <b-select placeholder="Local du club" v-model="form.salleSalleId">
+                    <option v-for="(salle, index) in salles" :key="index" :value="salle.salleId">
+                        {{ salle.nom }}
                     </option>
                 </b-select>
             </b-field>
@@ -93,11 +93,12 @@ export default {
       createdReadable: null,
       isProfileExists: false,
       types: [
-        'Scientifique',
-        'Culturel',
-        'Scietifique et culturel',
+        'scientifique',
+        'culturel',
+        'scietifique et culturel',
         'autre'
-      ]
+      ],
+      salles: []
     }
   },
   computed: {
@@ -146,6 +147,14 @@ export default {
     }
   },
   created () {
+    axios.get('http://localhost:8080/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .then((response) => {
+        this.listings = response.data
+        this.salles = this.listings.results
+      })
+      .catch((error) => {
+        console.log(error)
+      })
     this.getData()
   },
   methods: {
@@ -216,7 +225,7 @@ export default {
         axios.post('http://localhost:8080/api/data/clubs/' + this.id, {
           nom: this.form.nom,
           type: this.form.type,
-          salleId: this.form.salleId
+          salleId: this.form.salleSalleId
         }, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             this.$buefy.snackbar.open({

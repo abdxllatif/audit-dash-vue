@@ -1,10 +1,10 @@
 <template>
-  <b-modal :active.sync="isNewUEModalActive" has-modal-card>
+  <b-modal :active.sync="isNewMatiereModalActive" has-modal-card>
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title">
             <b-icon class="mx-4" icon="note"></b-icon>
-            Ajouter une nouvelle UE
+            Ajouter une nouvelle matière
         </p>
       </header>
       <section class="modal-card-body">
@@ -23,13 +23,13 @@
                 </b-select>
             </b-field>
             <b-field label="Coefficient">
-                <b-numberinput v-model="form.Coefficient" min="1" required></b-numberinput>
+                <b-numberinput v-model="form.coefficient" min="1" required></b-numberinput>
             </b-field>
             <b-field label="Crédit">
                 <b-numberinput v-model="form.credit" min="1" required></b-numberinput>
             </b-field>
             <b-field label="Charge horaire">
-                <b-numberinput v-model="form.ChargeHoraire" min="1" required></b-numberinput>
+                <b-numberinput v-model="form.chargeHoraire" min="1" required></b-numberinput>
             </b-field>
       </section>
       <footer class="modal-card-foot">
@@ -43,52 +43,44 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'NewUEModal',
+  name: 'NewMatiereModal',
   props: {
     isActive: {
       type: Boolean,
       default: false
     },
-    Semid: {
+    UE: {
       default: null
     }
   },
   data () {
     return {
-      isNewUEModalActive: false,
+      UEid: this.UE,
+      isNewMatiereModalActive: false,
       types: ['Fondamentale', 'Transversale', 'Méthodologie'],
-      form: {
-        outilId: '',
-        quantity: 0
-      }
+      form: {}
     }
   },
-  async mounted () {
-    await axios.get('http://localhost:8080/api/data/outils', { headers: { 'x-access-token': this.$session.get('jwt') } })
-      .then((response) => {
-        this.listings = response.data
-        this.outils = this.listings.results
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+  mounted () {
   },
   methods: {
     cancel () {
+      console.log(this.UE)
       this.$emit('cancel')
     },
     confirm () {
-      axios.post('http://localhost:8080/api/data/ues', {
+      console.log(this.UEid)
+      axios.post('http://localhost:8080/api/data/matieres', {
         nom: this.form.nom,
         type: this.form.type,
-        Coefficient: this.form.Coefficient,
+        Coefficient: this.form.coefficient,
         credit: this.form.credit,
-        ChargeHoraire: this.form.ChargeHoraire,
-        semestreId: this.Semid
+        ChargeHoraire: this.form.chargeHoraire,
+        ueId: this.UE
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({
-            message: "l'outil " + this.form.titre + ' bien ajoutée',
+            message: "l'outil " + this.form.nom + ' bien ajoutée',
             queue: false
           })
         })
@@ -106,9 +98,9 @@ export default {
   },
   watch: {
     isActive (newValue) {
-      this.isNewUEModalActive = newValue
+      this.isNewMatiereModalActive = newValue
     },
-    isNewUEModalActive (newValue) {
+    isNewMatiereModalActive (newValue) {
       if (!newValue) {
         this.cancel()
       }
