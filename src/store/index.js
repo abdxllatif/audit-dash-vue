@@ -58,8 +58,10 @@ export default new Vuex.Store({
     variables: [],
     data: [],
     Xes: [],
-    result: []
+    result: [],
 
+    /* kafka data */
+    logsdata: {}
   },
   mutations: {
     /* A fit-them-all commit */

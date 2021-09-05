@@ -33,7 +33,7 @@
         </b-tab-item>
         <b-tab-item label="équipements" icon="account">
           <card-component v-if="isProfileExists" title="Outils" icon="tools" class="tile is-child" vers-title="nouveau" todo="ModalNewOutil" @doit="SalleOutilsModal">
-            <outil-table :data-url="`http://localhost:8080/api/data/outils/salles/`" :id="parseInt(this.id)"/>
+            <outil-table :data-url="`http://localhost:8090/api/data/outils/salles/`" :id="parseInt(this.id)"/>
           </card-component>
         </b-tab-item>
       </b-tabs>
@@ -135,7 +135,7 @@ export default {
     getData () {
       if (this.id) {
         axios
-          .get('http://localhost:8080/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8090/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             const item = find(r.data.results, item => item.salleId === parseInt(this.id))
 
@@ -144,7 +144,7 @@ export default {
               this.form = item
               this.form.created_date = new Date(item.created_mm_dd_yyyy)
               this.createdReadable = dayjs(new Date(item.created_mm_dd_yyyy)).format('MMM D, YYYY')
-              axios.get('http://localhost:8080/api/data/departements/' + this.form.departementDepartementId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+              axios.get('http://localhost:8090/api/data/departements/' + this.form.departementDepartementId, { headers: { 'x-access-token': this.$session.get('jwt') } })
                 .then(r => {
                   this.dep = r.data.data.nom
                 })

@@ -63,7 +63,7 @@ export default {
     }
   },
   created () {
-    axios.get('http://localhost:8080/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
+    axios.get('http://localhost:8090/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then((response) => {
         this.listings = response.data
         this.departments = this.listings.results
@@ -89,7 +89,7 @@ export default {
       } else {
         this.departId = this.sel.departementId
       }
-      axios.post('http://localhost:8080/api/data/formations', {
+      axios.post('http://localhost:8090/api/data/formations', {
         nom: this.form.titre,
         description: this.form.description,
         departementId: this.departId // this.form.department.departementId // this.sel.departementId
@@ -102,7 +102,7 @@ export default {
           console.log(response.data.data.formationId)
           for (let i = 0; i < (this.form.duree); i++) {
             let k = i + 1
-            axios.post('http://localhost:8080/api/data/niveaux', {
+            axios.post('http://localhost:8090/api/data/niveaux', {
               nom: 'niveau ' + k,
               desc: 'desc',
               Durée: 1,
@@ -112,7 +112,7 @@ export default {
                 console.log(response2)
                 for (let j = 0; j < (2); j++) {
                   k = j + 1
-                  axios.post('http://localhost:8080/api/data/semestres', {
+                  axios.post('http://localhost:8090/api/data/semestres', {
                     numero: 'semestre ' + k,
                     desc: 'desc',
                     niveauId: response2.data.data.niveauId

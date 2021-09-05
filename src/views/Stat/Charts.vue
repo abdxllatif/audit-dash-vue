@@ -83,7 +83,7 @@ export default {
     },
     fillSallesData () {
       axios
-        .get('http://localhost:8080/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .get('http://localhost:8090/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           if (r.data && r.data.results) {
@@ -120,7 +120,7 @@ export default {
     },
     fillParData () {
       axios
-        .get('http://localhost:8080/api/data/partenaires', { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .get('http://localhost:8090/api/data/partenaires', { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           if (r.data && r.data.results) {

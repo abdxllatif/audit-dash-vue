@@ -74,7 +74,7 @@ export default {
   methods: {
     submit () {
       this.isLoading = true
-      axios.post('http://localhost:8080/api/data/departements', {
+      axios.post('http://localhost:8090/api/data/departements', {
         nom: this.form.name,
         description: this.form.description
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })

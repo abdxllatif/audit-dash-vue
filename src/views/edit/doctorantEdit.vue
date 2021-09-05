@@ -184,7 +184,7 @@ export default {
     async getData () {
       if (this.id) {
         await axios
-          .get('http://localhost:8080/api/data/doctorants', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8090/api/data/doctorants', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             const item = find(r.data.results, item => item.doctorantId === parseInt(this.id))
 
@@ -207,7 +207,7 @@ export default {
               queue: false
             })
           })
-        await axios.get('http://localhost:8080/api/data/doctorants/' + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
+        await axios.get('http://localhost:8090/api/data/doctorants/' + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             console.log('Last:')
             console.log(r.data.data)
@@ -230,7 +230,7 @@ export default {
         const utc = require('dayjs/plugin/utc')
         dayjs.extend(utc)
         alert('nom ' + this.form.nom + ' ' + 'type ' + this.form.type + ' ' + 'updatedAt ' + dayjs.utc().format())
-        axios.post('http://localhost:8080/api/data/doctorants/' + this.id, {
+        axios.post('http://localhost:8090/api/data/doctorants/' + this.id, {
           nom: this.form.nom,
           prenom: this.form.prenom,
           type: this.form.type,

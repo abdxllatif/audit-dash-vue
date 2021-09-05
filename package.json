@@ -17,6 +17,8 @@
     "chart.js": "^2.9.4",
     "core-js": "^3.9.0",
     "dayjs": "^1.10.4",
+    "fs": "*",
+    "kafkajs": "^1.15.0",
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
     "numeral": "^2.0.6",
@@ -29,8 +31,10 @@
     "vue-json-to-csv": "^1.1.8",
     "vue-router": "^3.5.1",
     "vue-session": "^1.0.0",
+    "vue-socket.io": "^3.0.10",
     "vuedraggable": "^2.24.3",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "write-json-file": "^5.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.11",

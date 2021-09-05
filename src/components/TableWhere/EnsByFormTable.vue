@@ -8,17 +8,17 @@
       :per-page="perPage"
       :striped="true"
       :hoverable="true"
-      default-sort="titre"
-      :data="formations">
+      default-sort="Titre"
+      :data="partenaires">
 
-      <b-table-column label="Titre" field="titre" sortable v-slot="props">
-        <attribut-table :id="props.row.formationId" :dataUrl="'http://localhost:8080/api/data/formations/'" att="nom"></attribut-table>
+      <b-table-column label="Titre" field="Titre" sortable v-slot="props">
+        <attribut-table :id="props.row.enseignantId" :dataUrl="'http://localhost:8080/api/data/enseignants/'" att="nom"></attribut-table>
       </b-table-column>
-      <b-table-column label="Description" field="description" sortable v-slot="props">
-        <attribut-table :id="props.row.formationId" :dataUrl="'http://localhost:8080/api/data/formations/'" att="description"></attribut-table>
+      <b-table-column label="Type" field="type" sortable v-slot="props">
+        <attribut-table :id="props.row.enseignantId" :dataUrl="'http://localhost:8080/api/data/enseignant/'" att="prenom"></attribut-table>
       </b-table-column>
       <b-table-column label="Détails" field="details" v-slot="props">
-        <router-link :to="{name:'FormationDetail', params: {id: props.row.formationId}}" class="button is-small is-dark">
+        <router-link :to="{name:'EnseignantDetail', params: {id: props.row.enseignantId}}" class="button is-small is-dark">
           Détails
         </router-link>
       </b-table-column>
@@ -56,7 +56,7 @@ import ModalBox from '@/components/ModalBox'
 import AttributTable from '@/components/Tables/Adds/AttributTable'
 
 export default {
-  name: 'formationTable',
+  name: 'partenaireTable',
   components: { ModalBox, AttributTable },
   props: {
     dataUrl: {
@@ -66,17 +66,21 @@ export default {
     id: {
       type: String,
       default: null
+    },
+    checkable: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
     return {
-      idEns: this.id,
       isModalActive: false,
       trashObject: null,
-      formations: [],
+      enseignants: [],
       isLoading: false,
       paginated: false,
-      perPage: 10
+      perPage: 10,
+      checkedRows: []
     }
   },
   computed: {
@@ -91,17 +95,16 @@ export default {
   async mounted () {
     if (this.dataUrl) {
       this.isLoading = true
-      await axios.get(this.dataUrl + this.idEns, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      await axios.get(this.dataUrl + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
-          console.log(r)
-          console.log(parseInt(this.id))
+          console.log(r.data)
           if (r.data && r.data.result) {
             if (r.data.result.length > this.perPage) {
               this.paginated = true
             }
-            this.formations = r.data.result
-            console.log(this.formations)
+            this.enseignants = r.data.result
+            console.log(this.enseignants)
           }
         })
         .catch(e => {
@@ -109,7 +112,7 @@ export default {
           console.log('There was an error!', e)
           this.$buefy.snackbar.open({
             type: 'is-warning',
-            message: "Erreur GET formations de l'enseignant",
+            message: 'Erreur GET partenaires de cette formation',
             queue: false
           })
         })
@@ -121,9 +124,14 @@ export default {
 
       this.isModalActive = true
     },
+    niveauxModal (trashObject) {
+      this.trashObject = trashObject
+
+      this.isNivModalActive = true
+    },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8080/api/data/formations/' + this.trashObject.formationId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8080/api/data/partenaires/' + this.trashObject.partenaireId, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({
@@ -158,8 +166,14 @@ export default {
           })
         })
     },
+    niveauxConfirm () {
+      this.isNivModalActive = false
+    },
     trashCancel () {
       this.isModalActive = false
+    },
+    niveauxCancel () {
+      this.isNivModalActive = false
     }
   }
 }

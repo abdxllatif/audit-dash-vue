@@ -111,7 +111,7 @@ export default {
     }
   },
   created () {
-    axios.get('http://localhost:8080/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
+    axios.get('http://localhost:8090/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then((response) => {
         this.listings = response.data
         this.$session.set('depTable', this.listings.results)
@@ -132,7 +132,7 @@ export default {
   methods: {
     submit () {
       this.isLoading = true
-      axios.post('http://localhost:8080/api/data/administratifs', {
+      axios.post('http://localhost:8090/api/data/administratifs', {
         nom: this.form.nom,
         prenom: this.form.prenom,
         date_naissance: this.form.dateNaissance,

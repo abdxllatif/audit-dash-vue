@@ -27,7 +27,7 @@
         </b-tab-item>
         <b-tab-item label="Formations" icon="account">
           <card-component title="Table des formations reliées" icon="account" vers-title="Nouveau" todo="ModalNewFormation" @doit="ParFormModal">
-            <form-table :data-url="`http://localhost:8080/api/data/partenaire/formations`" :id="this.id"/>
+            <form-table :data-url="`http://localhost:8090/api/data/partenaire/formations/`" :id="this.id"/>
           </card-component>
         </b-tab-item>
       </b-tabs>
@@ -109,7 +109,7 @@ export default {
     getData () {
       if (this.id) {
         axios
-          .get('http://localhost:8080/api/data/partenaires', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8090/api/data/partenaires', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             const item = find(r.data.results, item => item.partenaireId === parseInt(this.id))
 

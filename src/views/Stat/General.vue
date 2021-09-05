@@ -70,7 +70,7 @@ export default {
   },
   created () {
     // etudiants count
-    axios.post('http://localhost:8080/api/stats/count', {
+    axios.post('http://localhost:8090/api/stats/count', {
       table: 'etudiants'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -87,7 +87,7 @@ export default {
         })
       })
     // partenaires count
-    axios.post('http://localhost:8080/api/stats/count', {
+    axios.post('http://localhost:8090/api/stats/count', {
       table: 'partenaires'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -104,7 +104,7 @@ export default {
         })
       })
       // enseignants count
-    axios.post('http://localhost:8080/api/stats/count', {
+    axios.post('http://localhost:8090/api/stats/count', {
       table: 'enseignants'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -121,7 +121,7 @@ export default {
         })
       })
       // doctorants count
-    axios.post('http://localhost:8080/api/stats/count', {
+    axios.post('http://localhost:8090/api/stats/count', {
       table: 'doctorants'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -138,7 +138,7 @@ export default {
         })
       })
       // departements count
-    axios.post('http://localhost:8080/api/stats/count', {
+    axios.post('http://localhost:8090/api/stats/count', {
       table: 'departements'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -155,7 +155,7 @@ export default {
         })
       })
       // formations count
-    axios.post('http://localhost:8080/api/stats/count', {
+    axios.post('http://localhost:8090/api/stats/count', {
       table: 'formations'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -172,7 +172,7 @@ export default {
         })
       })
       // clubs count
-    axios.post('http://localhost:8080/api/stats/count', {
+    axios.post('http://localhost:8090/api/stats/count', {
       table: 'clubs'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -189,7 +189,7 @@ export default {
         })
       })
       // activites count
-    axios.post('http://localhost:8080/api/stats/count', {
+    axios.post('http://localhost:8090/api/stats/count', {
       table: 'activites'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -206,7 +206,7 @@ export default {
         })
       })
       // salles count
-    axios.post('http://localhost:8080/api/stats/count', {
+    axios.post('http://localhost:8090/api/stats/count', {
       table: 'salles'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -223,7 +223,7 @@ export default {
         })
       })
       // outils count
-    axios.post('http://localhost:8080/api/stats/count', {
+    axios.post('http://localhost:8090/api/stats/count', {
       table: 'outils'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -240,7 +240,7 @@ export default {
         })
       })
       // Administratifs count
-    axios.post('http://localhost:8080/api/stats/count', {
+    axios.post('http://localhost:8090/api/stats/count', {
       table: 'administratifs'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {

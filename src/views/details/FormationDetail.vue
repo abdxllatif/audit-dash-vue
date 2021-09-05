@@ -30,17 +30,17 @@
             </b-tab-item>
             <b-tab-item label="Niveaux">
               <card-component v-if="isProfileExists" title="Niveaux" icon="account" class="tile is-child">
-                <niveaux-table :data-url="`http://localhost:8080/api/stats/data`" :id="this.form.formationId"/>
+                <niveaux-table :data-url="`http://localhost:8090/api/stats/data`" :id="this.form.formationId"/>
               </card-component>
             </b-tab-item>
             <b-tab-item label="Partenaires">
               <card-component v-if="isProfileExists" title="Partenaires" icon="account" class="tile is-child" vers-title="Nouveau" todo="ModalNewPartenaire" @doit="FormParModal">
-                <par-table :data-url="`http://localhost:8080/api/data/formation/partenaires`" :id="this.id"/>
+                <par-table :data-url="`http://localhost:8090/api/data/formations/partenaires/`" :id="this.id"/>
               </card-component>
             </b-tab-item>
             <b-tab-item label="Enseignants">
               <card-component v-if="isProfileExists" title="Partenaires" icon="account" class="tile is-child" vers-title="Nouveau" todo="ModalNewPartenaire" @doit="FormParModal">
-                <par-table :data-url="`http://localhost:8080/api/data/formation/partenaires`" :id="this.id"/>
+                <ens-table :data-url="`http://localhost:8090/api/data/formations/partenaires/`" :id="this.id"/>
               </card-component>
             </b-tab-item>
             <b-tab-item label="..."></b-tab-item>
@@ -57,13 +57,14 @@ import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 import CardComponent from '@/components/CardComponent'
 import ParTable from '@/components/TableWhere/ParByFormTable'
+import EnsTable from '@/components/TableWhere/EnsByFormTable'
 // import EtudiantTable from '@/components/Tables/EtudiantTable.vue'
 import NiveauxTable from '@/components/Tables/NiveauxTable.vue'
 import ModalFormPar from '@/components/ModalBox/ModalFormPar.vue'
 
 export default {
   name: 'FormationDetail',
-  components: { CardComponent, HeroBar, TitleBar, ParTable, NiveauxTable, ModalFormPar },
+  components: { CardComponent, HeroBar, TitleBar, ParTable, NiveauxTable, ModalFormPar, EnsTable },
   props: {
     id: {
       default: null
@@ -127,7 +128,7 @@ export default {
     getData () {
       if (this.id) {
         axios
-          .get('http://localhost:8080/api/data/formations', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8090/api/data/formations', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             const item = find(r.data.results, item => item.formationId === parseInt(this.id))
 
@@ -136,7 +137,7 @@ export default {
               this.form = item
               this.form.created_date = new Date(item.created_mm_dd_yyyy)
               this.createdReadable = dayjs(new Date(item.created_mm_dd_yyyy)).format('MMM D, YYYY')
-              axios.get('http://localhost:8080/api/data/departements/' + this.form.departementDepartementId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+              axios.get('http://localhost:8090/api/data/departements/' + this.form.departementDepartementId, { headers: { 'x-access-token': this.$session.get('jwt') } })
                 .then(r => {
                   this.department = r.data.data
                   this.dep = r.data.data.nom

@@ -119,7 +119,7 @@ export default {
     getData () {
       if (this.id) {
         axios
-          .get('http://localhost:8080/api/data/etudiants', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8090/api/data/etudiants', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             const item = find(r.data.results, item => item.etudiantId === parseInt(this.id))
 

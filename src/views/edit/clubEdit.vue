@@ -147,7 +147,7 @@ export default {
     }
   },
   created () {
-    axios.get('http://localhost:8080/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
+    axios.get('http://localhost:8090/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then((response) => {
         this.listings = response.data
         this.salles = this.listings.results
@@ -178,7 +178,7 @@ export default {
     async getData () {
       if (this.id) {
         await axios
-          .get('http://localhost:8080/api/data/clubs', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8090/api/data/clubs', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             const item = find(r.data.results, item => item.clubId === parseInt(this.id))
 
@@ -200,7 +200,7 @@ export default {
               queue: false
             })
           })
-        await axios.get('http://localhost:8080/api/data/clubs/' + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
+        await axios.get('http://localhost:8090/api/data/clubs/' + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             console.log('Last:')
             console.log(r.data.data)
@@ -222,7 +222,7 @@ export default {
 
         const utc = require('dayjs/plugin/utc')
         dayjs.extend(utc)
-        axios.post('http://localhost:8080/api/data/clubs/' + this.id, {
+        axios.post('http://localhost:8090/api/data/clubs/' + this.id, {
           nom: this.form.nom,
           type: this.form.type,
           salleId: this.form.salleSalleId

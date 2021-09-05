@@ -18,17 +18,17 @@
                         <b-input :value="form.nom" custom-class="is-static" readonly/>
                     </b-field>
                     <b-field label="Formation" horizontal>
-                        <attribut-table :id="form.formationFormationId" :dataUrl="'http://localhost:8080/api/data/formations/'" :att="'nom'" ></attribut-table>
+                        <attribut-table :id="form.formationFormationId" :dataUrl="'http://localhost:8090/api/data/formations/'" :att="'nom'" ></attribut-table>
                     </b-field>
                 </card-component>
             </b-tab-item>
             <b-tab-item label="Semestres" icon="video">
                 <b-tabs>
                     <b-tab-item label="Semestre1">
-                        <u-e-table v-if="this.yes" :id="this.form.semestre1" :data-url="`http://localhost:8080/api/stats/data`"></u-e-table>
+                        <u-e-table v-if="this.yes" :id="this.form.semestre1" :data-url="`http://localhost:8090/api/stats/data`"></u-e-table>
                     </b-tab-item>
                     <b-tab-item label="Semestre 2">
-                        <u-e-table v-if="this.yes" :id="this.form.semestre2" :data-url="`http://localhost:8080/api/stats/data`"></u-e-table>
+                        <u-e-table v-if="this.yes" :id="this.form.semestre2" :data-url="`http://localhost:8090/api/stats/data`"></u-e-table>
                     </b-tab-item>
                 </b-tabs>
             </b-tab-item>
@@ -99,7 +99,7 @@ export default {
     getData () {
       if (this.id) {
         axios
-          .get('http://localhost:8080/api/data/niveaux', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8090/api/data/niveaux', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             const item = find(r.data.results, item => item.niveauId === parseInt(this.id))
 
@@ -109,7 +109,7 @@ export default {
               this.form.created_date = new Date(item.created_mm_dd_yyyy)
               this.createdReadable = dayjs(new Date(item.created_mm_dd_yyyy)).format('MMM D, YYYY')
               axios
-                .post('http://localhost:8080/api/stats/data', {
+                .post('http://localhost:8090/api/stats/data', {
                   table: 'semestres',
                   fk: 'niveauxNiveauId',
                   value: this.form.niveauId

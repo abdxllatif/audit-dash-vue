@@ -181,7 +181,7 @@ export default {
     }
   },
   async created () {
-    axios.get('http://localhost:8080/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
+    axios.get('http://localhost:8090/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then((response) => {
         this.listings = response.data
         this.salles = this.listings.results
@@ -189,7 +189,7 @@ export default {
       .catch((error) => {
         console.log(error)
       })
-    axios.get('http://localhost:8080/api/data/clubs', { headers: { 'x-access-token': this.$session.get('jwt') } })
+    axios.get('http://localhost:8090/api/data/clubs', { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then((response) => {
         this.listings = response.data
         this.clubs = this.listings.results
@@ -213,7 +213,7 @@ export default {
     async getData () {
       if (this.id) {
         await axios
-          .get('http://localhost:8080/api/data/activites', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8090/api/data/activites', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             const item = find(r.data.results, item => item.activiteId === parseInt(this.id))
 
@@ -238,7 +238,7 @@ export default {
               queue: false
             })
           })
-        await axios.get('http://localhost:8080/api/data/activites/' + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
+        await axios.get('http://localhost:8090/api/data/activites/' + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             console.log('Last:')
             console.log(r.data.data)
@@ -263,7 +263,7 @@ export default {
         // console.log(dayjs(this.date_debut).format())
         // console.log(dayjs(this.date_debut).format('YYYY-MM-DD HH:mm:ss.SSSZ'))
         console.log(this.dates[1])
-        axios.post('http://localhost:8080/api/data/activites/' + this.id, {
+        axios.post('http://localhost:8090/api/data/activites/' + this.id, {
           titre: this.form.titre,
           type: this.form.type,
           date_debut: dayjs(this.dates[0]).format('YYYY-MM-DD HH:mm:ss.SSSZ'),

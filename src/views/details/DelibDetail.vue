@@ -21,12 +21,12 @@
                         <b-input :value="form.type" custom-class="is-static" readonly/>
                     </b-field>
                     <b-field label="UE" horizontal>
-                        <attribut-table :id="form.ueUeId" :dataUrl="'http://localhost:8080/api/data/ues/'" :att="'nom'" ></attribut-table>
+                        <attribut-table :id="form.ueUeId" :dataUrl="'http://localhost:8090/api/data/ues/'" :att="'nom'" ></attribut-table>
                     </b-field>
                 </card-component>
             </b-tab-item>
             <b-tab-item label="Etudiants" icon="account">
-                <etud-delib-table v-if="this.yes" :matiereId="form.matiereId" :listetudiants="this.listetudiants" :data-url="`http://localhost:8080/api/stats/data`"></etud-delib-table>
+                <etud-delib-table v-if="this.yes" :matiereId="form.matiereId" :listetudiants="this.listetudiants" :data-url="`http://localhost:8090/api/stats/data`"></etud-delib-table>
             </b-tab-item>
         </b-tabs>
     </section>
@@ -97,7 +97,7 @@ export default {
     getData () {
       if (this.id) {
         axios
-          .get('http://localhost:8080/api/data/matieres', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8090/api/data/matieres', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             const item = find(r.data.results, item => item.matiereId === parseInt(this.id))
 
@@ -107,15 +107,15 @@ export default {
               this.form.created_date = new Date(item.created_mm_dd_yyyy)
               this.createdReadable = dayjs(new Date(item.created_mm_dd_yyyy)).format('MMM D, YYYY')
               axios
-                .get('http://localhost:8080/api/data/ues/' + this.form.ueUeId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+                .get('http://localhost:8090/api/data/ues/' + this.form.ueUeId, { headers: { 'x-access-token': this.$session.get('jwt') } })
                 .then(r2 => {
                   console.log(r2.data.data)
                   axios
-                    .get('http://localhost:8080/api/data/semestres/' + r2.data.data.semestreSemestreId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+                    .get('http://localhost:8090/api/data/semestres/' + r2.data.data.semestreSemestreId, { headers: { 'x-access-token': this.$session.get('jwt') } })
                     .then(r2 => {
                       console.log(r2.data.data)
                       axios
-                        .post('http://localhost:8080/api/stats/data', {
+                        .post('http://localhost:8090/api/stats/data', {
                           table: 'etudiant_niveauxes',
                           fk: 'niveauId',
                           value: r2.data.data.niveauxNiveauId

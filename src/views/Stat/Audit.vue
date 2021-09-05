@@ -377,7 +377,7 @@ export default {
   },
   async created () {
     // etudiants count
-    await axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8090/api/stats/count', {
       table: 'etudiants'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -395,7 +395,7 @@ export default {
         })
       })
     // partenaires count
-    await axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8090/api/stats/count', {
       table: 'partenaires'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -412,7 +412,7 @@ export default {
         })
       })
       // enseignants count
-    await axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8090/api/stats/count', {
       table: 'enseignants'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -430,7 +430,7 @@ export default {
         })
       })
       // doctorants count
-    await axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8090/api/stats/count', {
       table: 'doctorants'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -447,7 +447,7 @@ export default {
         })
       })
       // departements count
-    await axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8090/api/stats/count', {
       table: 'departements'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -464,7 +464,7 @@ export default {
         })
       })
       // formations count
-    await axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8090/api/stats/count', {
       table: 'formations'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -481,7 +481,7 @@ export default {
         })
       })
       // clubs count
-    await axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8090/api/stats/count', {
       table: 'clubs'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -498,7 +498,7 @@ export default {
         })
       })
       // activites count
-    await axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8090/api/stats/count', {
       table: 'activites'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -515,7 +515,7 @@ export default {
         })
       })
       // salles count
-    await axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8090/api/stats/count', {
       table: 'salles'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -532,7 +532,7 @@ export default {
         })
       })
       // outils count
-    await axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8090/api/stats/count', {
       table: 'outils'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -549,7 +549,7 @@ export default {
         })
       })
       // Administratifs count
-    await axios.post('http://localhost:8080/api/stats/count', {
+    await axios.post('http://localhost:8090/api/stats/count', {
       table: 'administratifs'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {
@@ -568,7 +568,7 @@ export default {
     this.tauxEnc.total = this.saha(this.$store.state.totalEns / this.$store.state.totalEtd)
     // get data
     await axios
-      .get('http://localhost:8080/api/data/enseignants', { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .get('http://localhost:8090/api/data/enseignants', { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(r => {
         this.isLoading = false
         if (r.data && r.data.results) {
@@ -649,7 +649,7 @@ export default {
     },
     fillSallesData () {
       axios
-        .get('http://localhost:8080/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .get('http://localhost:8090/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           if (r.data && r.data.results) {
@@ -685,7 +685,7 @@ export default {
     },
     fillEtdSexData () {
       axios
-        .get('http://localhost:8080/api/data/etudiants', { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .get('http://localhost:8090/api/data/etudiants', { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           if (r.data && r.data.results) {
@@ -717,7 +717,7 @@ export default {
     },
     fillEnsData () {
       axios
-        .get('http://localhost:8080/api/data/enseignants', { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .get('http://localhost:8090/api/data/enseignants', { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           if (r.data && r.data.results) {

@@ -1,9 +1,11 @@
 <template>
   <div>
+    <modal-ens-form :is-active="isEnsFormModalActive" :ensId="this.id" @confirm="EnsFormConfirm"
+               @cancel="EnsFormCancel"/>
     <title-bar :title-stack="titleStack"/>
     <hero-bar>
       {{ heroTitle }}
-      <router-link slot="right" :to="{ name: 'newEns', params: { sels: this.department }}" class="button">
+      <router-link slot="right" :to="{ name: 'newEns' }" class="button">
         {{ heroRouterLinkLabel }}
       </router-link>
     </hero-bar>
@@ -30,8 +32,8 @@
                 </b-field>
             </b-tab-item>
             <b-tab-item label="Formations">
-              <card-component title="Formations" icon="account" class="tile is-child" vers-title="Nouveau" todo="ModalNewFormation" @doit="FormEnsModal">
-                <form-table :data-url="`http://localhost:8080/api/data/enseignants/formations`" :id="form.eneignantId"/>
+              <card-component v-if="form.enseignantId" title="Formations" icon="account" class="tile is-child" vers-title="Nouveau" todo="ModalAddFormation" @doit="EnsFormModal">
+                <form-table :data-url="`http://localhost:8090/api/data/enseignants/formations/`" :id="form.enseignantId"/>
               </card-component>
             </b-tab-item>
             <b-tab-item label="..."></b-tab-item>
@@ -46,12 +48,13 @@ import dayjs from 'dayjs'
 import find from 'lodash/find'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
-// import CardComponent from '@/components/CardComponent'
+import CardComponent from '@/components/CardComponent'
 import FormTable from '@/components/TableWhere/FormByEnsTable'
+import ModalEnsForm from '@/components/ModalBox/ModalEnsForm.vue'
 
 export default {
-  name: 'EtudiantDetail',
-  components: { HeroBar, TitleBar, FormTable },
+  name: 'EnseignantDetail',
+  components: { HeroBar, TitleBar, FormTable, ModalEnsForm, CardComponent },
   props: {
     id: {
       default: null
@@ -63,6 +66,7 @@ export default {
       form: this.getClearFormObject(),
       createdReadable: null,
       isProfileExists: false,
+      isEnsFormModalActive: false,
       dep: ''
     }
   },
@@ -85,10 +89,20 @@ export default {
       }
     }
   },
-  created () {
-    this.getData()
+  async created () {
+    await this.getData()
   },
   methods: {
+    EnsFormModal () {
+      this.isEnsFormModalActive = true
+    },
+    EnsFormConfirm () {
+      this.isEnsFormModalActive = false
+      // this.$refs.outilTable.mounted
+    },
+    EnsFormCancel () {
+      this.isEnsFormModalActive = false
+    },
     getdate: function (t) {
       return dayjs(t).format('DD-MM-YYYY')
     },
@@ -106,7 +120,7 @@ export default {
     getData () {
       if (this.id) {
         axios
-          .get('http://localhost:8080/api/data/enseignants', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8090/api/data/enseignants', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             const item = find(r.data.results, item => item.enseignantId === parseInt(this.id))
 

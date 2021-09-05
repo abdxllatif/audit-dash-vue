@@ -29,7 +29,7 @@
                   <b-input :value="form.sex" custom-class="is-static" readonly/>
                 </b-field>
                 <b-field label="Département" horizontal>
-                    <name :id="depId" :dataUrl="'http://localhost:8080/api/data/departements/'" ></name>
+                    <name :id="depId" :dataUrl="'http://localhost:8090/api/data/departements/'" ></name>
                 </b-field>
             </b-tab-item>
             <b-tab-item label="Thèse doctorale"></b-tab-item>
@@ -107,7 +107,7 @@ export default {
     getData () {
       if (this.id) {
         axios
-          .get('http://localhost:8080/api/data/doctorants', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8090/api/data/doctorants', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             const item = find(r.data.results, item => item.doctorantId === parseInt(this.id))
 

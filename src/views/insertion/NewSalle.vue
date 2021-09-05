@@ -76,7 +76,7 @@ export default {
     }
   },
   created () {
-    axios.get('http://localhost:8080/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
+    axios.get('http://localhost:8090/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then((response) => {
         this.listings = response.data
         this.departments = this.listings.results
@@ -99,7 +99,7 @@ export default {
       if (this.$route.params.sel != null) {
         this.form.department = this.$route.params.sel
       }
-      axios.post('http://localhost:8080/api/data/salles', {
+      axios.post('http://localhost:8090/api/data/salles', {
         nom: this.form.name,
         description: this.form.type,
         capacite: this.form.capacite,

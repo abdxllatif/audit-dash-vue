@@ -57,7 +57,7 @@ export default {
   methods: {
     submit () {
       this.isLoading = true
-      axios.post('http://localhost:8080/api/auth/signup', {
+      axios.post('http://localhost:8090/api/auth/signup', {
         username: this.form.username,
         email: this.form.email,
         password: this.form.password

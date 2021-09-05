@@ -35,7 +35,7 @@
                   <b-input :value="form.role" custom-class="is-static" readonly/>
                 </b-field>
                 <b-field label="Département" horizontal>
-                    <attribut-table :id="this.dep" :dataUrl="'http://localhost:8080/api/data/departements/'" att="nom" ></attribut-table>
+                    <attribut-table :id="this.dep" :dataUrl="'http://localhost:8090/api/data/departements/'" att="nom" ></attribut-table>
                   <b-input :value="form.departementDepartementId" custom-class="is-static" readonly/>
                 </b-field>
             </b-tab-item>
@@ -111,7 +111,7 @@ export default {
     getData () {
       if (this.id) {
         axios
-          .get('http://localhost:8080/api/data/administratifs', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8090/api/data/administratifs', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             const item = find(r.data.data, item => item.administratifId === parseInt(this.id))
 

@@ -4,6 +4,8 @@
                @cancel="trashCancel"/>
       <new-u-e-modal :is-active="isNewUEModalActive" :Semid="this.idS" @confirm="NewUEConfirm"
                @cancel="NewUECancel"/>
+      <edit-u-e-modal :is-active="isEditUEModalActive" :UE="UeId" @confirm="EditUEConfirm"
+               @cancel="EditUECancel"/>
       <new-matiere-modal :is-active="isNewMatiereModalActive" :UE="UeId" @confirm="NewMatiereConfirm"
                @cancel="NewMatiereCancel"/>
       <card-component title="Table des unités" icon="account" vers-title="Nouvelle unité" todo="ModalNewUE" @doit="NewUEModal">
@@ -53,9 +55,9 @@
                 <button class="button is-small is-success" type="button" @click.prevent="NewMatiereModal(props.row)">
                   <b-icon icon="plus" size="is-small"/>
                 </button>
-                <router-link :to="{name:'dep.edit', params: {id: props.row.clubId}}" class="button is-small is-primary">
-                  <b-icon icon="account-edit" size="is-small"/>
-                </router-link>
+                <button class="button is-small is-primary" type="button" @click.prevent="EditUEModal(props.row)">
+                  <b-icon icon="pencil" size="is-small"/>
+                </button>
                 <button class="button is-small is-danger" type="button" @click.prevent="trashModal(props.row)">
                   <b-icon icon="trash-can" size="is-small"/>
                 </button>
@@ -90,12 +92,13 @@ import ModuleTable from './ModuleTable.vue'
 import ModalBox from '../ModalBox.vue'
 import CardComponent from '../CardComponent.vue'
 import NewUEModal from '../ModalBox/ModalNewUE.vue'
+import EditUEModal from '../ModalBox/ModalEditUE.vue'
 import NewMatiereModal from '../ModalBox/ModalNewMatiere.vue'
 
 // const data = [{ id: 1, nom: 'UEF1', type: 'Fondamentale', coefficient: '9', credit: '9', charge: '450', modules: { id: 2, nom: 'Analyse', type: 'Math', coefficient: '5', credit: '5', charge: '250' } }]
 export default {
   name: 'UETable',
-  components: { ModuleTable, ModalBox, CardComponent, NewUEModal, NewMatiereModal },
+  components: { ModuleTable, ModalBox, CardComponent, NewUEModal, EditUEModal, NewMatiereModal },
   props: {
     dataUrl: {
       type: String,
@@ -109,6 +112,7 @@ export default {
       idS: this.id,
       isModalActive: false,
       isNewUEModalActive: false,
+      isEditUEModalActive: false,
       isNewMatiereModalActive: false,
       trashObject: null,
       ues: [],
@@ -186,6 +190,7 @@ export default {
     NewMatiereCancel () {
       this.isNewMatiereModalActive = false
     },
+    // new UE
     NewUEModal () {
       this.isNewUEModalActive = true
     },
@@ -195,6 +200,17 @@ export default {
     NewUECancel () {
       this.isNewUEModalActive = false
     },
+    // edit UE
+    EditUEModal () {
+      this.isEditUEModalActive = true
+    },
+    EditUEConfirm () {
+      this.isEditUEModalActive = false
+    },
+    EditUECancel () {
+      this.isEditUEModalActive = false
+    },
+    // trash
     trashConfirm () {
       this.isModalActive = false
       axios.delete('http://localhost:8080/api/data/ues/' + this.trashObject.ueId, { headers: { 'x-access-token': this.$session.get('jwt') } })

@@ -5,6 +5,12 @@ import '@/scss/main.scss'
 import Vue from 'vue'
 import Buefy from 'buefy'
 
+/* kafka */
+// import '@/Kafka/consumer.js'
+
+/* VueSocketIO */
+// import VueSocketIO from 'vue-socket.io'
+import '@/Kafka/socket.js'
 /* Sessions */
 import VueSession from 'vue-session'
 
@@ -28,6 +34,8 @@ import VueJsonToCsv from 'vue-json-to-csv'
 import VueApexCharts from 'vue-apexcharts'
 Vue.use(VueApexCharts)
 Vue.component('apexchart', VueApexCharts)
+
+/* kafkajs */
 
 /* moment.js */
 // var moment = require('moment')

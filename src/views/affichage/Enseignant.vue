@@ -12,7 +12,7 @@
     </hero-bar>
     <section class="section is-main-section">
       <card-component class="has-table has-mobile-sort-spaced" title="Enseignants" icon="account-multiple">
-        <enseignant-table :data-url="`http://localhost:8080/api/data/enseignants`" :checkable="false"/>
+        <enseignant-table :data-url="`http://localhost:8090/api/data/enseignants`" :checkable="false"/>
       </card-component>
     </section>
   </div>
@@ -43,7 +43,7 @@ export default {
     }
   },
   created () {
-    axios.post('http://localhost:8080/api/stats/count', {
+    axios.post('http://localhost:8090/api/stats/count', {
       table: 'enseignants'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {

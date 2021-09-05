@@ -100,7 +100,7 @@ export default {
     }
   },
   created () {
-    axios.get('http://localhost:8080/api/data/clubs', { headers: { 'x-access-token': this.$session.get('jwt') } })
+    axios.get('http://localhost:8090/api/data/clubs', { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then((response) => {
         this.listings = response.data
         this.clubs = this.listings.results
@@ -108,7 +108,7 @@ export default {
       .catch((error) => {
         console.log(error)
       })
-    axios.get('http://localhost:8080/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
+    axios.get('http://localhost:8090/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then((response) => {
         this.listings = response.data
         this.salles = this.listings.results
@@ -120,7 +120,7 @@ export default {
   methods: {
     submit () {
       this.isLoading = true
-      axios.post('http://localhost:8080/api/data/activites', {
+      axios.post('http://localhost:8090/api/data/activites', {
         titre: this.form.titre,
         clubId: this.form.club.clubId,
         type: this.form.type,

@@ -12,7 +12,7 @@
     </hero-bar>
     <section class="section is-main-section">
       <card-component class="has-table has-mobile-sort-spaced" title="Salles" icon="account-multiple">
-        <salle-table :data-url="`http://localhost:8080/api/data/salles`" :checkable="true"/>
+        <salle-table :data-url="`http://localhost:8090/api/data/salles`" :checkable="true"/>
       </card-component>
     </section>
   </div>
@@ -45,7 +45,7 @@ export default {
   },
   created () {
     axios
-      .get('http://localhost:8080/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .get('http://localhost:8090/api/data/salles', { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(r => {
         this.isLoading = false
         if (r.data && r.data.results) {
@@ -72,7 +72,7 @@ export default {
           type: 'is-danger'
         })
       })
-    axios.post('http://localhost:8080/api/stats/count', {
+    axios.post('http://localhost:8090/api/stats/count', {
       table: 'salles'
     }, { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(response => {

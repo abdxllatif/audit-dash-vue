@@ -158,7 +158,7 @@ export default {
     async getData () {
       if (this.id) {
         await axios
-          .get('http://localhost:8080/api/data/outils', { headers: { 'x-access-token': this.$session.get('jwt') } })
+          .get('http://localhost:8090/api/data/outils', { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             const item = find(r.data.results, item => item.outilId === parseInt(this.id))
 
@@ -180,7 +180,7 @@ export default {
               queue: false
             })
           })
-        await axios.get('http://localhost:8080/api/data/outils/' + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
+        await axios.get('http://localhost:8090/api/data/outils/' + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             console.log('Last:')
             console.log(r.data.data)
@@ -202,7 +202,7 @@ export default {
 
         const utc = require('dayjs/plugin/utc')
         dayjs.extend(utc)
-        axios.post('http://localhost:8080/api/data/outils/' + this.id, {
+        axios.post('http://localhost:8090/api/data/outils/' + this.id, {
           titre: this.form.titre,
           type: this.form.type
         }, { headers: { 'x-access-token': this.$session.get('jwt') } })

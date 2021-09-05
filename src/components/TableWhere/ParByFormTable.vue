@@ -8,25 +8,22 @@
       :per-page="perPage"
       :striped="true"
       :hoverable="true"
-      default-sort="titre"
+      default-sort="Titre"
       :data="partenaires">
 
-      <b-table-column label="Titre" field="titre" sortable v-slot="props">
-        {{ props.row.nom }}
+      <b-table-column label="Titre" field="Titre" sortable v-slot="props">
+        <attribut-table :id="props.row.partenaireId" :dataUrl="'http://localhost:8080/api/data/partenaires/'" att="Nom"></attribut-table>
       </b-table-column>
-      <b-table-column label="Description" field="description" sortable v-slot="props">
-        {{ props.row.description }}
+      <b-table-column label="Type" field="type" sortable v-slot="props">
+        <attribut-table :id="props.row.partenaireId" :dataUrl="'http://localhost:8080/api/data/partenaires/'" att="type"></attribut-table>
       </b-table-column>
       <b-table-column label="Détails" field="details" v-slot="props">
-        <router-link :to="{name:'partenaireDetail', params: {id: props.row.partenaireId}}" class="button is-small is-dark">
+        <router-link :to="{name:'PartenaireDetail', params: {id: props.row.partenaireId}}" class="button is-small is-dark">
           Détails
         </router-link>
       </b-table-column>
       <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
         <div class="buttons is-right">
-          <router-link :to="{name:'client.edit', params: {id: props.row.id}}" class="button is-small is-primary">
-            <b-icon icon="account-edit" size="is-small"/>
-          </router-link>
           <button class="button is-small is-danger" type="button" @click.prevent="trashModal(props.row)">
             <b-icon icon="trash-can" size="is-small"/>
           </button>
@@ -56,10 +53,11 @@
 <script>
 import axios from 'axios'
 import ModalBox from '@/components/ModalBox'
+import AttributTable from '@/components/Tables/Adds/AttributTable'
 
 export default {
   name: 'partenaireTable',
-  components: { ModalBox },
+  components: { ModalBox, AttributTable },
   props: {
     dataUrl: {
       type: String,
@@ -97,16 +95,15 @@ export default {
   async mounted () {
     if (this.dataUrl) {
       this.isLoading = true
-      await axios.get(this.dataUrl, { formationId: this.id }, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      await axios.get(this.dataUrl + this.id, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
-          console.log(r)
-          console.log(parseInt(this.id))
-          if (r.data && r.data.data) {
-            if (r.data.data.length > this.perPage) {
+          console.log(r.data)
+          if (r.data && r.data.result) {
+            if (r.data.result.length > this.perPage) {
               this.paginated = true
             }
-            this.partenaires = r.data.data
+            this.partenaires = r.data.result
             console.log(this.partenaires)
           }
         })
