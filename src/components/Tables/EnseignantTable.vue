@@ -142,7 +142,7 @@ export default {
     },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8080/api/data/enseignants/' + this.trashObject.enseignantId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8090/api/data/enseignants/' + this.trashObject.enseignantId, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({

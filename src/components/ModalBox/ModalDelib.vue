@@ -44,7 +44,7 @@ export default {
     }
   },
   async mounted () {
-    await axios.get('http://localhost:8080/api/data/outils', { headers: { 'x-access-token': this.$session.get('jwt') } })
+    await axios.get('http://localhost:8090/api/data/outils', { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then((response) => {
         this.listings = response.data
         this.outils = this.listings.results
@@ -58,7 +58,7 @@ export default {
       this.$emit('cancel')
     },
     confirm () {
-      axios.put('http://localhost:8080/api/data/outils/salles', {
+      axios.put('http://localhost:8090/api/data/outils/salles', {
         outilId: this.form.outilId,
         salleId: this.salleId,
         quantity: this.form.quantity

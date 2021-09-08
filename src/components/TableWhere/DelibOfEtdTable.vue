@@ -14,11 +14,11 @@
       :data="delibs">
 
       <b-table-column label="Module" field="module" sortable v-slot="props">
-        <name :id="props.row.matiereMatiereId" :dataUrl="'http://localhost:8080/api/data/matieres/'" ></name>
+        <name :id="props.row.matiereMatiereId" :dataUrl="'http://localhost:8090/api/data/matieres/'" ></name>
       </b-table-column>
       <b-table-column label="Coefficient" field="coefficient" sortable v-slot="props">
           {{ props.row.Coefficient }}
-          <!--<attribut-table :id="props.row.etudiantId" :dataUrl="'http://localhost:8080/api/data/etudiants/'" :att="'prenom'" ></attribut-table>-->
+          <!--<attribut-table :id="props.row.etudiantId" :dataUrl="'http://localhost:8090/api/data/etudiants/'" :att="'prenom'" ></attribut-table>-->
       </b-table-column>
       <b-table-column label="Détails" field="details" v-slot="props">
         <router-link :to="{name:'DelibDetail', params: {id: props.row.matiereMatiereId}}" class="button is-small is-dark">
@@ -91,7 +91,7 @@ export default {
     const a = 0
     if (a === 0) {
       this.isLoading = true
-      await axios.get('http://localhost:8080/api/data/DelibModuless/' + 2, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      await axios.get('http://localhost:8090/api/data/DelibModuless/' + 2, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           console.log(r.data)
@@ -135,7 +135,7 @@ export default {
     },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8080/api/data/formations/' + this.trashObject.formationId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8090/api/data/formations/' + this.trashObject.formationId, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({

@@ -51,7 +51,7 @@ export default {
     }
   },
   async mounted () {
-    await axios.get('http://localhost:8080/api/data/formations', { headers: { 'x-access-token': this.$session.get('jwt') } })
+    await axios.get('http://localhost:8090/api/data/formations', { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then((response) => {
         this.listings = response.data
         this.formations = this.listings.results
@@ -65,7 +65,7 @@ export default {
       this.$emit('cancel')
     },
     confirm () {
-      axios.put('http://localhost:8080/api/data/enseignants', {
+      axios.put('http://localhost:8090/api/data/enseignants', {
         formationId: this.form.formationId,
         enseignantId: this.ensId
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })

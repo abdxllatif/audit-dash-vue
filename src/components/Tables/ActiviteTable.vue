@@ -26,10 +26,10 @@
         {{ getdate(props.row.date_fin) }}
       </b-table-column>
       <b-table-column label="Salle principale" field="salle" sortable v-slot="props">
-        <name :id="props.row.salleSalleId" :dataUrl="'http://localhost:8080/api/data/salles/'"/>
+        <name :id="props.row.salleSalleId" :dataUrl="'http://localhost:8090/api/data/salles/'"/>
       </b-table-column>
       <b-table-column label="Responsable" field="responsable" sortable v-slot="props">
-        <name :id="props.row.clubClubId" :dataUrl="'http://localhost:8080/api/data/clubs/'"/>
+        <name :id="props.row.clubClubId" :dataUrl="'http://localhost:8090/api/data/clubs/'"/>
       </b-table-column>
       <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
         <div class="buttons is-right">
@@ -155,7 +155,7 @@ export default {
     },
     getClub (a) {
       let club
-      axios.get('http://localhost:8080/api/data/clubs/' + a, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.get('http://localhost:8090/api/data/clubs/' + a, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           console.log(r.data.data.nom)
           club = r.data.data.nom
@@ -168,7 +168,7 @@ export default {
     },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8080/api/data/activites/' + this.trashObject.activiteId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8090/api/data/activites/' + this.trashObject.activiteId, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({

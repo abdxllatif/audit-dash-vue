@@ -5,7 +5,7 @@
         <p class="modal-card-title">Niveaux</p>
       </header>
       <section class="modal-card-body">
-        <niveaux-table :data-url="`http://localhost:8080/api/data/niveaux`"/>
+        <niveaux-table :data-url="`http://localhost:8090/api/data/niveaux`"/>
       </section>
       <footer class="modal-card-foot">
         <button class="button" type="button" @click="cancel">Sortir</button>

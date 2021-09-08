@@ -18,7 +18,7 @@
         {{ props.row.description }}
       </b-table-column>
       <b-table-column label="Département" field="departement" sortable v-slot="props">
-        <name :id="props.row.departementDepartementId" :dataUrl="'http://localhost:8080/api/data/departements/'"/>
+        <name :id="props.row.departementDepartementId" :dataUrl="'http://localhost:8090/api/data/departements/'"/>
       </b-table-column>
       <b-table-column label="Détails" field="details" v-slot="props">
         <router-link :to="{name:'FormationDetail', params: {id: props.row.formationId}}" class="button is-small is-dark">
@@ -126,7 +126,7 @@ export default {
     },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8080/api/data/formations/' + this.trashObject.formationId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8090/api/data/formations/' + this.trashObject.formationId, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({

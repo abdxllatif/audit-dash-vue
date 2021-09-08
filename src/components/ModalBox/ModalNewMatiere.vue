@@ -70,7 +70,7 @@ export default {
     },
     confirm () {
       console.log(this.UEid)
-      axios.post('http://localhost:8080/api/data/matieres', {
+      axios.post('http://localhost:8090/api/data/matieres', {
         nom: this.form.nom,
         type: this.form.type,
         Coefficient: this.form.coefficient,

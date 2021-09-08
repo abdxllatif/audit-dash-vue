@@ -48,7 +48,7 @@ export default {
   },
   /* async created () {
     await axios
-      .get('http://localhost:8080/api/bi/fact_data', { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .get('http://localhost:8090/api/bi/fact_data', { headers: { 'x-access-token': this.$session.get('jwt') } })
       .then(r => {
         this.isLoading = false
         console.log(r.data.value)

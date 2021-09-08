@@ -48,7 +48,7 @@ export default {
   async mounted () {
     console.log('wsalt ' + this.idUe)
     this.isLoading = true
-    await axios.post('http://localhost:8080/api/stats/data', {
+    await axios.post('http://localhost:8090/api/stats/data', {
       table: 'matieres',
       fk: 'ueUeId',
       value: this.idUe

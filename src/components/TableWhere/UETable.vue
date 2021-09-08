@@ -126,7 +126,7 @@ export default {
   },
   async mounted () {
     this.isLoading = true
-    await axios.post('http://localhost:8080/api/stats/data', {
+    await axios.post('http://localhost:8090/api/stats/data', {
       table: 'ues',
       fk: 'semestreSemestreId',
       value: this.id
@@ -145,7 +145,7 @@ export default {
         console.log('There was an error!', e)
         this.$buefy.snackbar.open({
           type: 'is-warning',
-          message: 'Erreur fl count',
+          message: 'Erreur fl UE table...',
           queue: false
         })
       })
@@ -213,14 +213,14 @@ export default {
     // trash
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8080/api/data/ues/' + this.trashObject.ueId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8090/api/data/ues/' + this.trashObject.ueId, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({
             message: 'Confirmed',
             type: 'is-success'
           })
-          axios.post('http://localhost:8080/api/stats/data', {
+          axios.post('http://localhost:8090/api/stats/data', {
             table: 'ues',
             fk: 'semestreSemestreId',
             value: this.id

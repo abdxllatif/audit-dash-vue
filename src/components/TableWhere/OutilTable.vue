@@ -12,10 +12,10 @@
       :data="outils">
 
       <b-table-column label="Titre" field="Titre" sortable v-slot="props">
-        <attribut-table :id="props.row.outilId" :dataUrl="'http://localhost:8080/api/data/outils/'" :att="'titre'" ></attribut-table>
+        <attribut-table :id="props.row.outilId" :dataUrl="'http://localhost:8090/api/data/outils/'" :att="'titre'" ></attribut-table>
       </b-table-column>
       <b-table-column label="Type" field="Type" sortable v-slot="props">
-        <attribut-table :id="props.row.outilId" :dataUrl="'http://localhost:8080/api/data/outils/'" :att="'type'" ></attribut-table>
+        <attribut-table :id="props.row.outilId" :dataUrl="'http://localhost:8090/api/data/outils/'" :att="'type'" ></attribut-table>
       </b-table-column>
       <b-table-column label="Quantité" field="Quantité" sortable v-slot="props">
         {{ props.row.quantity }}
@@ -108,7 +108,7 @@ export default {
             }
             this.outils = r.data.data
             /* for (let i = 0; i < this.outils.length; i++) {
-              axios.get('http://localhost:8080/api/data/outils/' + this.outils[i].outilId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+              axios.get('http://localhost:8090/api/data/outils/' + this.outils[i].outilId, { headers: { 'x-access-token': this.$session.get('jwt') } })
                 .then(r2 => {
                   console.log(r2.data.data)
                   this.outils[i].titre = r2.data.data.titre
@@ -138,7 +138,7 @@ export default {
     },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8080/api/data/outils/' + this.trashObject.outilId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8090/api/data/outils/' + this.trashObject.outilId, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({

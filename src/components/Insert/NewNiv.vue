@@ -33,7 +33,7 @@ export default {
   methods: {
     submit () {
       this.isLoading = true
-      axios.post('http://localhost:8080/api/data/niveaux', {
+      axios.post('http://localhost:8090/api/data/niveaux', {
         titre: this.form.name,
         desc: this.form.description,
         Durée: this.form.duree,

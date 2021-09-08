@@ -21,7 +21,7 @@
         {{ props.row.capacite }}
       </b-table-column>
       <b-table-column label="Département" field="departement" sortable v-slot="props">
-        <name :id="props.row.departementDepartementId" :dataUrl="'http://localhost:8080/api/data/departements/'"/>
+        <name :id="props.row.departementDepartementId" :dataUrl="'http://localhost:8090/api/data/departements/'"/>
       </b-table-column>
       <b-table-column label="Created" v-slot="props">
         <small class="has-text-grey is-abbr-like" :title="props.row.created">{{ props.row.createdAt }}</small>
@@ -140,7 +140,7 @@ export default {
     },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8080/api/data/salles/' + this.trashObject.salleId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8090/api/data/salles/' + this.trashObject.salleId, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({

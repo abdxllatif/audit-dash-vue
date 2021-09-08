@@ -14,10 +14,10 @@
       :data="etudiants">
 
       <b-table-column label="Nom" field="nom" sortable v-slot="props">
-        <attribut-table :id="props.row.etudiantId" :dataUrl="'http://localhost:8080/api/data/etudiants/'" :att="'nom'" ></attribut-table>
+        <attribut-table :id="props.row.etudiantId" :dataUrl="'http://localhost:8090/api/data/etudiants/'" :att="'nom'" ></attribut-table>
       </b-table-column>
       <b-table-column label="Prénom" field="prenom" sortable v-slot="props">
-          <attribut-table :id="props.row.etudiantId" :dataUrl="'http://localhost:8080/api/data/etudiants/'" :att="'prenom'" ></attribut-table>
+          <attribut-table :id="props.row.etudiantId" :dataUrl="'http://localhost:8090/api/data/etudiants/'" :att="'prenom'" ></attribut-table>
       </b-table-column>
       <b-table-column label="Détails" field="details" v-slot="props">
         <router-link :to="{name:'EtudiantDetail', params: {id: props.row.etudiantId}}" class="button is-small is-dark">
@@ -163,7 +163,7 @@ export default {
     },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8080/api/data/formations/' + this.trashObject.formationId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8090/api/data/formations/' + this.trashObject.formationId, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({
