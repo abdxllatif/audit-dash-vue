@@ -88,7 +88,7 @@ export default {
   computed: {
     trashObjectName () {
       if (this.trashObject) {
-        return this.trashObject.nom
+        return 'cet outil'
       }
 
       return null
@@ -138,7 +138,7 @@ export default {
     },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8090/api/data/outils/' + this.trashObject.outilId, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8090/api/data/outils/salles', { outilId: this.trashObject.outilId }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({

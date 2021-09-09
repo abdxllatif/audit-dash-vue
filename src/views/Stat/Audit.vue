@@ -103,60 +103,16 @@
                   </b-tab-item>
                   <b-tab-item label="Graphes" icon="chart-timeline-variant">
                     <tiles>
-                      <card-component class="tile is-child">
-                        <p class="">Veuillez choisir un graphe:</p><br>
-                        <b-field>
-                            <b-radio v-model="radio"
-                                native-value="none">
-                                None
-                            </b-radio>
-                        </b-field>
-                        <b-field>
-                            <b-radio v-model="radio"
-                                native-value="EtdSex">
-                                étudiants par sex
-                            </b-radio>
-                        </b-field>
-                        <b-field>
-                            <b-radio v-model="radio"
-                                native-value="EtdDep">
-                                étudiants par départements
-                            </b-radio>
-                        </b-field>
-                        <b-field>
-                            <b-radio v-model="radio"
-                                native-value="EnsSex">
-                                Enseignants par sex
-                            </b-radio>
-                        </b-field>
-                        <b-field>
-                            <b-radio v-model="radio"
-                                native-value="EnsSpe">
-                                Enseignants par spécialité
-                            </b-radio>
-                        </b-field>
-                        <b-field>
-                            <b-radio v-model="radio"
-                                native-value="EnsGrd">
-                                Enseignants par Grade
-                            </b-radio>
-                        </b-field>
-                        <b-field>
-                            <b-radio v-model="radio"
-                                native-value="EnsSoc">
-                                Enseignants par Situation sociale
-                            </b-radio>
-                        </b-field>
-                      </card-component>
-                      <card-component class="tile is-child" title="Graphe choisi" icon="finance">
-                        <p v-if="this.radio === 'none'"></p>
-                        <d-chart v-if="this.radio === 'EtdSex'" :chart-data="this.EtdSexData.chartData"></d-chart>
-                        <d-chart v-if="this.radio === 'EtdDep'" :chart-data="this.SallesData.chartData"></d-chart>
-                        <d-chart v-if="this.radio === 'EnsSex'" :chart-data="this.EnsSexData.chartData"></d-chart>
-                        <d-chart v-if="this.radio === 'EnsSpe'" :chart-data="this.EnsSpeData.chartData"></d-chart>
-                        <d-chart v-if="this.radio === 'EnsGrd'" :chart-data="this.EnsGrdData.chartData"></d-chart>
-                        <d-chart v-if="this.radio === 'EnsSoc'" :chart-data="this.EnsSocData.chartData"></d-chart>
-                      </card-component>
+                      <b-button class="is-info" @click="Activation(EnsSocData.chartData)" expanded>Enseignants par situation sociale</b-button>
+                      <b-button class="is-info" @click="Activation(EnsSexData.chartData)" expanded>Enseignants par sex</b-button>
+                      <b-button class="is-info" @click="Activation(EnsGrdData.chartData)" expanded>Enseignants par grade</b-button>
+                      <b-button class="is-info" @click="Activation(EnsSpeData.chartData)" expanded>Enseignants par spécialité</b-button>
+                    </tiles>
+                    <tiles>
+                      <b-button class="is-info" @click="Activation(EnsSocData.chartData)" expanded>Enseignants par situation sociale</b-button>
+                      <b-button class="is-info" @click="Activation(EnsSexData.chartData)" expanded>Enseignants par sex</b-button>
+                      <b-button class="is-info" @click="Activation(EnsGrdData.chartData)" expanded>Enseignants par grade</b-button>
+                      <b-button class="is-info" @click="Activation(EnsSpeData.chartData)" expanded>Enseignants par spécialité</b-button>
                     </tiles>
                   </b-tab-item>
               </b-tabs>

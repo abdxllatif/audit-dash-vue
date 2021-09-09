@@ -70,11 +70,11 @@ export default {
   },
   mounted () {
 
-    this.sockets.subscribe('stk' , (data) => {
+    this.sockets.subscribe('logs' , (data) => {
       var fromBuffer= String.fromCharCode.apply(null, new Uint8Array(data));
       this.msg = fromBuffer;
       console.log('message from socket: ' + this.msg);
-      this.$store.state.logsdata.push(this.msg)
+      this.$store.state.logsdata.add(this.msg)
       console.log(this.$socket)
     })
   },
