@@ -12,7 +12,7 @@
                 <article class="media">
                     <div class="media-left">
                         <figure class="image is-64x64">
-                            <img src="img/LogoKUMACF2.png" alt="Image">
+                            <img src="img/logo.jpg" alt="Image">
                         </figure>
                     </div>
                     <div class="media-content">

@@ -26,8 +26,8 @@
                         </div>
                         <div class="card-content">
                             <div class="content">
-                                <h4>Tristique senectus et netus et. </h4>
-                                <p>Purus semper eget duis at tellus at urna condimentum mattis. Non blandit massa enim nec. Integer enim neque volutpat ac tincidunt vitae semper quis. Accumsan tortor posuere ac ut consequat semper viverra nam.</p>
+                                <h4>Une plateforme qui s'adapte à toutes les universités </h4>
+                                <p>AuditDash est une plateforme qui permet aux universités de travailler efficacement et d'exploiter toutes leurs données. La conception du système est flexible et prendra de nombreuses formes en fonction des besoins de l'université. La plate-forme peut également inclure une grande variété d'informations sans aucun problème ni développement ultérieur de la part de l'institution.</p>
                             </div>
                         </div>
                     </div>
@@ -39,9 +39,8 @@
                         </div>
                         <div class="card-content">
                             <div class="content">
-                                <h4>Tempor orci dapibus ultrices in.</h4>
-                                <p>Ut venenatis tellus in metus vulputate. Amet consectetur adipiscing elit pellentesque. Sed arcu non odio euismod lacinia at quis risus. Faucibus turpis in eu mi bibendum neque egestas cmonsu songue. Phasellus vestibulum lorem
-                                sed risus.</p>
+                                <h4>Diverses statistiques et graphiques donnent une compréhension plus large de l'établissement</h4>
+                                <p>Vous voulez jeter un œil aux performances de votre école ? ESIAudit est la plateforme qu'il vous faut ! Avec ses statistiques et ses graphiques, vous pourrez voir les performances de votre école. Non seulement il affiche les données, mais il contient également des conseils et des astuces utiles qui vous aideront à progresser dans vos études.</p>
                             </div>
                         </div>
                     </div>
@@ -53,17 +52,17 @@
                         </div>
                         <div class="card-content">
                             <div class="content">
-                                <h4> Leo integer malesuada nunc vel risus. </h4>
-                                <p>Imperdiet dui accumsan sit amet nulla facilisi morbi. Fusce ut placerat orci nulla pellentesque dignissim enim. Libero id faucibus nisl tincidunt eget nullam. Commodo viverra maecenas accumsan lacus vel facilisis.</p>
+                                <h4>Plateforme très utile pour obtenir un audit social pour une institution universitaire </h4>
+                                <p>AuditDash est un service d'audit social pour les établissements universitaires. Prouver que votre établissement est sûr et sécurisé est essentiel pour attirer les étudiants et les professeurs. ESIAudit offre un avantage concurrentiel en offrant un délai d'exécution rapide, un contenu complet et une consultation gratuite avec le personnel des affaires étudiantes pour discuter des résultats.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="intro column is-12 has-text-centered">
+            <!--<div class="intro column is-12 has-text-centered">
                 <h2 class="title is-3">Le meilleur pour les établissements d'enseignement supérieur</h2>
                 <p class="subtitle">Vel fringilla est ullamcorper eget nulla facilisi. Nulla facilisi nullam vehicula ipsum a. Neque egestas congue quisque egestas diam in arcu cursus.</p>
-            </div>
+            </div>-->
         </section>
   </div>
 </template>
