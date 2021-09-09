@@ -5,7 +5,7 @@ import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import Login from '../views/Login.vue'
 import page404 from '../views/404.vue'
-// import store from '../store'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -20,14 +20,12 @@ const routes = [
   },
   {
     meta: {
-      title: 'dash'
+      title: 'dash',
+      requiresLogin: true
     },
     path: '/dash',
     name: 'dash',
     component: Dash
-    /* beforeEnter (to, from, next) {
-      if (store.state.isLog) { next() } else { next({ name: 'home' }) }
-    } */
   },
   {
     meta: {
@@ -72,7 +70,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Tables'
+      title: 'Tables',
+      requiresLogin: true
     },
     path: '/tables',
     name: 'tables',
@@ -83,7 +82,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Forms'
+      title: 'Forms',
+      requiresLogin: true
     },
     path: '/forms',
     name: 'forms',
@@ -94,7 +94,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Profile'
+      title: 'Profile',
+      requiresLogin: true
     },
     path: '/profile',
     name: 'profile',
@@ -105,7 +106,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'New client'
+      title: 'New client',
+      requiresLogin: true
     },
     path: '/client/new',
     name: 'client.new',
@@ -117,7 +119,8 @@ const routes = [
   /* edit */
   {
     meta: {
-      title: 'Edit client'
+      title: 'Edit client',
+      requiresLogin: true
     },
     path: '/client/:id',
     name: 'client.edit',
@@ -129,7 +132,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Modifier département'
+      title: 'Modifier département',
+      requiresLogin: true
     },
     path: '/department/:id/edit',
     name: 'dep.edit',
@@ -141,7 +145,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Modifier formation'
+      title: 'Modifier formation',
+      requiresLogin: true
     },
     path: '/formation/:id/edit',
     name: 'formationEdit',
@@ -153,7 +158,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Modifier partenaire'
+      title: 'Modifier partenaire',
+      requiresLogin: true
     },
     path: '/partenaire/:id/edit',
     name: 'partenaireEdit',
@@ -165,7 +171,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Modifier club'
+      title: 'Modifier club',
+      requiresLogin: true
     },
     path: '/club/:id/edit',
     name: 'clubEdit',
@@ -177,7 +184,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Modifier activité'
+      title: 'Modifier activité',
+      requiresLogin: true
     },
     path: '/activite/:id/edit',
     name: 'activiteEdit',
@@ -189,7 +197,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Modifier salle'
+      title: 'Modifier salle',
+      requiresLogin: true
     },
     path: '/salle/:id/edit',
     name: 'salleEdit',
@@ -201,7 +210,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Modifier outil'
+      title: 'Modifier outil',
+      requiresLogin: true
     },
     path: '/outil/:id/edit',
     name: 'outilEdit',
@@ -213,7 +223,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Modifier administratif'
+      title: 'Modifier administratif',
+      requiresLogin: true
     },
     path: '/administratif/:id/edit',
     name: 'administratifEdit',
@@ -225,7 +236,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Modifier étudiant'
+      title: 'Modifier étudiant',
+      requiresLogin: true
     },
     path: '/etudiant/:id/edit',
     name: 'etudiantEdit',
@@ -237,7 +249,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Modifier enseignant'
+      title: 'Modifier enseignant',
+      requiresLogin: true
     },
     path: '/enseignant/:id/edit',
     name: 'enseignantEdit',
@@ -249,7 +262,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Modifier doctorant'
+      title: 'Modifier doctorant',
+      requiresLogin: true
     },
     path: '/doctorant/:id/edit',
     name: 'doctorantEdit',
@@ -261,7 +275,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Nouveau Departement'
+      title: 'Nouveau Departement',
+      requiresLogin: true
     },
     path: '/departement/new',
     name: 'newDep',
@@ -272,7 +287,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Nouvelle formation'
+      title: 'Nouvelle formation',
+      requiresLogin: true
     },
     path: '/formation/new',
     name: 'newForm',
@@ -283,7 +299,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Nouveau partenaire'
+      title: 'Nouveau partenaire',
+      requiresLogin: true
     },
     path: '/partenaire/new',
     name: 'newPar',
@@ -294,7 +311,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Nouveau administratif'
+      title: 'Nouveau administratif',
+      requiresLogin: true
     },
     path: '/administratif/new',
     name: 'newAdm',
@@ -305,7 +323,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Nouveau étudiant'
+      title: 'Nouveau étudiant',
+      requiresLogin: true
     },
     path: '/etudiant/new',
     name: 'newEtu',
@@ -316,7 +335,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Nouveau enseignant'
+      title: 'Nouveau enseignant',
+      requiresLogin: true
     },
     path: '/enseignant/new',
     name: 'newEns',
@@ -327,7 +347,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Nouveau doctorant'
+      title: 'Nouveau doctorant',
+      requiresLogin: true
     },
     path: '/doctorant/new',
     name: 'newDoc',
@@ -338,7 +359,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Nouveau outil'
+      title: 'Nouveau outil',
+      requiresLogin: true
     },
     path: '/outil/new',
     name: 'newOutil',
@@ -349,7 +371,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Nouvelle salle'
+      title: 'Nouvelle salle',
+      requiresLogin: true
     },
     path: '/salle/new',
     name: 'newSalle',
@@ -360,7 +383,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Nouveau club'
+      title: 'Nouveau club',
+      requiresLogin: true
     },
     path: '/club/new',
     name: 'newClub',
@@ -371,7 +395,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Nouvelle activité'
+      title: 'Nouvelle activité',
+      requiresLogin: true
     },
     path: '/activite/new',
     name: 'newActivite',
@@ -382,7 +407,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Départements'
+      title: 'Départements',
+      requiresLogin: true
     },
     path: '/tables/departement',
     name: 'dep',
@@ -393,7 +419,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Formations'
+      title: 'Formations',
+      requiresLogin: true
     },
     path: '/tables/formation',
     name: 'form',
@@ -405,7 +432,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Partenaires'
+      title: 'Partenaires',
+      requiresLogin: true
     },
     path: '/tables/partenaire',
     name: 'par',
@@ -417,7 +445,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Etudiants'
+      title: 'Etudiants',
+      requiresLogin: true
     },
     path: '/tables/etudiants',
     name: 'etudiants',
@@ -429,7 +458,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Salles'
+      title: 'Salles',
+      requiresLogin: true
     },
     path: '/tables/salles',
     name: 'salle',
@@ -441,7 +471,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Outils'
+      title: 'Outils',
+      requiresLogin: true
     },
     path: '/tables/outils',
     name: 'outil',
@@ -453,7 +484,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Enseignants'
+      title: 'Enseignants',
+      requiresLogin: true
     },
     path: '/tables/enseignants',
     name: 'enseignant',
@@ -465,7 +497,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Doctorants'
+      title: 'Doctorants',
+      requiresLogin: true
     },
     path: '/tables/doctorants',
     name: 'doctorant',
@@ -477,7 +510,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Clubs scientifiques et culturels'
+      title: 'Clubs scientifiques et culturels',
+      requiresLogin: true
     },
     path: '/tables/clubs',
     name: 'club',
@@ -489,7 +523,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Activités'
+      title: 'Activités',
+      requiresLogin: true
     },
     path: '/tables/activites',
     name: 'activite',
@@ -501,7 +536,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Administratifs'
+      title: 'Administratifs',
+      requiresLogin: true
     },
     path: '/tables/administratifs',
     name: 'administratif',
@@ -514,7 +550,8 @@ const routes = [
   // Statistiques
   {
     meta: {
-      title: 'Statistiques générales'
+      title: 'Statistiques générales',
+      requiresLogin: true
     },
     path: '/stats',
     name: 'GeneralStat',
@@ -526,7 +563,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Charts'
+      title: 'Charts',
+      requiresLogin: true
     },
     path: '/charts',
     name: 'charts',
@@ -534,7 +572,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Audit Social'
+      title: 'Audit Social',
+      requiresLogin: true
     },
     path: '/audit',
     name: 'Audit',
@@ -543,7 +582,8 @@ const routes = [
   // Détails
   {
     meta: {
-      title: 'Détails de la formation'
+      title: 'Détails de la formation',
+      requiresLogin: true
     },
     path: '/formation/:id',
     name: 'FormationDetail',
@@ -552,7 +592,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Détails du niveau'
+      title: 'Détails du niveau',
+      requiresLogin: true
     },
     path: '/niveau/:id',
     name: 'NiveauDetail',
@@ -561,7 +602,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Détails du département'
+      title: 'Détails du département',
+      requiresLogin: true
     },
     path: '/departement/:id',
     name: 'DepartementDetail',
@@ -570,7 +612,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Détails du partenaire'
+      title: 'Détails du partenaire',
+      requiresLogin: true
     },
     path: '/partenaire/:id',
     name: 'PartenaireDetail',
@@ -579,7 +622,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Détails de la salle'
+      title: 'Détails de la salle',
+      requiresLogin: true
     },
     path: '/salle/:id',
     name: 'SalleDetail',
@@ -588,7 +632,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Détails du club'
+      title: 'Détails du club',
+      requiresLogin: true
     },
     path: '/club/:id',
     name: 'ClubDetail',
@@ -597,7 +642,8 @@ const routes = [
   },
   {
     meta: {
-      title: "Détails de l'étudiant"
+      title: "Détails de l'étudiant",
+      requiresLogin: true
     },
     path: '/etudiant/:id',
     name: 'EtudiantDetail',
@@ -606,7 +652,8 @@ const routes = [
   },
   {
     meta: {
-      title: "Détails de l'enseignant"
+      title: "Détails de l'enseignant",
+      requiresLogin: true
     },
     path: '/enseignant/:id',
     name: 'EnseignantDetail',
@@ -615,7 +662,8 @@ const routes = [
   },
   {
     meta: {
-      title: "Détails de l'administratif"
+      title: "Détails de l'administratif",
+      requiresLogin: true
     },
     path: '/administratif/:id',
     name: 'AdministratifDetail',
@@ -624,7 +672,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Détails du doctorant'
+      title: 'Détails du doctorant',
+      requiresLogin: true
     },
     path: '/doctorant/:id',
     name: 'DoctorantDetail',
@@ -633,7 +682,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Détails du module'
+      title: 'Détails du module',
+      requiresLogin: true
     },
     path: '/module/:id',
     name: 'DelibDetail',
@@ -643,7 +693,8 @@ const routes = [
   /* Query */
   {
     meta: {
-      title: "Création d'une requete"
+      title: "Création d'une requete",
+      requiresLogin: true
     },
     path: '/query',
     name: 'QueryCreator',
@@ -652,7 +703,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Résultats'
+      title: 'Résultats',
+      requiresLogin: true
     },
     path: '/query/results',
     name: 'QueryResult',
@@ -661,7 +713,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Graphe des résultats'
+      title: 'Graphe des résultats',
+      requiresLogin: true
     },
     path: '/query/results/chart',
     name: 'ChartResult',
@@ -670,7 +723,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Résultats sauvegardées'
+      title: 'Résultats sauvegardées',
+      requiresLogin: true
     },
     path: '/results',
     name: 'SavedQuery',
@@ -679,7 +733,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Historique'
+      title: 'Historique',
+      requiresLogin: true
     },
     path: '/history',
     name: 'History',
@@ -703,6 +758,18 @@ const router = new VueRouter({
     }
   }
 })
+
+// guard clause
+router.beforeEach((to, from, next) => {
+  console.log('isLog = ' + store.state.isLog)
+  if (to.matched.some(record => record.meta.requiresLogin) && store.state.isLog === false) {
+    console.log('you need to login')
+    next('/login')
+  } else {
+    next()
+  }
+})
+
 // GOOD
 /* router.beforeEach((to, from, next) => {
   if (!this.$session.exists()) next({ name: 'login' })

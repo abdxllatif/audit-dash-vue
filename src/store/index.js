@@ -68,6 +68,10 @@ export default new Vuex.Store({
     basic (state, payload) {
       state[payload.key] = payload.value
     },
+    // log
+    log (state, payload) {
+      state.isLog = payload
+    },
 
     /* User */
     user (state, payload) {

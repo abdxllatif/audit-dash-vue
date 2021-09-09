@@ -50,15 +50,16 @@ export default {
     this.form.password = ''
   },
   methods: {
-    submit () {
+    async submit () {
       this.isLoading = true
-      axios.post('http://localhost:8090/api/auth/signin', {
+      await axios.post('http://localhost:8090/api/auth/signin', {
         username: this.form.username,
         password: this.form.password
       })
         .then(response => {
           this.info = response
           this.$store.isLog = true
+          this.$store.commit('log', true)
           this.$store.username = this.form.username
           console.log(this.info.data.accessToken)
           this.$session.start()
