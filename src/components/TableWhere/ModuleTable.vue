@@ -2,6 +2,8 @@
       <div>
         <modal-box :is-active="isModalActive" :trash-object-name="trashObjectName" @confirm="trashConfirm"
                @cancel="trashCancel"/>
+        <edit-matiere-modal :is-active="isEditMatiereModalActive" :Mat="this.MatId" @confirm="EditMatiereConfirm"
+               @cancel="EditMatiereCancel"/>
                 <b-table :data="data">
                     <b-table-column field="nom" label="Nom" sortable v-slot="props">
                         {{ props.row.nom }}
@@ -22,9 +24,9 @@
                     </b-table-column>
                     <b-table-column custom-key="actions" cell-class="is-actions-cell" v-slot="props">
                       <div class="buttons is-right">
-                        <router-link :to="{name:'dep.edit', params: {id: props.row.clubId}}" class="button is-small is-primary">
+                        <button class="button is-small is-info" type="button" @click.prevent="EditMatiereModal(props.row)">
                           <b-icon icon="account-edit" size="is-small"/>
-                        </router-link>
+                        </button>
                         <button class="button is-small is-danger" type="button" @click.prevent="trashModal(props.row)">
                           <b-icon icon="trash-can" size="is-small"/>
                         </button>
@@ -36,11 +38,12 @@
 <script>
 import ModalBox from '@/components/ModalBox'
 import axios from 'axios'
-// const data = [{ id: 1, nom: 'UEF1', type: 'Fondamentale', coefficient: '9', credit: '9', charge: '450', modules: { id: 2, nom: 'Analyse', type: 'Math', coefficient: '5', credit: '5', charge: '250' } }]
+import EditMatiereModal from '../ModalBox/ModalEditMatiere.vue'
+
 export default {
   name: 'ModuleTable',
   components: {
-    ModalBox
+    ModalBox, EditMatiereModal
   },
   props: {
     idUe: {
@@ -49,10 +52,12 @@ export default {
   data () {
     return {
       isModalActive: false,
+      isEditMatiereModalActive: false,
       trashObject: null,
       idS: this.id,
       modules: [],
-      data: []
+      data: [],
+      Mat: null
     }
   },
   computed: {
@@ -61,6 +66,13 @@ export default {
         return this.trashObject.nom
       }
 
+      return null
+    },
+    MatId () {
+      if (this.Mat) {
+        console.log('from computed ' + this.Mat.matiereId)
+        return this.Mat.matiereId
+      }
       return null
     }
   },
@@ -141,6 +153,40 @@ export default {
     },
     trashCancel () {
       this.isModalActive = false
+    },
+    EditMatiereModal (Mat) {
+      this.Mat = Mat
+      console.log('here' + this.Mat.matiereId)
+      this.isEditMatiereModalActive = true
+    },
+    EditMatiereConfirm () {
+      this.isEditMatiereModalActive = false
+      axios.post('http://localhost:8090/api/stats/data', {
+        table: 'matieres',
+        fk: 'ueUeId',
+        value: this.idUe
+      }, { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .then(r => {
+          this.isLoading = false
+          if (r && r.data) {
+            if (r.data.length > this.perPage) {
+              this.paginated = true
+            }
+            this.data = r.data
+          }
+        })
+        .catch(e => {
+          this.errorMessage = e.message
+          console.log('There was an error!', e)
+          this.$buefy.snackbar.open({
+            type: 'is-warning',
+            message: 'Erreur f module table',
+            queue: false
+          })
+        })
+    },
+    EditMatiereCancel () {
+      this.isEditMatiereModalActive = false
     }
   }
 }

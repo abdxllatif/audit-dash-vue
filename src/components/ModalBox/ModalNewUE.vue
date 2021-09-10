@@ -63,16 +63,6 @@ export default {
       }
     }
   },
-  async mounted () {
-    await axios.get('http://localhost:8090/api/data/outils', { headers: { 'x-access-token': this.$session.get('jwt') } })
-      .then((response) => {
-        this.listings = response.data
-        this.outils = this.listings.results
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  },
   methods: {
     cancel () {
       this.$emit('cancel')
@@ -88,20 +78,20 @@ export default {
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({
-            message: "l'outil " + this.form.titre + ' bien ajoutée',
+            message: "l'outil " + this.form.nom + ' bien ajoutée',
             queue: false
           })
+          this.$emit('confirm')
         })
         .catch(e => {
           this.errorMessage = e.message
           console.log('There was an error!', e)
           this.$buefy.snackbar.open({
             type: 'is-warning',
-            message: "Erreur d'insertion",
+            message: "Erreur d'insertion de l'unité",
             queue: false
           })
         })
-      this.$emit('confirm')
     }
   },
   watch: {

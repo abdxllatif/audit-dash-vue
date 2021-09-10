@@ -4,7 +4,7 @@
                @cancel="trashCancel"/>
       <new-u-e-modal :is-active="isNewUEModalActive" :Semid="this.idS" @confirm="NewUEConfirm"
                @cancel="NewUECancel"/>
-      <edit-u-e-modal :is-active="isEditUEModalActive" :UE="UeId" @confirm="EditUEConfirm"
+      <edit-u-e-modal :is-active="isEditUEModalActive" :UE="this.UeId" @confirm="EditUEConfirm"
                @cancel="EditUECancel"/>
       <new-matiere-modal :is-active="isNewMatiereModalActive" :UE="UeId" @confirm="NewMatiereConfirm"
                @cancel="NewMatiereCancel"/>
@@ -167,9 +167,9 @@ export default {
     },
     UeId () {
       if (this.Ue) {
+        console.log('from computed ' + this.Ue.ueId)
         return this.Ue.ueId
       }
-
       return null
     }
   },
@@ -196,16 +196,64 @@ export default {
     },
     NewUEConfirm () {
       this.isNewUEModalActive = false
+      axios.post('http://localhost:8090/api/stats/data', {
+        table: 'ues',
+        fk: 'semestreSemestreId',
+        value: this.id
+      }, { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .then(r => {
+          this.isLoading = false
+          if (r && r.data) {
+            if (r.data.length > this.perPage) {
+              this.paginated = true
+            }
+            this.data = r.data
+          }
+        })
+        .catch(e => {
+          this.errorMessage = e.message
+          console.log('There was an error!', e)
+          this.$buefy.snackbar.open({
+            type: 'is-warning',
+            message: 'Erreur fl UE table...',
+            queue: false
+          })
+        })
     },
     NewUECancel () {
       this.isNewUEModalActive = false
     },
     // edit UE
-    EditUEModal () {
+    EditUEModal (Ue) {
+      this.Ue = Ue
+      console.log('here' + this.UeId)
       this.isEditUEModalActive = true
     },
     EditUEConfirm () {
       this.isEditUEModalActive = false
+      axios.post('http://localhost:8090/api/stats/data', {
+        table: 'ues',
+        fk: 'semestreSemestreId',
+        value: this.id
+      }, { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .then(r => {
+          this.isLoading = false
+          if (r && r.data) {
+            if (r.data.length > this.perPage) {
+              this.paginated = true
+            }
+            this.data = r.data
+          }
+        })
+        .catch(e => {
+          this.errorMessage = e.message
+          console.log('There was an error!', e)
+          this.$buefy.snackbar.open({
+            type: 'is-warning',
+            message: 'Erreur fl UE table...',
+            queue: false
+          })
+        })
     },
     EditUECancel () {
       this.isEditUEModalActive = false

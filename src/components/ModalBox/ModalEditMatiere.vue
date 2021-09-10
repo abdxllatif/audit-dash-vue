@@ -1,10 +1,10 @@
 <template>
-  <b-modal :active.sync="isEditUEModalActive" has-modal-card>
+  <b-modal :active.sync="isEditMatiereModalActive" has-modal-card>
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title">
             <b-icon class="mx-4" icon="pencil"></b-icon>
-            Editer UE
+            Editer matiere
         </p>
       </header>
       <section class="modal-card-body">
@@ -43,50 +43,41 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'EditUEModal',
+  name: 'EditMatiereModal',
   props: {
     isActive: {
       type: Boolean,
       default: false
     },
-    UE: {
+    Mat: {
       default: null
     }
   },
   data () {
     return {
-      ueId: this.UE,
-      isEditUEModalActive: false,
+      matId: this.Mat,
+      isEditMatiereModalActive: false,
       types: ['Fondamentale', 'Transversale', 'Méthodologie'],
       form: {}
     }
   },
-  /* async mounted () {
-    await axios.get('http://localhost:8090/api/data/ues/' + this.ueId, { headers: { 'x-access-token': this.$session.get('jwt') } })
-      .then((response) => {
-        console.log('response.data = ' + response.data)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, */
   methods: {
     cancel () {
       this.$emit('cancel')
     },
     confirm () {
-      console.log(this.UE)
-      axios.post('http://localhost:8090/api/data/ues/' + this.UE, {
+      console.log('id in confirm ' + this.Mat)
+      axios.post('http://localhost:8090/api/data/matieres/' + this.Mat, {
         nom: this.form.nom,
         type: this.form.type,
         Coefficient: this.form.Coefficient,
         credit: this.form.credit,
         ChargeHoraire: this.form.ChargeHoraire,
-        semestreId: this.Semid
+        ueId: this.ueid
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({
-            message: "l'unité " + this.form.nom + ' bien modifiée',
+            message: 'la matière ' + this.form.nom + ' bien modifiée',
             queue: false
           })
           this.$emit('confirm')
@@ -104,9 +95,9 @@ export default {
   },
   watch: {
     isActive (newValue) {
-      this.isEditUEModalActive = newValue
+      this.isEditMatiereModalActive = newValue
     },
-    isEditUEModalActive (newValue) {
+    isEditMatiereModalActive (newValue) {
       if (!newValue) {
         this.cancel()
       }
