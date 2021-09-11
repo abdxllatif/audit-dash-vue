@@ -762,7 +762,9 @@ const router = new VueRouter({
 // guard clause
 router.beforeEach((to, from, next) => {
   console.log('isLog = ' + store.state.isLog)
-  if (to.matched.some(record => record.meta.requiresLogin) && store.state.isLog === false) {
+  console.log(sessionStorage)
+  if (to.matched.some(record => record.meta.requiresLogin) && sessionStorage.getItem('vue-session-key') === '{}') {
+    console.log(sessionStorage.getItem('vue-session-key'))
     console.log('you need to login')
     next('/login')
   } else {

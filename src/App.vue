@@ -310,6 +310,46 @@ export default {
       ]
     }
   },
+  sockets: {
+    connect () {
+      // Fired when the socket connects.
+      this.isConnected = true
+      console.log('server connected')
+    },
+
+    disconnect () {
+      this.isConnected = false
+      console.log('server disconnected')
+    }
+
+    // Fired when the server sends something on the "messageChannel" channel.
+    /* logs (data) {
+      this.socketMessage = data
+      console.log('datalog =' + String.fromCharCode.apply(null, new Uint8Array(data)))
+      // this.$store.state.logsdata.push()
+    },
+    auths (data) {
+      const a = String.fromCharCode.apply(null, new Uint8Array(data))
+      console.log('dataAuth =' + a)
+    } */
+  },
+  mounted () {
+    this.sockets.subscribe('logs', (data) => {
+      var fromBuffer = String.fromCharCode.apply(null, new Uint8Array(data))
+      this.msg = fromBuffer
+      console.log('message from socket: ' + this.msg)
+      var myArr = this.msg.split('::')
+      this.$store.state.logsdata.push({ acteur: myArr[0], action: myArr[1], id: myArr[2], time: myArr[3], table: myArr[4].split('(')[0] })
+      // console.log(this.$socket)
+    })
+    this.sockets.subscribe('auths', (data) => {
+      var fromBuffer = String.fromCharCode.apply(null, new Uint8Array(data))
+      this.msg = fromBuffer
+      console.log('auths from socket: ' + this.msg)
+      // this.$store.state.logsdata.add(this.msg)
+      // console.log(this.$socket)
+    })
+  },
   created () {
     if (this.$session.exists()) {
       this.$store.state.isLog = true

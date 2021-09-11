@@ -32,6 +32,9 @@
                     </b-tab-item>
                 </b-tabs>
             </b-tab-item>
+            <b-tab-item label="Etudiants" icon="video">
+              <etud-niv-table :id="this.form.niveauId"></etud-niv-table>
+            </b-tab-item>
         </b-tabs>
     </section>
   </div>
@@ -45,10 +48,11 @@ import HeroBar from '@/components/HeroBar'
 import CardComponent from '@/components/CardComponent'
 import UETable from '@/components/TableWhere/UETable.vue'
 import AttributTable from '@/components/Tables/Adds/AttributTable'
+import EtudNivTable from '../../components/TableWhere/EtudNivTable.vue'
 
 export default {
   name: 'NiveauDetail',
-  components: { CardComponent, HeroBar, UETable, AttributTable },
+  components: { CardComponent, HeroBar, UETable, AttributTable, EtudNivTable },
   props: {
     id: {
       default: null

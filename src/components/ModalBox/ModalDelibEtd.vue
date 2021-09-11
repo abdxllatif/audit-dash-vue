@@ -10,7 +10,8 @@
       <section class="modal-card-body">
             <b-field label="Ajout d'une moyenne">
                 <b-input placeholder="Moyenne"
-                    value=""
+                    v-model="form.moy"
+                    value=0
                     min="0"
                     max="20">
                 </b-input>
@@ -33,7 +34,10 @@ export default {
       type: Boolean,
       default: false
     },
-    formId: {
+    Matid: {
+      default: null
+    },
+    Etdid: {
       default: null
     }
   },
@@ -42,32 +46,33 @@ export default {
       isDelibEtdModalActive: false,
       partenaires: [],
       form: {
-        formationId: ''
+        moy: 0
       }
     }
   },
-  async mounted () {
-    await axios.get('http://localhost:8090/api/data/partenaires', { headers: { 'x-access-token': this.$session.get('jwt') } })
-      .then((response) => {
-        this.listings = response.data
-        this.partenaires = this.listings.results
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  },
   methods: {
     cancel () {
+      console.log('etudiantId: ' + this.Etdid)
+      console.log('matiere: ' + this.Matid)
       this.$emit('cancel')
     },
-    confirm () {
-      axios.put('http://localhost:8090/api/data/partenaire', {
-        formationId: this.formId,
-        partenaireId: this.form.partenaireId
+    async confirm () {
+      var a
+      await axios.get('http://localhost:8090/api/data/DelibModules/' + this.Etdid + '/' + this.Matid, { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .then(r => {
+          console.log(r.data.results[0].DelibModuleId)
+          a = r.data.results[0].DelibModuleId
+        })
+        .catch(e => {
+          this.isLoading = false
+          console.log('id delib non trouvé')
+        })
+      axios.post('http://localhost:8090/api/data/DelibModules/' + a, {
+        Moyenne: this.form.moy
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({
-            message: 'le partenaire ' + this.form.Nom + ' bien relié',
+            message: 'Déliberation modifiée',
             queue: false
           })
         })
@@ -76,7 +81,7 @@ export default {
           console.log('There was an error!', e)
           this.$buefy.snackbar.open({
             type: 'is-warning',
-            message: "Erreur d'insertion",
+            message: 'Erreur de modification',
             queue: false
           })
         })

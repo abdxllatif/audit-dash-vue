@@ -1,29 +1,28 @@
 <template>
   <div>
-    <modal-box :is-active="isModalActive" :trash-object-name="trashObjectName" @confirm="trashConfirm"
-               @cancel="trashCancel"/>
     <b-table
-      :checked-rows.sync="checkedRows"
-      :checkable="checkable"
       :loading="isLoading"
       :paginated="paginated"
       :per-page="perPage"
       :striped="true"
       :hoverable="true"
-      default-sort="nom"
+      default-sort=""
       :data="history">
 
       <b-table-column label="Action" field="action" sortable v-slot="props">
-        {{ props.row.titre }}
+        {{ props.row.action }}
       </b-table-column>
-      <b-table-column label="Message" field="message" sortable v-slot="props">
-        {{ props.row.type }}
+      <b-table-column label="Table" field="table" sortable v-slot="props">
+        {{ props.row.table }}
+      </b-table-column>
+      <b-table-column label="ID" field="id" sortable v-slot="props">
+        {{ props.row.id }}
       </b-table-column>
       <b-table-column label="L'acteur" field="acteur" sortable v-slot="props">
-        {{ props.row.type }}
+        {{ props.row.acteur }}
       </b-table-column>
       <b-table-column label="Temps d'action" v-slot="props">
-        <small class="has-text-grey is-abbr-like" :title="props.row.created">{{ props.row.createdAt }}</small>
+        <small class="has-text-grey is-abbr-like" :title="props.row.created">{{ props.row.time }}</small>
       </b-table-column>
 
       <section class="section" slot="empty">
@@ -47,12 +46,11 @@
 </template>
 
 <script>
-import axios from 'axios'
-import ModalBox from '@/components/ModalBox'
+// import axios from 'axios'
 
 export default {
   name: 'HistoryTable',
-  components: { ModalBox },
+  components: {},
   props: {
     dataUrl: {
       default: null
@@ -62,7 +60,7 @@ export default {
     return {
       isModalActive: false,
       trashObject: null,
-      history: [],
+      history: this.$store.state.logsdata,
       isLoading: false,
       paginated: false,
       perPage: 10,
@@ -71,7 +69,7 @@ export default {
   },
   computed: {
   },
-  mounted () {
+  /* mounted () {
     if (this.dataUrl) {
       this.isLoading = true
       axios
@@ -93,7 +91,7 @@ export default {
           })
         })
     }
-  },
+  }, */
   methods: {
   }
 }

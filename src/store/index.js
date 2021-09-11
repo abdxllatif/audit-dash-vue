@@ -61,7 +61,7 @@ export default new Vuex.Store({
     result: [],
 
     /* kafka data */
-    logsdata: {}
+    logsdata: []
   },
   mutations: {
     /* A fit-them-all commit */

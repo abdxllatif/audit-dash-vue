@@ -20,7 +20,6 @@
                   v-model="date"
                   :events="events"
                   indicators="dots"
-                  :unselectable-dates="unselectableDates"
                   >
               </b-datepicker>
           </span>

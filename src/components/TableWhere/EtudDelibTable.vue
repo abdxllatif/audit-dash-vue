@@ -1,8 +1,6 @@
 <template>
   <div>
-    <modal-box :is-active="isModalActive" :trash-object-name="trashObjectName" @confirm="trashConfirm"
-               @cancel="trashCancel"/>
-    <modal-delib-etd :is-active="isDelibEtdModalActive" @confirm="DelibEtdConfirm"
+    <modal-delib-etd :is-active="isDelibEtdModalActive" :Etdid="Etudiantid" :Matid="matiereId" @confirm="DelibEtdConfirm"
                @cancel="DelibEtdCancel"/>
         <b-table
       :loading="isLoading"
@@ -43,9 +41,6 @@
           <button class="button is-small is-primary" type="button" @click.prevent="DelibEtdModal(props.row)">
             Modifier
           </button>
-          <button class="button is-small is-danger" type="button" @click.prevent="trashModal(props.row)">
-            <b-icon icon="trash-can" size="is-small"/>
-          </button>
         </div>
       </b-table-column>
 
@@ -71,14 +66,13 @@
 
 <script>
 import axios from 'axios'
-import ModalBox from '@/components/ModalBox'
 import AttributTable from '@/components/Tables/Adds/AttributTable'
 import ModalDelibEtd from '@/components/ModalBox/ModalDelibEtd'
 import MoyenneDelib from '@/components/Tables/Adds/MoyenneDelib'
 
 export default {
-  name: 'FormationTable',
-  components: { ModalBox, AttributTable, ModalDelibEtd, MoyenneDelib },
+  name: 'EtudDelibTable',
+  components: { AttributTable, ModalDelibEtd, MoyenneDelib },
   props: {
     matiereId: {
       type: String,
@@ -92,21 +86,21 @@ export default {
     return {
       edit: false,
       isModalActive: false,
-      trashObject: null,
       etudiants: [],
       isLoading: false,
       paginated: true,
       perPage: 20,
       checkedRows: [],
-      isDelibEtdModalActive: false
+      isDelibEtdModalActive: false,
+      etd: null
     }
   },
   computed: {
-    trashObjectName () {
-      if (this.trashObject) {
-        return this.trashObject.nom
+    Etudiantid () {
+      if (this.etd) {
+        console.log('from computed ' + this.etd.etudiantId)
+        return this.etd.etudiantId
       }
-
       return null
     }
   },
@@ -142,12 +136,8 @@ export default {
     }
   },
   methods: {
-    trashModal (trashObject) {
-      this.trashObject = trashObject
-
-      this.isModalActive = true
-    },
-    DelibEtdModal (trashObject) {
+    DelibEtdModal (a) {
+      this.etd = a
       this.isDelibEtdModalActive = true
     },
     DelibEtdConfirm () {
@@ -155,57 +145,6 @@ export default {
     },
     DelibEtdCancel () {
       this.isDelibEtdModalActive = false
-    },
-    niveauxModal (trashObject) {
-      this.trashObject = trashObject
-
-      this.isNivModalActive = true
-    },
-    trashConfirm () {
-      this.isModalActive = false
-      axios.delete('http://localhost:8090/api/data/formations/' + this.trashObject.formationId, { headers: { 'x-access-token': this.$session.get('jwt') } })
-        .then(r => {
-          this.isLoading = false
-          this.$buefy.toast.open({
-            message: 'Confirmed',
-            type: 'is-success'
-          })
-          axios
-            .get(this.dataUrl, { headers: { 'x-access-token': this.$session.get('jwt') } })
-            .then(r => {
-              this.isLoading = false
-              if (r.data && r.data.results) {
-                if (r.data.results.length > this.perPage) {
-                  this.paginated = true
-                }
-                this.formations = r.data.results
-              }
-            })
-            .catch(e => {
-              this.isLoading = false
-              this.$buefy.toast.open({
-                message: `Error: ${e.message}`,
-                type: 'is-danger'
-              })
-            })
-        })
-        .catch(e => {
-          this.isLoading = false
-          console.log(e)
-          this.$buefy.toast.open({
-            message: `Error: ${e.message}`,
-            type: 'is-danger'
-          })
-        })
-    },
-    niveauxConfirm () {
-      this.isNivModalActive = false
-    },
-    trashCancel () {
-      this.isModalActive = false
-    },
-    niveauxCancel () {
-      this.isNivModalActive = false
     }
   }
 }

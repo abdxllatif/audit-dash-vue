@@ -43,25 +43,18 @@ export default {
       }
     }
   },
-  async mounted () {
-    await axios.get('http://localhost:8090/api/data/outils', { headers: { 'x-access-token': this.$session.get('jwt') } })
-      .then((response) => {
-        this.listings = response.data
-        this.outils = this.listings.results
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  },
   methods: {
     cancel () {
       this.$emit('cancel')
     },
     confirm () {
-      axios.put('http://localhost:8090/api/data/outils/salles', {
-        outilId: this.form.outilId,
-        salleId: this.salleId,
-        quantity: this.form.quantity
+      axios.put('http://localhost:8090/api/data/DelibModules/' + this.id, {
+        // annee: this.annee,
+        Moyenne: this.form.moy,
+        // Coefficient: this.Co,
+        // Credit: this.Cr,
+        // etudiantId: this.Etd,
+        // matiereId: this.Mat,
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({

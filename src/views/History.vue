@@ -31,10 +31,9 @@ export default {
   },
   data () {
     return {
-      myLogs: logs
     }
   },
-  sockets: {
+  /* sockets: {
     connect() {
       // Fired when the socket connects.
       this.isConnected = true;
@@ -50,8 +49,17 @@ export default {
     log(data) {
       this.socketMessage = data
       console.log('data1' + data);
+    },
+    logs (data) {
+      this.socketMessage = data
+      console.log('datalog =' + String.fromCharCode.apply(null, new Uint8Array(data)))
+      // this.$store.state.logsdata.push()
+    },
+    auths (data) {
+      const a = String.fromCharCode.apply(null, new Uint8Array(data))
+      console.log('dataAuth =' + a)
     }
-  },
+  }, */
   /* sockets: {
     connect: function () {
       console.log('socket connected')
@@ -68,16 +76,23 @@ export default {
       ]
     }
   },
-  mounted () {
+  /* mounted () {
 
     this.sockets.subscribe('logs' , (data) => {
-      var fromBuffer= String.fromCharCode.apply(null, new Uint8Array(data));
-      this.msg = fromBuffer;
-      console.log('message from socket: ' + this.msg);
-      this.$store.state.logsdata.add(this.msg)
-      console.log(this.$socket)
+      var fromBuffer= String.fromCharCode.apply(null, new Uint8Array(data))
+      this.msg = fromBuffer
+      console.log('message from socket: ' + this.msg)
+      // this.$store.state.logsdata.add(this.msg)
+      // console.log(this.$socket)
     })
-  },
+    this.sockets.subscribe('auths' , (data) => {
+      var fromBuffer= String.fromCharCode.apply(null, new Uint8Array(data))
+      this.msg = fromBuffer
+      console.log('auths from socket: ' + this.msg)
+      // this.$store.state.logsdata.add(this.msg)
+      // console.log(this.$socket)
+    })
+  }, */
   methods: {
   }
 }
