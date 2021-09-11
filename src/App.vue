@@ -339,7 +339,7 @@ export default {
       this.msg = fromBuffer
       console.log('message from socket: ' + this.msg)
       var myArr = this.msg.split('::')
-      this.$store.state.logsdata.push({ acteur: myArr[0], action: myArr[1], id: myArr[2], time: myArr[3], table: myArr[4].split('(')[0] })
+      this.$store.state.logsdata.push({ acteur: myArr[0], action: myArr[1], id: myArr[2], time: myArr[3], table: myArr[4] })
       // console.log(this.$socket)
     })
     this.sockets.subscribe('auths', (data) => {
