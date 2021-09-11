@@ -204,7 +204,8 @@ export default {
         dayjs.extend(utc)
         axios.post('http://localhost:8090/api/data/outils/' + this.id, {
           titre: this.form.titre,
-          type: this.form.type
+          type: this.form.type,
+          admin: this.$store.state.userEmail
         }, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             this.$buefy.snackbar.open({

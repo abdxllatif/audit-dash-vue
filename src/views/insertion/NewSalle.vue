@@ -103,7 +103,8 @@ export default {
         nom: this.form.name,
         description: this.form.type,
         capacite: this.form.capacite,
-        departementId: this.form.department.departementId
+        departementId: this.form.department.departementId,
+        admin: this.$store.state.userEmail
         // departementId: this.$route.params.sel.departementId
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {

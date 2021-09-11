@@ -75,7 +75,8 @@ export default {
       this.isLoading = true
       axios.post('http://localhost:8090/api/data/clubs', {
         nom: this.form.name,
-        description: this.form.type
+        description: this.form.type,
+        admin: this.$store.state.userEmail
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({

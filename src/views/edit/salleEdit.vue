@@ -214,7 +214,8 @@ export default {
           nom: this.form.nom,
           description: this.form.type,
           capacite: this.form.capacite,
-          departementId: this.form.departementDepartementId
+          departementId: this.form.departementDepartementId,
+          admin: this.$store.state.userEmail
         }, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             this.$buefy.snackbar.open({

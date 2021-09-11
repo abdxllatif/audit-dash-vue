@@ -73,7 +73,8 @@ export default {
         Coefficient: this.form.Coefficient,
         credit: this.form.credit,
         ChargeHoraire: this.form.ChargeHoraire,
-        ueId: this.ueid
+        ueId: this.ueid,
+        admin: this.$store.state.userEmail
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({

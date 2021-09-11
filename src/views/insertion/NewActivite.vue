@@ -126,7 +126,8 @@ export default {
         type: this.form.type,
         date_debut: this.dates[0],
         date_fin: this.dates[1],
-        salleId: this.form.salle.salleId
+        salleId: this.form.salle.salleId,
+        admin: this.$store.state.userEmail
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({

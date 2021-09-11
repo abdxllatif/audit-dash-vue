@@ -225,7 +225,8 @@ export default {
         axios.post('http://localhost:8090/api/data/clubs/' + this.id, {
           nom: this.form.nom,
           type: this.form.type,
-          salleId: this.form.salleSalleId
+          salleId: this.form.salleSalleId,
+          admin: this.$store.state.userEmail
         }, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             this.$buefy.snackbar.open({

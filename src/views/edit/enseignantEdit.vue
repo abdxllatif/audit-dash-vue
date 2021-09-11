@@ -262,7 +262,7 @@ export default {
           nom: this.form.nom,
           prenom: this.form.prenom,
           type: this.form.type,
-          updatedAt: dayjs.utc().format()
+          admin: this.$store.state.userEmail
         }, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             this.$buefy.snackbar.open({

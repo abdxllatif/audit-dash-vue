@@ -142,7 +142,8 @@ export default {
         specialite: this.form.specialite,
         role: this.form.role,
         sex: this.form.sex,
-        depId: this.form.department.departementId
+        depId: this.form.department.departementId,
+        admin: this.$store.state.userEmail
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({

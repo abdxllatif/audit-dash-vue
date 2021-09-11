@@ -68,7 +68,8 @@ export default {
           console.log('id delib non trouvé')
         })
       axios.post('http://localhost:8090/api/data/DelibModules/' + a, {
-        Moyenne: this.form.moy
+        Moyenne: this.form.moy,
+        admin: this.$store.state.userEmail
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({

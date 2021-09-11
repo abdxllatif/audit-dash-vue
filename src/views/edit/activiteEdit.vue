@@ -269,7 +269,8 @@ export default {
           date_debut: dayjs(this.dates[0]).format('YYYY-MM-DD HH:mm:ss.SSSZ'),
           date_fin: dayjs(this.dates[1]).format('YYYY-MM-DD HH:mm:ss.SSSZ'),
           salleId: this.form.salleSalleId,
-          clubId: this.form.clubClubId
+          clubId: this.form.clubClubId,
+          admin: this.$store.state.userEmail
         }, { headers: { 'x-access-token': this.$session.get('jwt') } })
           .then(r => {
             this.$buefy.snackbar.open({

@@ -122,7 +122,8 @@ export default {
       axios.post('http://localhost:8090/api/data/formations', {
         nom: this.form.titre,
         description: this.form.description,
-        depId: this.form.department.departementId
+        depId: this.form.department.departementId,
+        admin: this.$store.state.userEmail
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({
