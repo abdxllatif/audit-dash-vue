@@ -8,6 +8,7 @@
       </router-link>
     </hero-bar>
     <section class="section is-main-section">
+      <import-component link="http://localhost:8090/api/data/etudiants/file"/>
       <card-component title="Nouveau étudiant" icon="ballot">
         <form @submit.prevent="submit">
           <b-field label="Départment" horizontal>
@@ -76,11 +77,12 @@ import TitleBar from '@/components/TitleBar'
 import CardComponent from '@/components/CardComponent'
 import HeroBar from '@/components/HeroBar'
 import axios from 'axios'
+import ImportComponent from '@/components/ImportComponent'
 import wilayas from '../../../public/data-sources/algeria_cities.json'
 
 export default {
   name: 'newEtu',
-  components: { HeroBar, CardComponent, TitleBar },
+  components: { HeroBar, CardComponent, TitleBar, ImportComponent },
   data () {
     return {
       wilayas: wilayas,

@@ -11,6 +11,9 @@
 </template>
 
 <script>
+// import axios from 'axios'
+// import csvToJson from 'convert-csv-to-json'
+
 export default {
   name: 'FilePicker',
   props: {
@@ -32,27 +35,24 @@ export default {
   },
   methods: {
     upload (file) {
+      console.log(file)
+      // const json = csvToJson.getJsonFromCsv(file)
+      // console.log(json)
       this.$emit('input', file)
       // Use this as an example for handling file uploads
-      // let formData = new FormData()
+      // const formData = new FormData()
       // formData.append('file', file)
-
-      // axios
-      //   .post(window.routeMediaStore, formData, {
-      //     headers: {
-      //       'Content-Type': 'multipart/form-data'
-      //     },
-      //     onUploadProgress: this.progressEvent
-      //   })
-      //   .then(r => {
-      //
-      //   })
-      //   .catch(err => {
-      //     this.$buefy.toast.open({
-      //       message: `Error: ${err.message}`,
-      //       type: 'is-danger'
-      //     })
-      //   })
+      // console.log(formData.get('file'))
+      /* axios.post('http://localhost:8090/api/data/outils/file', formData, { headers: { 'Content-Type': 'multipart/form-data' }, onUploadProgress: this.progressEvent })
+        .then(r => {
+          console.log('resultats: ' + r)
+        })
+        .catch(err => {
+          this.$buefy.toast.open({
+            message: `Error: ${err.message}`,
+            type: 'is-danger'
+          })
+        }) */
     },
     progressEvent (progressEvent) {
       this.uploadPercent = Math.round((progressEvent.loaded * 100) / progressEvent.total)
