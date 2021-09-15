@@ -36,35 +36,16 @@
                   </b-tab-item>
                   <b-tab-item label="Graphes" icon="chart-timeline-variant">
                     <tiles>
-                      <b-button class="is-info" @click="Activation(EnsSocData.chartData)" expanded>Etudiants par</b-button>
-                      <b-button class="is-info" @click="Activation(EtdSexData.chartData)" expanded>Etudiants par sex</b-button>
-                      <b-button class="is-info" @click="Activation(SallesData.chartData)" expanded>Etudiants par</b-button>
-                      <b-button class="is-info" @click="Activation(SallesData.chartData)" expanded>Etudiants par</b-button>
-                      <!--<b-collapse class="tile is-child" style="width: 100%" :open="false" aria-id="contentIdForA11y1">
-                          <template #trigger>
-                              <b-button
-                                  label="Graphe des étudiants par sex"
-                                  type="is-primary"
-                                  aria-controls="contentIdForA11y1" />
-                          </template>
-                          <div class="notification">
-                              <div class="content">
-                                  <d-chart :chart-data="this.EnsSocData.chartData"></d-chart>
-                              </div>
-                          </div>
-                      </b-collapse>-->
-                    </tiles>
-                    <tiles>
-                      <b-button class="is-info" @click="Activation(EnsSocData.chartData)" expanded>Enseignants par situation sociale</b-button>
+                      <b-button class="is-info" @click="Activation(FormDepData.chartData)" expanded>Formations par département</b-button>
                       <b-button class="is-info" @click="Activation(EnsSexData.chartData)" expanded>Enseignants par sex</b-button>
                       <b-button class="is-info" @click="Activation(EnsGrdData.chartData)" expanded>Enseignants par grade</b-button>
                       <b-button class="is-info" @click="Activation(EnsSpeData.chartData)" expanded>Enseignants par spécialité</b-button>
                     </tiles>
                     <tiles>
-                      <b-button class="is-info" @click="Activation(EnsSocData.chartData)" expanded>Partenaires par type</b-button>
-                      <b-button class="is-info" @click="Activation(EnsSexData.chartData)" expanded>Enseignants par sex</b-button>
-                      <b-button class="is-info" @click="Activation(EnsGrdData.chartData)" expanded>Enseignants par grade</b-button>
-                      <b-button class="is-info" @click="Activation(EnsSpeData.chartData)" expanded>Enseignants par spécialité</b-button>
+                      <b-button class="is-info" @click="Activation(ParTypData.chartData)" expanded>Partenaires par type</b-button>
+                      <b-button class="is-info" @click="Activation(ActTypData.chartData)" expanded>Activités par type</b-button>
+                      <b-button class="is-info" @click="Activation(ActClbData.chartData)" expanded>Activités par club</b-button>
+                      <b-button class="is-info" @click="Activation(ClbTypData.chartData)" expanded>Club par type</b-button>
                     </tiles>
                   </b-tab-item>
               </b-tabs>
@@ -103,16 +84,28 @@
                   </b-tab-item>
                   <b-tab-item label="Graphes" icon="chart-timeline-variant">
                     <tiles>
-                      <b-button class="is-info" @click="Activation(EnsSocData.chartData)" expanded>Enseignants par situation sociale</b-button>
-                      <b-button class="is-info" @click="Activation(EnsSexData.chartData)" expanded>Enseignants par sex</b-button>
-                      <b-button class="is-info" @click="Activation(EnsGrdData.chartData)" expanded>Enseignants par grade</b-button>
-                      <b-button class="is-info" @click="Activation(EnsSpeData.chartData)" expanded>Enseignants par spécialité</b-button>
+                      <b-button class="is-info" @click="Activation(EtdResData.chartData)" expanded>Etudiants par résidanat</b-button>
+                      <b-button class="is-info" @click="Activation(EtdSexData.chartData)" expanded>Etudiants par sex</b-button>
+                      <b-button class="is-info" @click="Activation(EnsGrdData.chartData)" expanded>Etudiants par adresse</b-button>
+                      <b-button class="is-info" @click="Activation(EnsSpeData.chartData)" expanded>Etudiants par départemeent</b-button>
                     </tiles>
                     <tiles>
                       <b-button class="is-info" @click="Activation(EnsSocData.chartData)" expanded>Enseignants par situation sociale</b-button>
                       <b-button class="is-info" @click="Activation(EnsSexData.chartData)" expanded>Enseignants par sex</b-button>
                       <b-button class="is-info" @click="Activation(EnsGrdData.chartData)" expanded>Enseignants par grade</b-button>
                       <b-button class="is-info" @click="Activation(EnsSpeData.chartData)" expanded>Enseignants par spécialité</b-button>
+                    </tiles>
+                    <tiles>
+                      <b-button class="is-info" @click="Activation(AdmDipData.chartData)" expanded>Administratifs par diplome</b-button>
+                      <b-button class="is-info" @click="Activation(AdmSexData.chartData)" expanded>Administratifs par sex</b-button>
+                      <b-button class="is-info" @click="Activation(AdmDepData.chartData)" expanded>Administratifs par département</b-button>
+                      <b-button class="is-info" @click="Activation(AdmRolData.chartData)" expanded>Administratifs par role</b-button>
+                    </tiles>
+                    <tiles>
+                      <b-button class="is-info" @click="Activation(EnsSocData.chartData)" expanded>Doctorants par </b-button>
+                      <b-button class="is-info" @click="Activation(DocSexData.chartData)" expanded>Doctorants par sex</b-button>
+                      <b-button class="is-info" @click="Activation(DocDepData.chartData)" expanded>Doctorants par département</b-button>
+                      <b-button class="is-info" @click="Activation(EnsSpeData.chartData)" expanded>Doctorants par spécialité</b-button>
                     </tiles>
                   </b-tab-item>
               </b-tabs>
@@ -210,7 +203,7 @@
                                 <d-chart :chart-data="this.SallesData.chartData"></d-chart>
                               </card-component>-->
                               <b-button class="is-info" @click="Activation(SallesData.chartData)" expanded>Salles par type</b-button>
-                              <b-button class="is-info" @click="Activation(SallesData.chartData)" expanded>Salles par département</b-button>
+                              <b-button class="is-info" @click="Activation(SalDepData.chartData)" expanded>Salles par département</b-button>
                             </tiles>
                           </b-tab-item>
                         </b-tabs>
@@ -222,7 +215,7 @@
                               {{ totalOut }}
                           </b-tab-item>
                           <b-tab-item label="Graphes" icon="chart-timeline-variant">
-                            <b-button class="is-info" @click="Activation(SallesData.chartData)">Outils par type</b-button>
+                            <b-button class="is-info" @click="Activation(OutTypData.chartData)">Outils par type</b-button>
                           </b-tab-item>
                         </b-tabs>
                       </b-tab-item>
@@ -302,6 +295,45 @@ export default {
       EnsSocData: {
         chartData: null
       },
+      EtdResData: {
+        chartData: null
+      },
+      ParTypData: {
+        chartData: null
+      },
+      ActTypData: {
+        chartData: null
+      },
+      ActClbData: {
+        chartData: null
+      },
+      ClbTypData: {
+        chartData: null
+      },
+      FormDepData: {
+        chartData: null
+      },
+      SalDepData: {
+        chartData: null
+      },
+      OutTypData: {
+        chartData: null
+      },
+      AdmDepData: {
+        chartData: null
+      },
+      AdmDipData: {
+        chartData: null
+      },
+      AdmSexData: {
+        chartData: null
+      },
+      DocSexData: {
+        chartData: null
+      },
+      DocDepData: {
+        chartData: null
+      },
       totalEtd: 0,
       totalPar: 0,
       totalEns: 0,
@@ -328,8 +360,15 @@ export default {
     this.$store.state.isFooterBarVisible = true
     this.$store.state.isAsideVisible = true
     this.fillSallesData()
-    this.fillEtdSexData()
+    this.fillEtdData()
     this.fillEnsData()
+    this.fillParData()
+    this.fillFormData()
+    this.fillActData()
+    this.fillClbData()
+    this.fillOutData()
+    this.fillAdmData()
+    this.fillDocData()
   },
   async created () {
     // etudiants count
@@ -612,6 +651,29 @@ export default {
             if (r.data.results.length > this.perPage) {
               this.paginated = true
             }
+            /* Salles par département */
+            const test = r.data.results
+            var tablData = []
+            var tableL = []
+            var tableID = []
+            axios.get('http://localhost:8090/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
+              .then(r => {
+                for (let i = 0; i < r.data.results.length; i++) {
+                  tableL.push(r.data.results[i].nom)
+                  tableID.push(r.data.results[i].departementId.toString())
+                  tablData.push(test.filter(obj => obj.departementDepartementId === r.data.results[i].departementId).length)
+                }
+              })
+            this.SalDepData.chartData = {
+              labels: tableL,
+              datasets: [
+                {
+                  label: 'Data One',
+                  // backgroundColor: ['#0078D7', '#EA005E', '#EB505E'],
+                  data: tablData
+                }
+              ]
+            }
             // this.$store.state.salles = r.data.results
             this.salles.data = this.salles.dataset = r.data.results
             this.sallesAmphi = r.data.results.filter(obj => obj.type === 'Amphi')
@@ -639,7 +701,7 @@ export default {
           })
         })
     },
-    fillEtdSexData () {
+    fillEtdData () {
       axios
         .get('http://localhost:8090/api/data/etudiants', { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
@@ -658,6 +720,19 @@ export default {
                   label: 'Data One',
                   backgroundColor: ['#0078D7', '#EA005E'],
                   data: [this.Homme.length, this.Femme.length]
+                }
+              ]
+            }
+            /* Etudiants par résidanat */
+            this.Oui = r.data.results.filter(obj => obj.intern === 'oui')
+            this.Non = r.data.results.filter(obj => obj.intern === 'no')
+            this.EtdResData.chartData = {
+              labels: ['Oui', 'Non'],
+              datasets: [
+                {
+                  label: 'Data One',
+                  backgroundColor: ['#0078D7', '#EA005E'],
+                  data: [this.Oui.length, this.Non.length]
                 }
               ]
             }
@@ -749,6 +824,349 @@ export default {
           })
         })
     },
+    fillParData () {
+      axios
+        .get('http://localhost:8090/api/data/partenaires', { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .then(r => {
+          this.isLoading = false
+          if (r.data && r.data.results) {
+            if (r.data.results.length > this.perPage) {
+              this.paginated = true
+            }
+            /* Partenaires par type */
+            this.ped = r.data.results.filter(obj => obj.type === 'Pédagogique')
+            this.soc = r.data.results.filter(obj => obj.type === 'SocioEconomique')
+            this.ParTypData.chartData = {
+              labels: ['Pédagogique', 'SocioEconomique'],
+              datasets: [
+                {
+                  label: 'Data One',
+                  backgroundColor: ['#0078D7', '#EA005E'],
+                  data: [this.ped.length, this.soc.length]
+                }
+              ]
+            }
+          }
+        })
+        .catch(e => {
+          this.isLoading = false
+          this.$buefy.toast.open({
+            message: `Error: ${e.message}`,
+            type: 'is-danger'
+          })
+        })
+    },
+    fillActData () {
+      axios
+        .get('http://localhost:8090/api/data/activites', { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .then(r => {
+          this.isLoading = false
+          if (r.data && r.data.results) {
+            if (r.data.results.length > this.perPage) {
+              this.paginated = true
+            }
+            /* Activités par club */
+            const test = r.data.results
+            var tablData = []
+            var tableL = []
+            var tableID = []
+            axios.get('http://localhost:8090/api/data/clubs', { headers: { 'x-access-token': this.$session.get('jwt') } })
+              .then(r => {
+                for (let i = 0; i < r.data.results.length; i++) {
+                  tableL.push(r.data.results[i].nom)
+                  tableID.push(r.data.results[i].clubId.toString())
+                  tablData.push(test.filter(obj => obj.clubClubId === r.data.results[i].clubId).length)
+                }
+              })
+            this.ActClbData.chartData = {
+              labels: tableL,
+              datasets: [
+                {
+                  label: 'Data One',
+                  // backgroundColor: ['#0078D7', '#EA005E', '#EB505E'],
+                  data: tablData
+                }
+              ]
+            }
+            /* Activités par type */
+            this.cul = r.data.results.filter(obj => obj.type === 'culturel')
+            this.sci = r.data.results.filter(obj => obj.type === 'scientifique')
+            this.aut = r.data.results.filter(obj => obj.type === 'autre')
+            this.ActTypData.chartData = {
+              labels: ['Culturel', 'Scientifique', 'Autre'],
+              datasets: [
+                {
+                  label: 'Data One',
+                  data: [this.cul.length, this.sci.length, this.aut.length]
+                }
+              ]
+            }
+          }
+        })
+        .catch(e => {
+          this.isLoading = false
+          this.$buefy.toast.open({
+            message: `Error: ${e.message}`,
+            type: 'is-danger'
+          })
+        })
+    },
+    fillAdmData () {
+      axios
+        .get('http://localhost:8090/api/data/administratifs', { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .then(r => {
+          this.isLoading = false
+          if (r.data && r.data.data) {
+            if (r.data.data.length > this.perPage) {
+              this.paginated = true
+            }
+            /* Administratifs par departement */
+            const test = r.data.data
+            var tablData = []
+            var tableL = []
+            var tableID = []
+            axios.get('http://localhost:8090/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
+              .then(r => {
+                for (let i = 0; i < r.data.results.length; i++) {
+                  tableL.push(r.data.results[i].nom)
+                  tableID.push(r.data.results[i].departementId.toString())
+                  tablData.push(test.filter(obj => obj.departementDepartementId === r.data.results[i].departementId).length)
+                }
+              })
+            this.AdmDepData.chartData = {
+              labels: tableL,
+              datasets: [
+                {
+                  label: 'Data One',
+                  // backgroundColor: ['#0078D7', '#EA005E', '#EB505E'],
+                  data: tablData
+                }
+              ]
+            }
+            /* Administratifs par sex */
+            this.H = test.filter(obj => obj.sex === 'Homme')
+            this.F = test.filter(obj => obj.sex === 'Femme')
+            this.AdmSexData.chartData = {
+              labels: ['Homme', 'Femme'],
+              datasets: [
+                {
+                  label: 'Data One',
+                  backgroundColor: ['#0078D7', '#EA005E'],
+                  data: [this.H.length, this.F.length]
+                }
+              ]
+            }
+            /* Administratifs par diplome */
+            this.SansDip = test.filter(obj => obj.diplome === 'sans diplôme')
+            this.BAC = test.filter(obj => obj.diplome === 'BAC')
+            this.TS = test.filter(obj => obj.diplome === 'TS')
+            this.BTS = test.filter(obj => obj.diplome === 'BTS')
+            this.Lic = test.filter(obj => obj.diplome === 'Licence')
+            this.M1 = test.filter(obj => obj.diplome === 'Master 1')
+            this.M2 = test.filter(obj => obj.diplome === 'Master 2')
+            this.Doct = test.filter(obj => obj.diplome === 'Doctorat')
+            this.Prof = test.filter(obj => obj.diplome === 'Professeur')
+            this.Autr = test.filter(obj => obj.diplome === 'Autres')
+            this.AdmDipData.chartData = {
+              labels: ['Sans diplôme', 'BAC', 'TS', 'BTS', 'Licence', 'Master 1', 'Master 2', 'Doctorat', 'Professeur', 'Autres'],
+              datasets: [
+                {
+                  label: 'Data One',
+                  data: [this.SansDip.length, this.BAC.length, this.TS.length, this.BTS.length, this.Lic.length, this.M1.length, this.M2.length, this.Doct.length, this.Prof.length, this.Autr.length]
+                }
+              ]
+            }
+          }
+        })
+        .catch(e => {
+          this.isLoading = false
+          console.log(e)
+          this.$buefy.toast.open({
+            message: `Error: ${e.message}`,
+            type: 'is-danger'
+          })
+        })
+    },
+    fillDocData () {
+      axios
+        .get('http://localhost:8090/api/data/doctorants', { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .then(r => {
+          this.isLoading = false
+          if (r.data && r.data.results) {
+            if (r.data.results.length > this.perPage) {
+              this.paginated = true
+            }
+            /* Doctorants par departement */
+            const test = r.data.results
+            var tablData = []
+            var tableL = []
+            var tableID = []
+            axios.get('http://localhost:8090/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
+              .then(r => {
+                for (let i = 0; i < r.data.results.length; i++) {
+                  tableL.push(r.data.results[i].nom)
+                  tableID.push(r.data.results[i].departementId.toString())
+                  tablData.push(test.filter(obj => obj.departementDepartementId === r.data.results[i].departementId).length)
+                }
+              })
+            this.DocDepData.chartData = {
+              labels: tableL,
+              datasets: [
+                {
+                  label: 'Data One',
+                  // backgroundColor: ['#0078D7', '#EA005E', '#EB505E'],
+                  data: tablData
+                }
+              ]
+            }
+            /* Doctorants par sex */
+            this.H = test.filter(obj => obj.sex === 'Homme')
+            this.F = test.filter(obj => obj.sex === 'Femme')
+            this.DocSexData.chartData = {
+              labels: ['Homme', 'Femme'],
+              datasets: [
+                {
+                  label: 'Data One',
+                  backgroundColor: ['#0078D7', '#EA005E'],
+                  data: [this.H.length, this.F.length]
+                }
+              ]
+            }
+            /* Administratifs par diplome */
+            /* .SansDip = test.filter(obj => obj.diplome === 'sans diplôme')
+            this.BAC = test.filter(obj => obj.diplome === 'BAC')
+            this.TS = test.filter(obj => obj.diplome === 'TS')
+            this.BTS = test.filter(obj => obj.diplome === 'BTS')
+            this.Lic = test.filter(obj => obj.diplome === 'Licence')
+            this.M1 = test.filter(obj => obj.diplome === 'Master 1')
+            this.M2 = test.filter(obj => obj.diplome === 'Master 2')
+            this.Doct = test.filter(obj => obj.diplome === 'Doctorat')
+            this.Prof = test.filter(obj => obj.diplome === 'Professeur')
+            this.Autr = test.filter(obj => obj.diplome === 'Autres')
+            this.AdmDipData.chartData = {
+              labels: ['Sans diplôme', 'BAC', 'TS', 'BTS', 'Licence', 'Master 1', 'Master 2', 'Doctorat', 'Professeur', 'Autres'],
+              datasets: [
+                {
+                  label: 'Data One',
+                  data: [this.SansDip.length, this.BAC.length, this.TS.length, this.BTS.length, this.Lic.length, this.M1.length, this.M2.length, this.Doct.length, this.Prof.length, this.Autr.length]
+                }
+              ]
+            } */
+          }
+        })
+        .catch(e => {
+          this.isLoading = false
+          console.log(e)
+          this.$buefy.toast.open({
+            message: `Error: ${e.message}`,
+            type: 'is-danger'
+          })
+        })
+    },
+    fillClbData () {
+      axios
+        .get('http://localhost:8090/api/data/clubs', { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .then(r => {
+          this.isLoading = false
+          if (r.data && r.data.results) {
+            if (r.data.results.length > this.perPage) {
+              this.paginated = true
+            }
+            /* Partenaires par type */
+            this.cul = r.data.results.filter(obj => obj.type === 'culturel')
+            this.sci = r.data.results.filter(obj => obj.type === 'scientifique')
+            this.scicul = r.data.results.filter(obj => obj.type === 'Scietifique et culturel')
+            this.aut = r.data.results.filter(obj => obj.type === 'autre')
+            this.ClbTypData.chartData = {
+              labels: ['Culturel', 'Scientifique', 'Scietifique et culturel', 'Autre'],
+              datasets: [
+                {
+                  label: 'Data One',
+                  data: [this.cul.length, this.sci.length, this.scicul.length, this.aut.length]
+                }
+              ]
+            }
+          }
+        })
+        .catch(e => {
+          this.isLoading = false
+          this.$buefy.toast.open({
+            message: `Error: ${e.message}`,
+            type: 'is-danger'
+          })
+        })
+    },
+    fillOutData () {
+      axios
+        .get('http://localhost:8090/api/data/outils', { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .then(r => {
+          this.isLoading = false
+          if (r.data && r.data.results) {
+            if (r.data.results.length > this.perPage) {
+              this.paginated = true
+            }
+            /* Partenaires par type */
+            this.meubles = r.data.results.filter(obj => obj.type === 'Meubles')
+            this.electro = r.data.results.filter(obj => obj.type === 'Électronique')
+            this.autre = r.data.results.filter(obj => obj.type === 'Autres')
+            this.OutTypData.chartData = {
+              labels: ['Meubles', 'Électronique', 'Autres'],
+              datasets: [
+                {
+                  label: 'Data One',
+                  data: [this.meubles.length, this.electro.length, this.autre.length]
+                }
+              ]
+            }
+          }
+        })
+        .catch(e => {
+          this.isLoading = false
+          this.$buefy.toast.open({
+            message: `Error: ${e.message}`,
+            type: 'is-danger'
+          })
+        })
+    },
+    fillFormData () {
+      axios
+        .get('http://localhost:8090/api/data/formations', { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .then(r => {
+          this.isLoading = false
+          if (r.data && r.data.results) {
+            const test = r.data.results
+            var tablData = []
+            var tableL = []
+            var tableID = []
+            axios.get('http://localhost:8090/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
+              .then(r => {
+                for (let i = 0; i < r.data.results.length; i++) {
+                  tableL.push(r.data.results[i].nom)
+                  tableID.push(r.data.results[i].departementId.toString())
+                  tablData.push(test.filter(obj => obj.departementDepartementId === r.data.results[i].departementId).length)
+                }
+              })
+            /* Formations par département */
+            this.FormDepData.chartData = {
+              labels: tableL,
+              datasets: [
+                {
+                  label: 'Data One',
+                  // backgroundColor: ['#0078D7', '#EA005E', '#EB505E'],
+                  data: tablData
+                }
+              ]
+            }
+          }
+        })
+        .catch(e => {
+          this.isLoading = false
+          this.$buefy.toast.open({
+            message: `Error: ${e.message}`,
+            type: 'is-danger'
+          })
+        })
+    },
     simplify (str) {
       var result = ''
       var data = str.split('/')
@@ -778,8 +1196,8 @@ export default {
       do {
         a = 1 / i
         b = Math.abs(a - x)
-        console.log('b :' + b)
-        console.log('init :' + init)
+        // console.log('b :' + b)
+        // console.log('init :' + init)
         if (init >= b) {
           res = i
           init = b

@@ -8,7 +8,7 @@
       </router-link>
     </hero-bar>
     <section class="section is-main-section">
-      <!--<import-component/>-->
+      <import-component link="http://localhost:8090/api/data/salles/file"/>
       <card-component title="Nouvelle salle" icon="ballot">
         <form @submit.prevent="submit">
           <b-field label="Départment" horizontal>
@@ -51,12 +51,12 @@
 import TitleBar from '@/components/TitleBar'
 import CardComponent from '@/components/CardComponent'
 import HeroBar from '@/components/HeroBar'
-// import ImportComponent from '@/components/ImportComponent'
+import ImportComponent from '@/components/Imports/ImportSalle'
 import axios from 'axios'
 
 export default {
   name: 'newSalle',
-  components: { HeroBar, CardComponent, TitleBar },
+  components: { HeroBar, CardComponent, TitleBar, ImportComponent },
   data () {
     return {
       isLoading: false,

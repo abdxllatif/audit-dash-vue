@@ -1,6 +1,9 @@
 <template>
   <div>
     <title-bar :title-stack="titleStack"/>
+    <hero-bar>
+      <b-button class="is-info" style="float: right" v-on:click="reload">Actualiser l'entrepot</b-button>
+    </hero-bar>
     <section class="section is-main-section">
         <tiles>
             <card-component title="Liste des attributs" class="tile is-child">
@@ -43,10 +46,11 @@ import GroupingBy from '../../components/Query/GroupingBy.vue'
 import AttCh from '../../components/Query/AttCh.vue'
 import SimpleAtt from '../../components/Query/SimpleAtt.vue'
 import axios from 'axios'
+import HeroBar from '@/components/HeroBar'
 
 export default {
   name: 'QueryCreator',
-  components: { TitleBar, Tiles, CardComponent, ListAtt, GroupingBy, AttCh, SimpleAtt },
+  components: { TitleBar, Tiles, CardComponent, ListAtt, GroupingBy, AttCh, SimpleAtt, HeroBar },
   computed: {
     titleStack () {
       return [
@@ -69,6 +73,15 @@ export default {
     }
   },
   methods: {
+    reload: function () {
+      axios.post('http://localhost:5000/', { headers: { 'x-access-token': this.$session.get('jwt') } })
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
     show: function () {
       const jsonr = {
         tables: [],

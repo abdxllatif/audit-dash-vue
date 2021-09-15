@@ -7,12 +7,12 @@
     <section class="section is-main-section">
       <tiles>
           <tiles class="tile is-child">
-            <card-widget class="tile is-child" type="is-primary" icon="account-multiple" :number="2" label="Départements"/>
-            <card-widget class="tile is-child" type="is-primary" icon="account-multiple" :number="512" label="Etudiants"/>
+            <card-widget class="tile is-child" type="is-primary" icon="account-multiple" :number="totalDep" label="Départements"/>
+            <card-widget class="tile is-child" type="is-primary" icon="account-multiple" :number="totalEtd" label="Etudiants"/>
           </tiles>
           <tiles class="tile is-child">
-            <card-widget class="tile is-child" type="is-primary" icon="account-multiple" :number="3" label="Formations"/>
-            <card-widget class="tile is-child" type="is-primary" icon="account-multiple" :number="45" label="Enseignants"/>
+            <card-widget class="tile is-child" type="is-primary" icon="account-multiple" :number="totalForm" label="Formations"/>
+            <card-widget class="tile is-child" type="is-primary" icon="account-multiple" :number="this.totalEns" label="Enseignants"/>
           </tiles>
           <span>
               <b-datepicker
@@ -32,16 +32,6 @@
               <apexchart id="chart" width="100%" type="pie" :options="this.options" :series="this.data"></apexchart>
         </card-component>
       </tiles>
-      <card-component title="Performance" @header-icon-click="fillChartData" icon="finance" header-icon="reload">
-        <div v-if="defaultChart.chartData" class="chart-area">
-          <line-chart style="height: 100%"
-                      ref="bigChart"
-                      chart-id="big-line-chart"
-                      :chart-data="defaultChart.chartData"
-                      :extra-options="defaultChart.extraOptions">
-          </line-chart>
-        </div>
-      </card-component>
     </section>
   </div>
 </template>
@@ -55,6 +45,7 @@ import CardWidget from '@/components/CardWidget'
 import CardComponent from '@/components/CardComponent'
 import LineChart from '@/components/Charts/LineChart'
 import VueApexCharts from 'vue-apexcharts'
+import axios from 'axios'
 
 /* eslint-disable */
 export default {
@@ -128,7 +119,11 @@ export default {
           type: 'is-info'
         }
       ],
-      bars: false
+      bars: false,
+      totalEtd: 0,
+      totalEns: 0,
+      totalDep: 0,
+      totalForm: 0
     }
   },
   computed: {
@@ -139,73 +134,40 @@ export default {
       ]
     }
   },
-  mounted () {
+  async mounted () {
+    await axios.post('http://localhost:8090/api/stats/count', {
+      table: 'etudiants'
+    }, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .then(response => {
+        console.log(response.data.count)
+        this.totalEtd = response.data.count
+      })
+    await axios.post('http://localhost:8090/api/stats/count', {
+      table: 'enseignants'
+    }, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .then(response => {
+        console.log(response.data.count)
+        this.totalEns = response.data.count
+      })
+    await axios.post('http://localhost:8090/api/stats/count', {
+      table: 'departements'
+    }, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .then(response => {
+        console.log(response.data.count)
+        this.totalDep = response.data.count
+      })
+    await axios.post('http://localhost:8090/api/stats/count', {
+      table: 'formations'
+    }, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      .then(response => {
+        console.log(response.data.count)
+        this.totalForm = response.data.count
+      })
     this.$store.state.isFooterBarVisible = true
     this.$store.state.isAsideVisible = true
     this.fillChartData()
   },
   methods: {
-    randomChartData (n) {
-      const data = []
-
-      for (let i = 0; i < n; i++) {
-        data.push(Math.round(Math.random() * 200))
-      }
-
-      return data
-    },
-    fillChartData () {
-      this.defaultChart.chartData = {
-        datasets: [
-          {
-            fill: false,
-            borderColor: chartConfig.chartColors.default.primary,
-            borderWidth: 2,
-            borderDash: [],
-            borderDashOffset: 0.0,
-            pointBackgroundColor: chartConfig.chartColors.default.primary,
-            pointBorderColor: 'rgba(255,255,255,0)',
-            pointHoverBackgroundColor: chartConfig.chartColors.default.primary,
-            pointBorderWidth: 20,
-            pointHoverRadius: 4,
-            pointHoverBorderWidth: 15,
-            pointRadius: 4,
-            data: this.randomChartData(9)
-          },
-          {
-            fill: false,
-            borderColor: chartConfig.chartColors.default.info,
-            borderWidth: 2,
-            borderDash: [],
-            borderDashOffset: 0.0,
-            pointBackgroundColor: chartConfig.chartColors.default.info,
-            pointBorderColor: 'rgba(255,255,255,0)',
-            pointHoverBackgroundColor: chartConfig.chartColors.default.info,
-            pointBorderWidth: 20,
-            pointHoverRadius: 4,
-            pointHoverBorderWidth: 15,
-            pointRadius: 4,
-            data: this.randomChartData(9)
-          },
-          {
-            fill: false,
-            borderColor: chartConfig.chartColors.default.danger,
-            borderWidth: 2,
-            borderDash: [],
-            borderDashOffset: 0.0,
-            pointBackgroundColor: chartConfig.chartColors.default.danger,
-            pointBorderColor: 'rgba(255,255,255,0)',
-            pointHoverBackgroundColor: chartConfig.chartColors.default.danger,
-            pointBorderWidth: 20,
-            pointHoverRadius: 4,
-            pointHoverBorderWidth: 15,
-            pointRadius: 4,
-            data: this.randomChartData(9)
-          }
-        ],
-        labels: ['01', '02', '03', '04', '05', '06', '07', '08', '09']
-      }
-    }
   }
 }
 </script>
