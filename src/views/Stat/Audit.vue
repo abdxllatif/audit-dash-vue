@@ -86,8 +86,8 @@
                     <tiles>
                       <b-button class="is-info" @click="Activation(EtdResData.chartData)" expanded>Etudiants par résidanat</b-button>
                       <b-button class="is-info" @click="Activation(EtdSexData.chartData)" expanded>Etudiants par sex</b-button>
-                      <b-button class="is-info" @click="Activation(EnsGrdData.chartData)" expanded>Etudiants par adresse</b-button>
-                      <b-button class="is-info" @click="Activation(EnsSpeData.chartData)" expanded>Etudiants par départemeent</b-button>
+                      <!--<b-button class="is-info" @click="Activation(EnsGrdData.chartData)" expanded>Etudiants par adresse</b-button>
+                      <b-button class="is-info" @click="Activation(EnsSpeData.chartData)" expanded>Etudiants par départemeent</b-button>-->
                     </tiles>
                     <tiles>
                       <b-button class="is-info" @click="Activation(EnsSocData.chartData)" expanded>Enseignants par situation sociale</b-button>
@@ -99,13 +99,13 @@
                       <b-button class="is-info" @click="Activation(AdmDipData.chartData)" expanded>Administratifs par diplome</b-button>
                       <b-button class="is-info" @click="Activation(AdmSexData.chartData)" expanded>Administratifs par sex</b-button>
                       <b-button class="is-info" @click="Activation(AdmDepData.chartData)" expanded>Administratifs par département</b-button>
-                      <b-button class="is-info" @click="Activation(AdmRolData.chartData)" expanded>Administratifs par role</b-button>
+                      <!--<b-button class="is-info" @click="Activation(AdmRolData.chartData)" expanded>Administratifs par role</b-button>-->
                     </tiles>
                     <tiles>
-                      <b-button class="is-info" @click="Activation(EnsSocData.chartData)" expanded>Doctorants par </b-button>
+                      <!--<b-button class="is-info" @click="Activation(EnsSocData.chartData)" expanded>Doctorants par </b-button>-->
                       <b-button class="is-info" @click="Activation(DocSexData.chartData)" expanded>Doctorants par sex</b-button>
-                      <b-button class="is-info" @click="Activation(DocDepData.chartData)" expanded>Doctorants par département</b-button>
-                      <b-button class="is-info" @click="Activation(EnsSpeData.chartData)" expanded>Doctorants par spécialité</b-button>
+                      <!--<b-button class="is-info" @click="Activation(DocDepData.chartData)" expanded>Doctorants par département</b-button>
+                      <b-button class="is-info" @click="Activation(EnsSpeData.chartData)" expanded>Doctorants par spécialité</b-button>-->
                     </tiles>
                   </b-tab-item>
               </b-tabs>

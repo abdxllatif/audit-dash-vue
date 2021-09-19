@@ -38,12 +38,6 @@
                 <par-table :data-url="`http://localhost:8090/api/data/formations/partenaires/`" :id="this.id"/>
               </card-component>
             </b-tab-item>
-            <b-tab-item label="Enseignants">
-              <card-component v-if="isProfileExists" title="Partenaires" icon="account" class="tile is-child" vers-title="Nouveau" todo="ModalNewPartenaire" @doit="FormParModal">
-                <ens-table :data-url="`http://localhost:8090/api/data/formations/partenaires/`" :id="this.id"/>
-              </card-component>
-            </b-tab-item>
-            <b-tab-item label="..."></b-tab-item>
       </b-tabs>
     </section>
   </div>
@@ -57,14 +51,14 @@ import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 import CardComponent from '@/components/CardComponent'
 import ParTable from '@/components/TableWhere/ParByFormTable'
-import EnsTable from '@/components/TableWhere/EnsByFormTable'
+// import EnsTable from '@/components/TableWhere/EnsByFormTable'
 // import EtudiantTable from '@/components/Tables/EtudiantTable.vue'
 import NiveauxTable from '@/components/Tables/NiveauxTable.vue'
 import ModalFormPar from '@/components/ModalBox/ModalFormPar.vue'
 
 export default {
   name: 'FormationDetail',
-  components: { CardComponent, HeroBar, TitleBar, ParTable, NiveauxTable, ModalFormPar, EnsTable },
+  components: { CardComponent, HeroBar, TitleBar, ParTable, NiveauxTable, ModalFormPar },
   props: {
     id: {
       default: null

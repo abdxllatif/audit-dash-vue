@@ -11,13 +11,6 @@
       <import-component link="http://localhost:8090/api/data/etudiants/file"/>
       <card-component title="Nouveau étudiant" icon="ballot">
         <form @submit.prevent="submit">
-          <b-field label="Départment" horizontal>
-            <b-select placeholder="Selectionne un départment" v-model="form.department" required>
-              <option v-for="(department, index) in departments" :key="index" :value="department">
-                {{ department.nom }}
-              </option>
-            </b-select>
-          </b-field>
           <b-field label="Nom et prénom" horizontal>
             <b-field>
               <b-input icon="account" v-model="form.nom" placeholder="Nom" name="nom" required />
@@ -47,17 +40,6 @@
                 {{ wilaya.code + ': ' + wilaya.name }}
               </option>
             </b-select>
-          </b-field>
-          <b-field label="Diplome" horizontal>
-            <b-field>
-              <b-input v-model="form.diplome" placeholder="Diplome" name="Diplome" required />
-            </b-field>
-            <b-field>
-              <b-input v-model="form.specialite" placeholder="Spécialité" name="Spécialité" required />
-            </b-field>
-          </b-field>
-          <b-field label="Role" horizontal>
-              <b-input v-model="form.role" placeholder="Role" name="Role" required />
           </b-field>
           <b-field horizontal>
             <b-field grouped>
@@ -100,15 +82,6 @@ export default {
     }
   },
   created () {
-    axios.get('http://localhost:8090/api/data/departements', { headers: { 'x-access-token': this.$session.get('jwt') } })
-      .then((response) => {
-        this.listings = response.data
-        this.$session.set('depTable', this.listings.results)
-        this.departments = this.listings.results
-      })
-      .catch((error) => {
-        console.log(error)
-      })
   },
   computed: {
     titleStack () {
@@ -121,26 +94,29 @@ export default {
   methods: {
     submit () {
       this.isLoading = true
-      axios.post('http://localhost:8090/api/data/formations', {
+      axios.post('http://localhost:8090/api/data/etudiants', {
         nom: this.form.titre,
-        description: this.form.description,
-        depId: this.form.department.departementId,
+        prenom: this.form.description,
+        data_naissance: this.form.dateNaissance,
+        lieu_naissance: this.form.LieuNaissance,
+        adresse: this.form.adresse,
+        Sex: this.form.sex,
         admin: this.$store.state.userEmail
       }, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(response => {
           this.$buefy.snackbar.open({
-            message: 'la formation ' + this.form.name + ' ajouté',
+            message: 'étudiant ' + this.form.nom + ' ajouté',
             queue: false
           })
         })
         .catch(e => {
           this.errorMessage = e.message
           console.log('There was an error!', e)
-          this.$buefy.snackbar.open({
+          /* this.$buefy.snackbar.open({
             type: 'is-warning',
             message: "Erreur d'insertion",
             queue: false
-          })
+          }) */
         })
       setTimeout(() => {
         this.isLoading = false

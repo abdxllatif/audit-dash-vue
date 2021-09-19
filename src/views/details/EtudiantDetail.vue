@@ -32,7 +32,7 @@
                   <b-input v-if="form.intern=='no'" :value="'Non'" custom-class="is-static" readonly/>
                   <b-input v-if="form.intern=='oui'" :value="'Oui'" custom-class="is-static" readonly/>
                 </b-field>
-                <b-field label="Niveau" horizontal>
+                <!--<b-field label="Niveau" horizontal>
                   <b-input :value="dep" custom-class="is-static" readonly/>
                 </b-field>
                 <b-field label="Formation" horizontal>
@@ -40,12 +40,11 @@
                 </b-field>
                 <b-field label="Département" horizontal>
                   <b-input :value="dep" custom-class="is-static" readonly/>
-                </b-field>
+                </b-field>-->
             </b-tab-item>
             <b-tab-item label="Notes">
               <delib-of-etd-table :etdid='form.etudiantId'></delib-of-etd-table>
             </b-tab-item>
-            <b-tab-item label="..."></b-tab-item>
       </b-tabs>
     </section>
   </div>
@@ -81,9 +80,6 @@ export default {
     titleStack () {
       return [
         'Admin',
-        this.dep,
-        this.formation,
-        this.niveau,
         this.form.nom
       ]
     },

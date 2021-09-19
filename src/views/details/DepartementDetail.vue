@@ -33,10 +33,6 @@
               <salle-table :data-url="`http://localhost:8090/api/stats/data`" :id="parseInt(this.id)"/>
           </card-component>
         </b-tab-item>
-        <b-tab-item label="Les enseignants" icon="account">
-          <card-component v-if="isProfileExists" title="Enseignants" vers-title="nouveau" vers="newSalle" icon="account">
-          </card-component>
-        </b-tab-item>
       </b-tabs>
     </section>
   </div>

@@ -28,11 +28,11 @@
                 <b-field label="Sex" horizontal>
                   <b-input :value="form.sex" custom-class="is-static" readonly/>
                 </b-field>
-                <b-field label="Département" horizontal>
+                <!--<b-field label="Département" horizontal>
                     <name :id="depId" :dataUrl="'http://localhost:8090/api/data/departements/'" ></name>
-                </b-field>
+                </b-field>-->
             </b-tab-item>
-            <b-tab-item label="Thèse doctorale"></b-tab-item>
+            <!--<b-tab-item label="Thèse doctorale"></b-tab-item>-->
       </b-tabs>
     </section>
   </div>
@@ -45,11 +45,11 @@ import find from 'lodash/find'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 // import CardComponent from '@/components/CardComponent'
-import Name from '@/components/Tables/Adds/Name'
+// import Name from '@/components/Tables/Adds/Name'
 
 export default {
   name: 'DoctorantDetail',
-  components: { HeroBar, TitleBar, Name },
+  components: { HeroBar, TitleBar },
   props: {
     id: {
       default: null
@@ -69,9 +69,6 @@ export default {
     titleStack () {
       return [
         'Admin',
-        this.dep,
-        this.formation,
-        this.niveau,
         this.form.nom
       ]
     },

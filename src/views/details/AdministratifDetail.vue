@@ -35,11 +35,10 @@
                   <b-input :value="form.role" custom-class="is-static" readonly/>
                 </b-field>
                 <b-field label="Département" horizontal>
-                    <attribut-table :id="this.dep" :dataUrl="'http://localhost:8090/api/data/departements/'" att="nom" ></attribut-table>
+                    <!--<attribut-table :id="dep" :dataUrl="'http://localhost:8090/api/data/departements/'" att="nom" ></attribut-table>-->
                   <b-input :value="form.departementDepartementId" custom-class="is-static" readonly/>
                 </b-field>
             </b-tab-item>
-            <b-tab-item label="..."></b-tab-item>
       </b-tabs>
     </section>
   </div>
@@ -52,11 +51,11 @@ import find from 'lodash/find'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 // import CardComponent from '@/components/CardComponent'
-import AttributTable from '@/components/Tables/Adds/AttributTable'
+// import AttributTable from '@/components/Tables/Adds/AttributTable'
 
 export default {
   name: 'AdministratifDetail',
-  components: { HeroBar, TitleBar, AttributTable },
+  components: { HeroBar, TitleBar },
   props: {
     id: {
       default: null
@@ -68,7 +67,7 @@ export default {
       form: this.getClearFormObject(),
       createdReadable: null,
       isProfileExists: false,
-      dep: ''
+      dep: null
     }
   },
   computed: {
