@@ -83,23 +83,13 @@ export default {
   computed: {
     trashObjectName () {
       if (this.trashObject) {
-        return this.trashObject.nom
+        return this.trashObject.titre
       }
 
       return null
     }
   },
   mounted () {
-    console.log(this.props)
-    console.log(this.$session.get('deps'))
-    /* if (this.dataUrl) {
-      if (r.data && r.data.data) {
-        if (r.data.data.length > this.perPage) {
-          this.paginated = true
-        }
-        this.departements = this.$session.get('deps')
-      }
-    } */
     if (this.dataUrl) {
       this.isLoading = true
       axios
@@ -129,7 +119,7 @@ export default {
     },
     trashConfirm () {
       this.isModalActive = false
-      axios.delete('http://localhost:8090/api/data/outils/' + this.trashObject.salleId + '/' + this.$store.state.userEmail, { headers: { 'x-access-token': this.$session.get('jwt') } })
+      axios.delete('http://localhost:8090/api/data/outils/' + this.trashObject.outilId + '/' + this.$store.state.userEmail, { headers: { 'x-access-token': this.$session.get('jwt') } })
         .then(r => {
           this.isLoading = false
           this.$buefy.toast.open({
@@ -150,7 +140,7 @@ export default {
             .catch(e => {
               this.isLoading = false
               this.$buefy.toast.open({
-                message: `Error: ${e.message}`,
+                message: `Error: ${e.message} yo`,
                 type: 'is-danger'
               })
             })
@@ -158,10 +148,28 @@ export default {
         .catch(e => {
           this.isLoading = false
           console.log(e)
-          this.$buefy.toast.open({
-            message: `Error: ${e.message}`,
+          /* this.$buefy.toast.open({
+            message: `Error: ${e.message} hna`,
             type: 'is-danger'
-          })
+          }) */
+          axios
+            .get(this.dataUrl, { headers: { 'x-access-token': this.$session.get('jwt') } })
+            .then(r => {
+              this.isLoading = false
+              if (r.data && r.data.results) {
+                if (r.data.results.length > this.perPage) {
+                  this.paginated = true
+                }
+                this.outils = r.data.results
+              }
+            })
+            .catch(e => {
+              this.isLoading = false
+              this.$buefy.toast.open({
+                message: `Error: ${e.message} yo`,
+                type: 'is-danger'
+              })
+            })
         })
     },
     trashCancel () {
