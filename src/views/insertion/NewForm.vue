@@ -107,7 +107,8 @@ export default {
               nom: 'niveau ' + k,
               desc: 'desc',
               Durée: 1,
-              formationId: response.data.data.formationId
+              formationId: response.data.data.formationId,
+              admin: this.$store.state.userEmail
             }, { headers: { 'x-access-token': this.$session.get('jwt') } })
               .then(response2 => {
                 console.log(response2)
@@ -116,7 +117,8 @@ export default {
                   axios.post('http://localhost:8090/api/data/semestres', {
                     numero: 'semestre ' + k,
                     desc: 'desc',
-                    niveauId: response2.data.data.niveauId
+                    niveauId: response2.data.data.niveauId,
+                    admin: this.$store.state.userEmail
                   }, { headers: { 'x-access-token': this.$session.get('jwt') } })
                     .then(response3 => {
                       console.log(response3)
