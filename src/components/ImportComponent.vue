@@ -50,7 +50,7 @@ export default {
         const formData = new FormData()
         formData.append('file', this.file)
         console.log(formData.get('file'))
-        axios.post(this.link, formData, { headers: { 'Content-Type': 'multipart/form-data' }, onUploadProgress: this.progressEvent })
+        axios.post(this.link + '/' + this.$store.state.userEmail, formData, { headers: { 'Content-Type': 'multipart/form-data' }, onUploadProgress: this.progressEvent })
           .then(r => {
             console.log('resultats: ' + r)
             this.isLoading = false
